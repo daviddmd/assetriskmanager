@@ -1,0 +1,56 @@
+@startuml
+start
+group Asset Creation
+:Create Asset Types;
+:Create asset with all its respective attributes and type;
+:Assign the asset to its respective Asset Manager, an existing user in the platform;
+end group
+group Asset Evaluation
+:Choose Asset;
+:Open Asset Appreciation Menu;
+fork
+    :Set Asset Availability Evaluation;
+fork again
+    :Set Asset Integrity Evaluation;
+fork again
+    :Set Asset Confidentiality Evaluation;
+end merge
+end group
+group Asset Threats Definition
+:Open Asset Threats Menu;
+:Select one or more Threats from a list of Threats that are applicable to the asset;
+while (Has More Unclassified Threats)
+    fork
+        :Define the probability of the threat;
+    fork again
+        :Define the threat Availability impact;
+    fork again
+        :Define the threat Integrity impact;
+    fork again
+        :Define the threat Confidentiality impact;
+    end merge
+endwhile(No)
+end group
+group Asset Risks Treatment Definition and Confirmation
+:Open Asset Risks Treatment Menu;
+while(Has more untreated threats?)
+        fork
+            :Choose control from list associated with the threat;
+        fork again
+            :Input Type of Treatment (Accept, Transfer, Mitigate);
+        fork again
+            :Define the final risk score post-treatment;
+        end merge
+        /'
+        if (Evaluate Treatment) then (Accept Treatment)
+
+        else(Reject Treatment)
+            :Remove Treatment;
+        endif
+        '/
+        :Confirm Treatment;
+        :Accept Remaining Risk;
+endwhile(No)
+end group
+stop
+@enduml

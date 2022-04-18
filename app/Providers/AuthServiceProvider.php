@@ -31,7 +31,6 @@ class AuthServiceProvider extends ServiceProvider
                 'userPrincipalName' => $request->email,
                 'password' => $request->password
             ]);
-
             return $validated ? Auth::getLastAttempted() : null;
         });
     }

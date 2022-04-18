@@ -1,0 +1,103 @@
+@startuml
+'https://plantuml.com/object-diagram
+object AssetType
+AssetType : ID = PK
+AssetType : Name
+'possivelmente icone
+object  Department
+Department : ID = PK
+Department : Name
+Department : Description
+object User
+Department *-> User
+User : ID = PK
+User : Name
+User : Email
+User : PhoneNumber
+User : PreferredLanguage
+User : ActiveDirectoryId = Composite(ADId,CN,...)
+User : Role = Enum(ADMIN,ASSET_MANAGER,DPO,SECURITY_OFFICER)
+User : Department = FK
+User : Active = bool
+object Asset
+Asset : ID = PK
+Asset : InventoryNumber/ID
+Asset : Type = AssetType
+Asset : Name
+Asset : Manufacturer
+Asset : Location
+Asset : ManufacturerContractType = Enum(Warranty,Maintenance,Support,None)
+Asset : ManufacturerContractBeginningDate = Date
+Asset : ManufacturerContractEndingDate = Date
+Asset : ManufacturerContractProvider
+Asset : Description
+Asset : CNCSExport = bool
+Asset : MACAddress
+Asset : IPAddress
+Asset : LinksTo = Asset (0..1) (?)
+Asset : Manager = User
+Asset : Status = Enum(INITIAL,SET_THREATS,SET_TREATMENT,VALIDATING,AWAITS_CONFIRMATION,COMPLETE)
+Asset : AvailabilityAppreciation = int(1..5)
+Asset : IntegrityAppreciation = int(1..5)
+Asset : ConfidentialityAppreciation = int(1..5)
+Asset : TotalAppreciation = Max(AvailabilityAppreciation,IntegrityAppreciation,ConfidentialityAppreciation)
+Asset : IsActive = bool
+User o-- Asset
+AssetType o-- Asset
+object Threat
+Threat : ID = PK
+Threat : Name
+Threat : Description
+object Control
+Control : ID = PK
+Control : Name
+Control : Description
+Control : Threat
+Control *-> Threat
+object SecurityOfficer
+SecurityOfficer : ID = PK
+SecurityOfficer : EntityName
+SecurityOfficer : Name
+SecurityOfficer : Role
+SecurityOfficer : EmailAddress
+SecurityOfficer : LandlinePhoneNumber
+SecurityOfficer : MobilePhoneNumber
+object PermanentContactPoint
+PermanentContactPoint : EntityName
+PermanentContactPoint : PermanentContactPointName
+PermanentContactPoint : MainEmailAddress
+PermanentContactPoint : SecondaryEmailAddress
+PermanentContactPoint : MainLandlinePhoneNumber
+PermanentContactPoint : SecondaryLandlinePhoneNumber
+PermanentContactPoint : MainMobilePhoneNumber
+PermanentContactPoint : SecondaryMobilePhoneNumber
+PermanentContactPoint : OtherAlternativeContacts
+
+object AssetThreat
+AssetThreat : ID = PK
+AssetThreat : Asset = FK
+AssetThreat : Risk = FK
+AssetThreat : Probability
+AssetThreat : ConfidentialityImpact
+AssetThreat : AvailabilityImpact
+AssetThreat : IntegrityImpact
+AssetThreat : AbsoluteRisk = Auto
+AssetThreat : FinalRiskScore = Auto
+AssetThreat : ResidualRisk
+AssetThreat : RemainingRiskAccepted = bool
+AssetThreat <-* Asset
+AssetThreat <-* Threat
+
+object AssetThreatControl
+AssetThreatControl : ID = PK
+AssetThreatControl : AssetThreat = FK
+AssetThreatControl : Control = FK
+AssetThreatControl : ControlType = Enum(MITIGATE,TRANSFER,ACCEPT)
+AssetThreatControl : Validated = bool
+AssetThreatControl <-* AssetThreat
+AssetThreatControl <-* Control
+
+
+'the logging will apply to all tables, the only added columns will be the date of the operation and operation (CRUD)
+
+@enduml

@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <title>RJSC</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">RJSC</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Assets</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Users</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="configurationDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Manage
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="configurationDropdown">
+                        <li><a class="dropdown-item" href="#">Threats</a></li>
+                        <li><a class="dropdown-item" href="#">Controls</a></li>
+                        <li><a class="dropdown-item" href="#">Permanent Contact Point</a></li>
+                        <li><a class="dropdown-item" href="#">Security Officer Details</a></li>
+                        <li><a class="dropdown-item" href="#">Asset Types</a> </li>
+                        <li><a class="dropdown-item" href="#">Departments</a> </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Reports</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav pull-right">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Security Officer
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="#">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <i>
+        On adding new controls for a threat, the remaining risk is automatically reset and the acceptance is unset.
+        <br>
+        All controls for a threat must be validated for the residual risk to be set and accepted.
+    </i>
+    <h3 class="text-center">Threat List for Asset</h3>
+    <table class="table table-bordered mb-5">
+        <thead>
+        <tr>
+            <th scope="col">Risk</th>
+            <th scope="col">Confidentiality Impact</th>
+            <th scope="col">Availability Impact</th>
+            <th scope="col">Integrity Impact</th>
+            <th scope="col">Probability</th>
+            <th scope="col">Absolute Risk</th>
+            <th scope="col">Final Risk</th>
+            <th scope="col">Number Controls</th>
+            <th scope="col">Accept Residual Risk?</th>
+            <th scope="col">Residual Risk</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row"><a href="">Fire</a> </th>
+            <td style="background-color: yellow"><input type="number" name="confidentiality_impact" value="1" min="1" max="5"> </td>
+            <td style="background-color: orangered"><input type="number" name="availability_impact" value="4" min="1" max="5"> </td>
+            <td style="background-color: orange"><input type="number" name="integrity_impact" value="3" min="1" max="5"> </td>
+            <td style="background-color: orange"><input type="number" name="probability" value="3" min="1" max="5"> </td>
+            <td style="background-color: orangered">4</td>
+            <td style="background-color: orangered">12</td>
+            <td>2</td>
+            <td><input type="checkbox" name="accepted" checked></td>
+            <td style="background-color: orange"><input type="number" name="residual_risk" value="3" min="1" max="5"> </td>
+            <td><button class="btn btn-primary btnUpdate">Update</button><button class="btn btn-danger btnDelete">Delete</button> </td>
+        </tr>
+        <tr>
+            <th scope="row"><a href="">RCE</a> </th>
+            <td style="background-color: red"><input type="number" name="confidentiality_impact" value="5" min="1" max="5"> </td>
+            <td style="background-color: red"><input type="number" name="availability_impact" value="5" min="1" max="5"> </td>
+            <td style="background-color: red"><input type="number" name="integrity_impact" value="5" min="1" max="5"> </td>
+            <td style="background-color: orange"><input type="number" name="probability" value="3" min="1" max="5"> </td>
+            <td style="background-color: red">5</td>
+            <td style="background-color: orangered">15</td>
+            <td>3</td>
+            <td><input type="checkbox" name="accepted" checked></td>
+            <td style="background-color: orangered"><input type="number" name="residual_risk" value="4" min="1" max="5"> </td>
+            <td><button class="btn btn-primary btnUpdate">Update</button><button class="btn btn-danger btnDelete">Delete</button> </td>
+        </tr>
+        <tr>
+            <th scope="row"><a href="">LPE</a> </th>
+            <td style="background-color: orange"><input type="number" name="confidentiality_impact" value="3" min="1" max="5"> </td>
+            <td style="background-color: yellow"><input type="number" name="availability_impact" value="1" min="1" max="5"> </td>
+            <td style="background-color: yellow"><input type="number" name="integrity_impact" value="1" min="1" max="5"> </td>
+            <td style="background-color: darkgoldenrod"><input type="number" name="probability" value="2" min="1" max="5"> </td>
+            <td style="background-color: orange">3</td>
+            <td style="background-color: yellow">6</td>
+            <td>3</td>
+            <td><input type="checkbox" name="accepted"></td>
+            <td><input type="number" name="residual_risk" value="" min="1" max="5" disabled> </td>
+            <td><button class="btn btn-primary btnUpdate">Update</button><button class="btn btn-danger btnDelete">Delete</button> </td>
+        </tr>
+        </tbody>
+    </table>
+    <h3 class="text-center">Add Threat</h3>
+    <i>It must not be possible to link a threat to an asset if said threat doesn't have any control associated to it.</i>
+    <form id="departmentForm">
+        <div class="form-group">
+            <label for="threat">Threat</label>
+            <input type="text" placeholder="#ID, Name or Description">
+            <button class="btn btn-primary" type="button"><i class="bi bi-search"></i></button>
+            <select name="threat" id="threat">
+                <option disabled selected>Select Threat...</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="availability">Availability Impact</label>
+            <input type="number" name="availability" id="availability" min="1" max="5" value="2">
+        </div>
+        <div class="form-group">
+            <label for="integrity">Integrity Impact</label>
+            <input type="number" name="integrity" id="integrity" min="1" max="5" value="4">
+        </div>
+        <div class="form-group">
+            <label for="confidentiality">Confidentiality Impact</label>
+            <input type="number" name="confidentiality" id="confidentiality" min="1" max="5" value="3">
+        </div>
+        <div class="form-group">
+            <label for="probability">Probability</label>
+            <input type="number" name="probability" id="probability" min="1" max="5" value="3">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+<script>
+</script>
+</body>
+</html>
