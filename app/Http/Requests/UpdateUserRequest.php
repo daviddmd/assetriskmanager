@@ -2,7 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\UserRole;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Enum;
+use Illuminate\Validation\Rules\Exists;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -13,7 +17,7 @@ class UpdateUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +28,10 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'department' => [Rule::exists("departments","id"),"nullable"],
+            "name"=>["required"],
+            "active"=>[],
+            "role"=>["required",new Enum(UserRole::class)],
         ];
     }
 }

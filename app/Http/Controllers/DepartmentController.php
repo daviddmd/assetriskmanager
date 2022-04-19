@@ -24,7 +24,6 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        //TODO nº de utilizadores de cada dpt na tabela. relacao de dependencia no modelo.
         $departments = Department::all();
         return view("departments.index",["departments"=>$departments]);
     }
@@ -64,7 +63,6 @@ class DepartmentController extends Controller
      */
     public function show(Department $department)
     {
-        //TODO potencialmente uma funcionalidade que conta o nº de utilizadores que um departamento tem para utilizadores normais e lista de utilizadores para um SO/admin.
         return view("departments.show",["department"=>$department]);
     }
 
@@ -76,6 +74,7 @@ class DepartmentController extends Controller
      */
     public function edit(Department $department)
     {
+        //TODO corrigir lista de utilizadores para hyperlinks para os perfis de utilizadores numa nova tab
         return view("departments.edit",["department"=>$department]);
     }
 
@@ -101,7 +100,6 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        //FIXME verificar primeiro se tem alguma dependência com algum utilizador, a ser feito quando utilizador tiver roles
         $department->delete();
         return redirect()->route("departments.index")->with("status","Department Deleted");
     }

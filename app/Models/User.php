@@ -29,7 +29,9 @@ class User extends Authenticatable implements  LdapAuthenticatable
      */
     protected $fillable = [
         'name',
-        'department_id'
+        'department_id',
+        "active",
+        "role"
     ];
     /**
      * The attributes that should be hidden for serialization.
@@ -61,4 +63,8 @@ class User extends Authenticatable implements  LdapAuthenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function department(){
+        return $this->belongsTo(Department::class);
+    }
 }
