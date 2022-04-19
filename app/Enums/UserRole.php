@@ -1,0 +1,10 @@
+<?php
+namespace App\Enums;
+enum UserRole : string
+{
+    case ASSET_MANAGER = "ASSET_MANAGER";
+    case SECURITY_OFFICER = "SECURITY_OFFICER";
+    case DATA_PROTECTION_OFFICER = "DATA_PROTECTION_OFFICER";
+    case ADMINISTRATOR = "ADMINISTRATOR";
+
+}

@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\UserRole;
 use App\Models\Department;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -42,7 +43,7 @@ class DepartmentPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->role==UserRole::SECURITY_OFFICER;
     }
 
     /**
@@ -54,7 +55,7 @@ class DepartmentPolicy
      */
     public function update(User $user, Department $department): bool
     {
-        return true;
+        return $user->role==UserRole::SECURITY_OFFICER;
     }
 
     /**
@@ -66,7 +67,7 @@ class DepartmentPolicy
      */
     public function delete(User $user, Department $department): bool
     {
-        return true;
+        return $user->role==UserRole::SECURITY_OFFICER;
     }
 
     /**
@@ -78,7 +79,7 @@ class DepartmentPolicy
      */
     public function restore(User $user, Department $department): bool
     {
-        return true;
+        return $user->role==UserRole::SECURITY_OFFICER;
     }
 
     /**
@@ -90,6 +91,6 @@ class DepartmentPolicy
      */
     public function forceDelete(User $user, Department $department): bool
     {
-        return true;
+        return $user->role==UserRole::SECURITY_OFFICER;
     }
 }
