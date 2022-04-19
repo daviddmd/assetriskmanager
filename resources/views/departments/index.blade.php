@@ -25,6 +25,9 @@
                                     {{__("Description")}}
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    {{__("Users")}}
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     {{__("Action")}}
                                 </th>
                             </tr>
@@ -35,6 +38,7 @@
                                     <td class="px-6 py-4">{{$department->id}}</td>
                                     <td class="px-6 py-4">{{$department->name}}</td>
                                     <td class="px-6 py-4">{{$department->description}}</td>
+                                    <td class="px-6 py-4">{{$department->users->count()}}</td>
                                     <td class="px-6 py-4">
                                         <a href="{{route("departments.edit",$department->id)}}"
                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">

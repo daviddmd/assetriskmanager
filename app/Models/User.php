@@ -30,6 +30,7 @@ class User extends Authenticatable implements  LdapAuthenticatable
      */
     protected $fillable = [
         'name',
+        'department_id'
     ];
 
     /**
