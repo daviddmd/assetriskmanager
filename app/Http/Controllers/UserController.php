@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Enums\UserRole;
@@ -26,7 +25,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //paginate, filter by dpt and name
+        //todo paginate, filter by dpt and name
         $users = User::all();
         return view("users.index", ["users" => $users]);
     }

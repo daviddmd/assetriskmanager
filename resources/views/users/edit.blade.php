@@ -55,7 +55,8 @@
                             <label for="role"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Role")}}</label>
                             <select name="role" id="role"
-                                    class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+                                    class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                            {{Auth::user()->role != \App\Enums\UserRole::ADMINISTRATOR ? "disabled" : ""}}>
                                 @foreach(\App\Enums\UserRole::cases() as $role)
                                     <option
                                         value="{{ $role->value }}" {{ $user->role->value == $role->value  ? "selected" : "" }}>
