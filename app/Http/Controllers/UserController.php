@@ -10,6 +10,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -23,11 +24,25 @@ class UserController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function index()
+    public function index(Request $request)
     {
-        //todo paginate, filter by dpt and name
-        $users = User::all();
-        return view("users.index", ["users" => $users]);
+        $filter = $request->input("filter");
+        $department_id = $request->input("department");
+        if (!empty($filter) || !empty($department_id)){
+            if (!empty($department_id)){
+                $users = User::where("department_id",$department_id)->where(function ($query) use ($filter){
+                    $query->where("name","like","%".$filter."%")->orWhere("email","like","%".$filter."%");
+                })->paginate(5)->withQueryString();
+            }
+            else{
+                $users = User::where("name","like","%".$filter."%")->orWhere("email","like","%".$filter."%")->paginate(5)->withQueryString();
+            }
+        }
+        else{
+            $users = User::paginate(5)->withQueryString();
+        }
+        $departments = Department::all();
+        return view("users.index", ["users" => $users,"departments"=>$departments,"filter"=>$filter,"department_id"=>$department_id]);
     }
 
     /**

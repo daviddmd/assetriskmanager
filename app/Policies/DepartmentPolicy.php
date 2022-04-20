@@ -43,7 +43,7 @@ class DepartmentPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role==UserRole::SECURITY_OFFICER;
+        return in_array($user->role,[UserRole::SECURITY_OFFICER,UserRole::ADMINISTRATOR]);
     }
 
     /**
@@ -55,7 +55,7 @@ class DepartmentPolicy
      */
     public function update(User $user, Department $department): bool
     {
-        return $user->role==UserRole::SECURITY_OFFICER;
+        return in_array($user->role,[UserRole::SECURITY_OFFICER,UserRole::ADMINISTRATOR]);
     }
 
     /**
@@ -67,7 +67,7 @@ class DepartmentPolicy
      */
     public function delete(User $user, Department $department): bool
     {
-        return $user->role==UserRole::SECURITY_OFFICER;
+        return in_array($user->role,[UserRole::SECURITY_OFFICER,UserRole::ADMINISTRATOR]);
     }
 
     /**
@@ -79,7 +79,7 @@ class DepartmentPolicy
      */
     public function restore(User $user, Department $department): bool
     {
-        return $user->role==UserRole::SECURITY_OFFICER;
+        return in_array($user->role,[UserRole::SECURITY_OFFICER,UserRole::ADMINISTRATOR]);
     }
 
     /**
@@ -91,6 +91,6 @@ class DepartmentPolicy
      */
     public function forceDelete(User $user, Department $department): bool
     {
-        return $user->role==UserRole::SECURITY_OFFICER;
+        return in_array($user->role,[UserRole::SECURITY_OFFICER,UserRole::ADMINISTRATOR]);
     }
 }
