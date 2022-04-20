@@ -32,7 +32,11 @@
                             {{ __('Permanent Contact Point') }}
                         </x-jet-nav-link>
                     @endcan
-
+                    @can("viewAny",\App\Models\SecurityOfficer::class)
+                        <x-jet-nav-link :href="route('security-officer.index')" :active="request()->routeIs('security-officer.index')">
+                            {{ __('Security Officer') }}
+                        </x-jet-nav-link>
+                    @endcan
                 </div>
             </div>
 

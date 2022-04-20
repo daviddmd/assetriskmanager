@@ -24,15 +24,15 @@ class UpdatePermanentContactPointRequest extends FormRequest
     public function rules()
     {
         return [
-            "entity_name"=>["required"],
-            "permanent_contact_point_name"=>["required"],
-            "main_email_address"=>["required"],
-            "secondary_email_address"=>["required"],
-            "main_landline_phone_number"=>["required"],
-            "secondary_landline_phone_number"=>["required"],
-            "main_mobile_phone_number"=>["required"],
-            "secondary_mobile_phone_number"=>["required"],
-            "other_alternative_contacts"=>[],
+            "entity_name" => ["required"],
+            "permanent_contact_point_name" => ["required"],
+            "main_email_address" => ["required","email:rfc"],
+            "secondary_email_address" => ["required","email:rfc"],
+            "main_landline_phone_number" => ["required"],
+            "secondary_landline_phone_number" => ["required"],
+            "main_mobile_phone_number" => ["required"],
+            "secondary_mobile_phone_number" => ["required"],
+            "other_alternative_contacts" => [],
         ];
     }
 }

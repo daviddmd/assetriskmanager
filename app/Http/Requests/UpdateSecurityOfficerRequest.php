@@ -13,7 +13,7 @@ class UpdateSecurityOfficerRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class UpdateSecurityOfficerRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "entity_name" => ["required"],
+            "name" => ["required"],
+            "role" => ["required"],
+            "email_address" => ["required","email:rfc"],
+            "landline_phone_number" => ["required"],
+            "mobile_phone_number" => ["required"]
         ];
     }
 }
