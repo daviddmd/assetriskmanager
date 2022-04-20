@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PermanentContactPointExport;
 use App\Models\PermanentContactPoint;
 use App\Http\Requests\StorePermanentContactPointRequest;
 use App\Http\Requests\UpdatePermanentContactPointRequest;
@@ -9,7 +10,10 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class PermanentContactPointController extends Controller
 {
@@ -21,16 +25,18 @@ class PermanentContactPointController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return RedirectResponse
+     * @return Application|Factory|View|BinaryFileResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        $permanent_contact_point = PermanentContactPoint::first();
-        if (empty($permanent_contact_point)) {
-            return redirect()->route("permanent-contact-point.create");
+        if ($request->has("export")) {
+            return Excel::download(new PermanentContactPointExport, "permanent_contact_point.xlsx");
+        }
+        $permanentContactPoint = PermanentContactPoint::first();
+        if (empty($permanentContactPoint)) {
+            return view("permanent-contact-point.create");
         } else {
-            return redirect()->route("permanent-contact-point.edit", $permanent_contact_point);
-
+            return view("permanent-contact-point.edit", ["permanent_contact_point" => $permanentContactPoint]);
         }
     }
 
@@ -66,7 +72,7 @@ class PermanentContactPointController extends Controller
             "other_alternative_contacts" => $request->input("other_alternative_contacts"),
         ]);
         $permanet_contact_point->save();
-        return redirect()->route("dashboard")->with("status", "Permanent Contact Point Created");
+        return redirect()->route("permanent-contact-point.index")->with("status", "Permanent Contact Point Created");
     }
 
     /**
@@ -76,41 +82,7 @@ class PermanentContactPointController extends Controller
      */
     public function show(PermanentContactPoint $permanentContactPoint)
     {
-        $headers = array(
-            "Content-type" => "text/csv",
-            "Content-Disposition" => "attachment; filename=permanent_contact_point.csv",
-            "Pragma" => "no-cache",
-            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
-            "Expires" => "0"
-        );
-        $columns = array(
-            'Entity Name',
-            'Permanent Contact Point Name',
-            'Main Email Address',
-            'Secondary Email Address',
-            'Main Landline Phone Number',
-            'Secondary Landline Phone Number',
-            'Main Mobile Phone Number',
-            'Secondary Mobile Phone Number',
-            'Other Alternative Contacts'
-        );
-        $file = fopen('php://output', 'w');
-        fputcsv($file, $columns);
-        fputcsv($file, array(
-            $permanentContactPoint->entity_name,
-            $permanentContactPoint->permanent_contact_point_name,
-            $permanentContactPoint->main_email_address,
-            $permanentContactPoint->secondary_email_address,
-            $permanentContactPoint->main_landline_phone_number,
-            $permanentContactPoint->secondary_landline_phone_number,
-            $permanentContactPoint->main_mobile_phone_number,
-            $permanentContactPoint->secondary_mobile_phone_number,
-            $permanentContactPoint->other_alternative_contacts,
-        ));
-        fclose($file);
-        return Response::stream($file, 200, $headers);
-
-        //return redirect()->route("permanent-contact-point.edit", $permanentContactPoint);
+        return redirect()->route("permanent-contact-point.edit", $permanentContactPoint);
     }
 
     /**
@@ -147,17 +119,18 @@ class PermanentContactPointController extends Controller
                 "other_alternative_contacts" => $request->input("other_alternative_contacts"),
             ]
         );
-        return redirect()->route("dashboard")->with("status", "Permanent Contact Point Updated");
+        return redirect()->route("permanent-contact-point.index")->with("status", "Permanent Contact Point Updated");
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param PermanentContactPoint $permanentContactPoint
-     * @return Response
+     * @return RedirectResponse
      */
     public function destroy(PermanentContactPoint $permanentContactPoint)
     {
-        //
+        $permanentContactPoint->delete();
+        return redirect()->route("permanent-contact-point.index")->with("status","Permanent Contact Point Deleted");
     }
 }

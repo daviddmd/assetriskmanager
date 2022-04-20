@@ -2,9 +2,10 @@
 
 namespace App\Policies;
 
+use App\Enums\UserRole;
 use App\Models\PermanentContactPoint;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use LdapRecord\Models\ActiveDirectory\User;
 
 class PermanentContactPointPolicy
 {
@@ -13,82 +14,83 @@ class PermanentContactPointPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \LdapRecord\Models\ActiveDirectory\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @return bool
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user) : bool
     {
-        //
+        return $user->role == UserRole::SECURITY_OFFICER;
+
     }
 
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \LdapRecord\Models\ActiveDirectory\User  $user
-     * @param  \App\Models\PermanentContactPoint  $permanentContactPoint
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @param PermanentContactPoint $permanentContactPoint
+     * @return bool
      */
-    public function view(User $user, PermanentContactPoint $permanentContactPoint)
+    public function view(User $user, PermanentContactPoint $permanentContactPoint) : bool
     {
-        //
+        return $user->role == UserRole::SECURITY_OFFICER;
     }
 
     /**
      * Determine whether the user can create models.
      *
-     * @param  \LdapRecord\Models\ActiveDirectory\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @return bool
      */
-    public function create(User $user)
+    public function create(User $user) : bool
     {
-        //
+        return $user->role == UserRole::SECURITY_OFFICER;
     }
 
     /**
      * Determine whether the user can update the model.
      *
-     * @param  \LdapRecord\Models\ActiveDirectory\User  $user
-     * @param  \App\Models\PermanentContactPoint  $permanentContactPoint
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @param PermanentContactPoint $permanentContactPoint
+     * @return bool
      */
-    public function update(User $user, PermanentContactPoint $permanentContactPoint)
+    public function update(User $user, PermanentContactPoint $permanentContactPoint) : bool
     {
-        //
+        return $user->role == UserRole::SECURITY_OFFICER;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \LdapRecord\Models\ActiveDirectory\User  $user
-     * @param  \App\Models\PermanentContactPoint  $permanentContactPoint
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @param PermanentContactPoint $permanentContactPoint
+     * @return bool
      */
-    public function delete(User $user, PermanentContactPoint $permanentContactPoint)
+    public function delete(User $user, PermanentContactPoint $permanentContactPoint) : bool
     {
-        //
+        return $user->role == UserRole::SECURITY_OFFICER;
     }
 
     /**
      * Determine whether the user can restore the model.
      *
-     * @param  \LdapRecord\Models\ActiveDirectory\User  $user
-     * @param  \App\Models\PermanentContactPoint  $permanentContactPoint
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @param PermanentContactPoint $permanentContactPoint
+     * @return bool
      */
-    public function restore(User $user, PermanentContactPoint $permanentContactPoint)
+    public function restore(User $user, PermanentContactPoint $permanentContactPoint) : bool
     {
-        //
+        return $user->role == UserRole::SECURITY_OFFICER;
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
-     * @param  \LdapRecord\Models\ActiveDirectory\User  $user
-     * @param  \App\Models\PermanentContactPoint  $permanentContactPoint
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @param PermanentContactPoint $permanentContactPoint
+     * @return bool
      */
-    public function forceDelete(User $user, PermanentContactPoint $permanentContactPoint)
+    public function forceDelete(User $user, PermanentContactPoint $permanentContactPoint) : bool
     {
-        //
+        return $user->role == UserRole::SECURITY_OFFICER;
     }
 }

@@ -27,6 +27,11 @@
                     <x-jet-nav-link :href="route('asset-types.index')" :active="request()->routeIs('asset-types.index')">
                         {{ __('Asset Types') }}
                     </x-jet-nav-link>
+                    @can("viewAny",\App\Models\PermanentContactPoint::class)
+                        <x-jet-nav-link :href="route('permanent-contact-point.index')" :active="request()->routeIs('permanent-contact-point.index')">
+                            {{ __('Permanent Contact Point') }}
+                        </x-jet-nav-link>
+                    @endcan
 
                 </div>
             </div>
