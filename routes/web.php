@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\AssetTypeController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\PermanentContactPointController;
+use App\Http\Controllers\SecurityOfficerController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +30,9 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+    Route::resource("permanent-contact-point", PermanentContactPointController::class);
+    Route::resource("security-officer", SecurityOfficerController::class);
+    Route::resource("asset-types", AssetTypeController::class);
     Route::resource("departments", DepartmentController::class);
     Route::resource("users", UserController::class);
 });

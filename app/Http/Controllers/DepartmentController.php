@@ -74,7 +74,6 @@ class DepartmentController extends Controller
      */
     public function edit(Department $department)
     {
-        //TODO corrigir lista de utilizadores para hyperlinks para os perfis de utilizadores numa nova tab
         return view("departments.edit",["department"=>$department]);
     }
 

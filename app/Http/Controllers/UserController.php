@@ -26,8 +26,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $filter = $request->input("filter");
-        $department_id = $request->input("department");
+        $filter = $request->input("filter","");
+        $department_id = $request->input("department","");
         if (!empty($filter) || !empty($department_id)){
             if (!empty($department_id)){
                 $users = User::where("department_id",$department_id)->where(function ($query) use ($filter){
@@ -74,7 +74,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view("users.show", ["user" => $user]);
+        $departments = Department::all();
+        return view("users.show", ["user" => $user,"departments"=>$departments]);
     }
 
     /**

@@ -11,7 +11,6 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <form method="GET" action="{{route('users.index')}}">
-                            @csrf
                             <div class="mb-6">
                                 <label for="department"
                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Department")}}</label>

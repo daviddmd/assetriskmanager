@@ -24,6 +24,9 @@
                             {{ __('Users') }}
                         </x-jet-nav-link>
                     @endcan
+                    <x-jet-nav-link :href="route('asset-types.index')" :active="request()->routeIs('asset-types.index')">
+                        {{ __('Asset Types') }}
+                    </x-jet-nav-link>
 
                 </div>
             </div>
