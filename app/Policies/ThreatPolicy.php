@@ -2,9 +2,10 @@
 
 namespace App\Policies;
 
+use App\Enums\UserRole;
 use App\Models\Threat;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use LdapRecord\Models\ActiveDirectory\User;
 
 class ThreatPolicy
 {
@@ -13,82 +14,82 @@ class ThreatPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \LdapRecord\Models\ActiveDirectory\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @return bool
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \LdapRecord\Models\ActiveDirectory\User  $user
-     * @param  \App\Models\Threat  $threat
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @param Threat $threat
+     * @return bool
      */
-    public function view(User $user, Threat $threat)
+    public function view(User $user, Threat $threat): bool
     {
-        //
+        return true;
     }
 
     /**
      * Determine whether the user can create models.
      *
-     * @param  \LdapRecord\Models\ActiveDirectory\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @return bool
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
-        //
+        return $user->role == UserRole::SECURITY_OFFICER;
     }
 
     /**
      * Determine whether the user can update the model.
      *
-     * @param  \LdapRecord\Models\ActiveDirectory\User  $user
-     * @param  \App\Models\Threat  $threat
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @param Threat $threat
+     * @return bool
      */
-    public function update(User $user, Threat $threat)
+    public function update(User $user, Threat $threat): bool
     {
-        //
+        return $user->role == UserRole::SECURITY_OFFICER;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \LdapRecord\Models\ActiveDirectory\User  $user
-     * @param  \App\Models\Threat  $threat
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @param Threat $threat
+     * @return bool
      */
-    public function delete(User $user, Threat $threat)
+    public function delete(User $user, Threat $threat): bool
     {
-        //
+        return $user->role == UserRole::SECURITY_OFFICER;
     }
 
     /**
      * Determine whether the user can restore the model.
      *
-     * @param  \LdapRecord\Models\ActiveDirectory\User  $user
-     * @param  \App\Models\Threat  $threat
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @param Threat $threat
+     * @return bool
      */
-    public function restore(User $user, Threat $threat)
+    public function restore(User $user, Threat $threat): bool
     {
-        //
+        return $user->role == UserRole::SECURITY_OFFICER;
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
-     * @param  \LdapRecord\Models\ActiveDirectory\User  $user
-     * @param  \App\Models\Threat  $threat
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @param Threat $threat
+     * @return bool
      */
-    public function forceDelete(User $user, Threat $threat)
+    public function forceDelete(User $user, Threat $threat): bool
     {
-        //
+        return $user->role == UserRole::SECURITY_OFFICER;
     }
 }

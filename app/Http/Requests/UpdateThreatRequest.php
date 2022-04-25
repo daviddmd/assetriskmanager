@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateThreatRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class UpdateThreatRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +24,10 @@ class UpdateThreatRequest extends FormRequest
      */
     public function rules()
     {
+        $threat = $this->route()->parameter("threat");
         return [
-            //
+            "name" => ["required", Rule::unique("threats")->ignore($threat), "max:50"]
+
         ];
     }
 }

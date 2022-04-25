@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\AssetTypeController;
+use App\Http\Controllers\ControlController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\PermanentContactPointController;
 use App\Http\Controllers\SecurityOfficerController;
+use App\Http\Controllers\ThreatController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,4 +37,7 @@ Route::middleware([
     Route::resource("asset-types", AssetTypeController::class);
     Route::resource("departments", DepartmentController::class);
     Route::resource("users", UserController::class);
+    Route::resource("threats", ThreatController::class);
+    Route::resource("controls", ControlController::class);
+
 });
