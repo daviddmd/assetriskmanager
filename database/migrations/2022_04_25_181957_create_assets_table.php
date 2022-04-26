@@ -25,12 +25,12 @@ return new class extends Migration {
             $table->enum("manufacturer_contract_type", ["NONE", "WARRANTY", "MAINTENANCE", "SUPPORT"])->default("NONE");
             $table->date("manufacturer_contract_beginning_date")->nullable();
             $table->date("manufacturer_contract_ending_date")->nullable();
-            $table->string("manufacturer_contract_provider");
+            $table->string("manufacturer_contract_provider")->nullable();
             $table->string("mac_address");
             $table->string("ip_address");
-            $table->integer("availability_appreciation");
-            $table->integer("integrity_appreciation");
-            $table->integer("confidentiality_appreciation");
+            $table->integer("availability_appreciation")->default(0);
+            $table->integer("integrity_appreciation")->default(0);
+            $table->integer("confidentiality_appreciation")->default(0);
             $table->boolean("export")->default(true);
             $table->boolean("active")->default(true);
             //$table->enum("status", ["INITIAL","AWAITS_THREATS", "AWAITS_TREATMENTS", "AWAITS_VALIDATION", "AWAITS_CONFIRMATION","COMPLETE"])->default("INITIAL");

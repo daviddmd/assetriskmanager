@@ -31,7 +31,7 @@ class AssetPolicy
      */
     public function view(User $user, Asset $asset): bool
     {
-        return $user->role == UserRole::SECURITY_OFFICER || $asset->manager == $user;
+        return in_array($user->role, array(UserRole::SECURITY_OFFICER, UserRole::DATA_PROTECTION_OFFICER)) || $asset->manager == $user;
     }
 
     /**

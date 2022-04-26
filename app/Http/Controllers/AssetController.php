@@ -30,7 +30,7 @@ class AssetController extends Controller
     {
         //fixme adicionar query pelo asset type e nome/descricao/etc
         $user = Auth::user();
-        if ($user->role == UserRole::SECURITY_OFFICER) {
+        if (in_array($user->role, array(UserRole::SECURITY_OFFICER, UserRole::DATA_PROTECTION_OFFICER))) {
             $assets = Asset::paginate(5)->withQueryString();
         } else {
             $assets = Asset::where("manager", $user)->paginate(5)->withQueryString();
@@ -79,8 +79,7 @@ class AssetController extends Controller
             "availability_appreciation" => $request->input("availability_appreciation"),
             "integrity_appreciation" => $request->input("integrity_appreciation"),
             "confidentiality_appreciation" => $request->input("confidentiality_appreciation"),
-            "export" => $request->input("export"),
-            "active" => $request->input("active"),
+            "export" => $request->has("export"),
             "links_to" => $request->input("links_to"),
         ]);
         $asset->save();

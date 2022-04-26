@@ -44,7 +44,6 @@ class StoreAssetRequest extends FormRequest
             "integrity_appreciation"=>["numeric","min:1","max:5"],
             "confidentiality_appreciation"=>["numeric","min:1","max:5"],
             "export"=>[],
-            "active"=>[],
             "links_to"=>[Rule::exists("assets","id"),"nullable"]
         ];
     }
