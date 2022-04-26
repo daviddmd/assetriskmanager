@@ -24,7 +24,8 @@ class ThreatController extends Controller
      */
     public function index()
     {
-        $threats = Threat::all();
+        //FIXME vale a pena adicionar pesquisa?
+        $threats = Threat::paginate(5)->withQueryString();
         return view("threats.index", ["threats" => $threats]);
     }
 

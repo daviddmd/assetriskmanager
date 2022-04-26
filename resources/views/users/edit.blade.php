@@ -63,9 +63,11 @@
                                         {{ __("enums.".$role->name)  }}
                                     </option>
                                 @endforeach
-
                             </select>
                         </div>
+                        @if(Auth::user()->role != \App\Enums\UserRole::ADMINISTRATOR)
+                            <input type="hidden" name="role" value="{{$user->role->value}}">
+                        @endif
                         <div class="mb-6">
                             <label for="active"
                                    class="form-check-label inline-block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Active")}}</label>
@@ -77,6 +79,74 @@
                         <button type="submit"
                                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{__("Update")}}</button>
                     </form>
+                    <hr>
+                    <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">Assets</h2>
+                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-5">
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                            <thead
+                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    {{__("ID")}}
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    {{__("Name")}}
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    {{__("Description")}}
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    {{__("Type")}}
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    {{__("SKU")}}
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    {{__("IP")}}
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    {{__("MAC")}}
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    {{__("Manufacturer")}}
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    {{__("Location")}}
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    {{__("Action")}}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($user->assets as $asset)
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <td class="px-6 py-4">{{$asset->id}}</td>
+                                    <td class="px-6 py-4">{{$asset->name}}</td>
+                                    <td class="px-6 py-4">{{$asset->description}}</td>
+                                    <td class="px-6 py-4">{{$asset->type->name}}</td>
+                                    <td class="px-6 py-4">{{$asset->sku}}</td>
+                                    <td class="px-6 py-4">{{$asset->ip_address}}</td>
+                                    <td class="px-6 py-4">{{$asset->mac_address}}</td>
+                                    <td class="px-6 py-4">{{$asset->manufacturer}}</td>
+                                    <td class="px-6 py-4">{{$asset->location}}</td>
+                                    <td class="px-6 py-4">
+                                        @can("update",$control)
+                                            <a href="{{route("assets.edit",$asset->id)}}"
+                                               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                                {{__("Manage")}}
+                                            </a>
+                                        @else
+                                            <a href="{{route("assets.show",$asset->id)}}"
+                                               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                            {{__("View")}}
+                                        @endcan
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

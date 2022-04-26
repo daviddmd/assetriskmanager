@@ -59,6 +59,7 @@
                             @endforeach
                             </tbody>
                         </table>
+                        {{ $controls->links() }}
                     </div>
                 </div>
             </div>

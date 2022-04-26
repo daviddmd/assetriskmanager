@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssetController;
 use App\Http\Controllers\AssetTypeController;
 use App\Http\Controllers\ControlController;
 use App\Http\Controllers\DepartmentController;
@@ -39,5 +40,6 @@ Route::middleware([
     Route::resource("users", UserController::class);
     Route::resource("threats", ThreatController::class);
     Route::resource("controls", ControlController::class);
+    Route::resource("assets", AssetController::class);
 
 });

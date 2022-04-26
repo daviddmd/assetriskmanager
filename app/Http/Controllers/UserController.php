@@ -11,6 +11,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -105,9 +106,9 @@ class UserController extends Controller
             "name" => $request->input("name"),
             "department_id" => $request->input("department"),
             "active" => $request->has("active"),
-            "role"=>$user->role == UserRole::ADMINISTRATOR ? $request->input("role") : $user->role,
+            "role"=>Auth::user()->role == UserRole::ADMINISTRATOR ? $request->input("role") : $user->role,
         ]);
-        return redirect()->route("users.index")->with("status", "User Updated, status of active: " . var_export($request->has("active"),true));
+        return redirect()->route("users.index")->with("status", "User Updated");
     }
 
     /**

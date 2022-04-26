@@ -67,4 +67,7 @@ class User extends Authenticatable implements  LdapAuthenticatable
     public function department(){
         return $this->belongsTo(Department::class);
     }
+    public function assets(){
+        return $this->hasMany(Asset::class,"manager");
+    }
 }

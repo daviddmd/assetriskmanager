@@ -21,7 +21,7 @@ User : Department = FK
 User : Active = bool
 object Asset
 Asset : ID = PK
-Asset : InventoryNumber/ID
+Asset : InventoryNumber/ID/SKU
 Asset : Type = AssetType
 Asset : Name
 Asset : Manufacturer

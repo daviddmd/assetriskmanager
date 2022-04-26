@@ -23,11 +23,9 @@
                                 <th scope="col" class="px-6 py-3">
                                     {{__("Name")}}
                                 </th>
-                                <!--
                                 <th scope="col" class="px-6 py-3">
                                     {{__("Assets")}}
                                 </th>
-                                -->
                                 <th scope="col" class="px-6 py-3">
                                     {{__("Action")}}
                                 </th>
@@ -38,6 +36,7 @@
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <td class="px-6 py-4">{{$assetType->id}}</td>
                                     <td class="px-6 py-4">{{$assetType->name}}</td>
+                                    <td class="px-6 py-4">{{$assetType->assets()->count()}}</td>
                                     <td class="px-6 py-4">
                                         @can("update",$assetType)
                                             <a href="{{route("asset-types.edit",$assetType->id)}}"

@@ -18,6 +18,7 @@ class ControlController extends Controller
     {
         $this->authorizeResource(Control::class, 'control');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,8 +26,9 @@ class ControlController extends Controller
      */
     public function index()
     {
-        $controls = Control::all();
-        return view("controls.index",["controls"=>$controls]);
+        //FIXME vale a pena adicionar pesquisa ou filtros? Se sim, que filtros?
+        $controls = Control::paginate(5)->withQueryString();
+        return view("controls.index", ["controls" => $controls]);
     }
 
     /**
@@ -36,9 +38,7 @@ class ControlController extends Controller
      */
     public function create()
     {
-        //$threats = Threat::all();
-        //return view("controls.create",["threats"=>$threats]);
-        return redirect()->route("controls.index")->with("error","The Controls for a Threat Must be Created in the Threat Page");
+        return redirect()->route("controls.index")->with("error", "The Controls for a Threat Must be Created in the Threat Page");
     }
 
     /**
@@ -55,12 +55,12 @@ class ControlController extends Controller
         $threat_id = $request->input("threat");
         $control = new Control;
         $control->fill([
-            "name"=>$name,
+            "name" => $name,
             "description" => $description,
             "threat_id" => $threat_id
         ]);
         $control->save();
-        return redirect()->route("threats.edit",$threat_id)->with("status", "Control Created");
+        return redirect()->route("threats.edit", $threat_id)->with("status", "Control Created");
 
     }
 
@@ -72,7 +72,7 @@ class ControlController extends Controller
      */
     public function show(Control $control)
     {
-        return view("controls.show",$control);
+        return view("controls.show", $control);
     }
 
     /**
@@ -83,13 +83,13 @@ class ControlController extends Controller
      */
     public function edit(Control $control)
     {
-        return view("controls.edit",["control"=>$control]);
+        return view("controls.edit", ["control" => $control]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateControlRequest  $request
+     * @param \App\Http\Requests\UpdateControlRequest $request
      * @param Control $control
      * @return RedirectResponse
      */
@@ -100,7 +100,7 @@ class ControlController extends Controller
             "name" => $request->input("name"),
             "description" => $request->input("description")
         ]);
-        return redirect()->route("threats.edit",$control->threat_id)->with("status", "Control Updated");
+        return redirect()->route("threats.edit", $control->threat_id)->with("status", "Control Updated");
 
     }
 
@@ -113,6 +113,6 @@ class ControlController extends Controller
     public function destroy(Control $control)
     {
         $control->delete();
-        return redirect()->route("threats.edit",$control->threat_id)->with("status", "Control Deleted");
+        return redirect()->route("threats.edit", $control->threat_id)->with("status", "Control Deleted");
     }
 }
