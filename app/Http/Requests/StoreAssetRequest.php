@@ -40,9 +40,6 @@ class StoreAssetRequest extends FormRequest
             "manufacturer_contract_provider"=>["nullable"],
             "mac_address"=>["nullable"],
             "ip_address"=>["nullable"],
-            "availability_appreciation"=>["numeric","min:1","max:5"],
-            "integrity_appreciation"=>["numeric","min:1","max:5"],
-            "confidentiality_appreciation"=>["numeric","min:1","max:5"],
             "export"=>[],
             "links_to"=>[Rule::exists("assets","id"),"nullable"]
         ];

@@ -15,35 +15,5 @@ class AssetSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('asset_types')->insert([
-            'name' => "Router"
-        ]);
-        DB::table('asset_types')->insert([
-            'name' => "Switch"
-        ]);
-        DB::table('asset_types')->insert([
-            'name' => "Laptop"
-        ]);
-        DB::table('asset_types')->insert([
-            'name' => "Server"
-        ]);
-        DB::table('asset_types')->insert([
-            'name' => "Mainframe"
-        ]);
-        DB::table('asset_types')->insert([
-            'name' => "IP Camera"
-        ]);
-        DB::table('asset_types')->insert([
-            'name' => "Analog Camera"
-        ]);
-        DB::table('asset_types')->insert([
-            'name' => "NVR"
-        ]);
-        DB::table('asset_types')->insert([
-            'name' => "DVR"
-        ]);
-        DB::table('asset_types')->insert([
-            'name' => "Desktop"
-        ]);
     }
 }

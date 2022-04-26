@@ -91,7 +91,9 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="hidden" id="contract_details">
+                        <div
+                            class="{{!empty(old("manufacturer_contract_type")) && old("manufacturer_contract_type") != \App\Enums\ManufacturerContractType::NONE ? "" : "hidden"}}"
+                            id="contract_details">
                             <div class="mb-6">
                                 <label for="manufacturer_contract_provider"
                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Manufacturer Contract Provider")}}</label>
@@ -103,7 +105,7 @@
                             <div class="mb-6">
                                 <label for="contract_date_range_picker"
                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Manufacturer Contract Date")}}</label>
-                                <div date-rangepicker class="flex items-center" id="contract_date_range_picker">
+                                <div date-rangepicker  datepicker-format="yyyy-mm-dd" class="flex items-center" id="contract_date_range_picker">
                                     <div class="relative">
                                         <div
                                             class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -156,35 +158,12 @@
                                    value="{{old("ip_address")}}"
                                    required>
                         </div>
-                        <div class="mb-6 flex">
-                            <label for="availability_appreciation"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Availability Appreciation")}}</label>
-                            <input type="number" id="availability_appreciation" name="availability_appreciation"
-                                   min="1" max="5"
-                                   value="{{empty(old("availability_appreciation")) ? 1 : old("availability_appreciation")}}"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                   required>
-                            <label for="integrity_appreciation"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Integrity Appreciation")}}</label>
-                            <input type="number" id="integrity_appreciation" name="integrity_appreciation"
-                                   min="1" max="5"
-                                   value="{{empty(old("integrity_appreciation")) ? 1 : old("integrity_appreciation")}}"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                   required>
-                            <label for="confidentiality_appreciation"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Confidentiality Appreciation")}}</label>
-                            <input type="number" id="confidentiality_appreciation" name="confidentiality_appreciation"
-                                   min="1" max="5"
-                                   value="{{empty(old("confidentiality_appreciation")) ? 1 : old("confidentiality_appreciation")}}"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                   required>
-                        </div>
                         <div class="mb-6">
                             <label for="export"
                                    class="form-check-label inline-block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Export to CNCS?")}}</label>
                             <input
                                 class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                                type="checkbox" value="{{old("export")}}" name="export" id="export">
+                                type="checkbox" name="export" id="export" {{!empty(old("export")) ? "checked" : ""}}>
                         </div>
                         <div class="mb-6">
                             <label for="links_to"
@@ -210,7 +189,7 @@
     </div>
 </x-app-layout>
 <script>
-    let select = document.getElementById("role");
+    let select = document.getElementById("manufacturer_contract_type");
     select.onchange = function () {
         if (select.value !== "{{\App\Enums\ManufacturerContractType::NONE->value}}") {
             document.getElementById("contract_details").classList.remove("hidden");

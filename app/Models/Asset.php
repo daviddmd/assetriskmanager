@@ -13,8 +13,8 @@ class Asset extends Model
     use HasFactory;
     protected $fillable = [
         'name',
-        'type',
-        "manager",
+        'asset_type_id',
+        "manager_id",
         "description",
         "sku",
         "manufacturer",
@@ -30,7 +30,7 @@ class Asset extends Model
         "confidentiality_appreciation",
         "export",
         "active",
-        "links_to"
+        "links_to_id"
     ];
     /**
      * The attributes that should be cast.
@@ -40,13 +40,13 @@ class Asset extends Model
     protected $casts = [
         'manufacturer_contract_type'=>ManufacturerContractType::class,
     ];
-    public function assetType(): BelongsTo
+    public function type()
     {
-        return $this->belongsTo(AssetType::class);
+        return $this->belongsTo(AssetType::class,"asset_type_id");
     }
-    public function manager(): BelongsTo
+    public function manager()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,"manager_id","id");
     }
     public function totalAppreciation(){
         return max([$this->availability_appreciation,$this->integrity_appreciation,$this->confidentiality_appreciation]);
@@ -87,11 +87,11 @@ class Asset extends Model
     //asset that this asset connects to
     public function linksTo(): BelongsTo
     {
-        return $this->belongsTo(Asset::class,"links_to");
+        return $this->belongsTo(Asset::class,"links_to_id");
     }
     //assets that connect to this asset
     public function assetsLinked(): HasMany
     {
-        return $this->hasMany(Asset::class,"links_to");
+        return $this->hasMany(Asset::class,"links_to_id");
     }
 }

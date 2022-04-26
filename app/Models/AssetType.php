@@ -14,6 +14,6 @@ class AssetType extends Model
     ];
     public function assets(): HasMany
     {
-        return $this->hasMany(Asset::class,"type");
+        return $this->hasMany(Asset::class);
     }
 }

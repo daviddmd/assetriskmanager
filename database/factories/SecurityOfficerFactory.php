@@ -17,7 +17,12 @@ class SecurityOfficerFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'entity_name' => $this->faker->company(),
+            'name' => $this->faker->name(),
+            'role' => "Security Officer",
+            'email_address' => $this->faker->companyEmail(),
+            'landline_phone_number' => $this->faker->phoneNumber(),
+            'mobile_phone_number' => $this->faker->phoneNumber(),
         ];
     }
 }

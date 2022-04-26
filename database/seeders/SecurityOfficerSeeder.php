@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\SecurityOfficer;
 use Illuminate\Database\Seeder;
 
 class SecurityOfficerSeeder extends Seeder
@@ -14,6 +14,6 @@ class SecurityOfficerSeeder extends Seeder
      */
     public function run()
     {
-        //
+        SecurityOfficer::factory()->count(1)->create();
     }
 }

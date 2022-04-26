@@ -25,9 +25,6 @@
                                     {{__("Name")}}
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    {{__("Description")}}
-                                </th>
-                                <th scope="col" class="px-6 py-3">
                                     {{__("Type")}}
                                 </th>
                                 <th scope="col" class="px-6 py-3">
@@ -58,7 +55,6 @@
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <td class="px-6 py-4">{{$asset->id}}</td>
                                     <td class="px-6 py-4">{{$asset->name}}</td>
-                                    <td class="px-6 py-4">{{$asset->description}}</td>
                                     <td class="px-6 py-4">{{$asset->type->name}}</td>
                                     <td class="px-6 py-4">{{$asset->sku}}</td>
                                     <td class="px-6 py-4">{{$asset->ip_address}}</td>

@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\PermanentContactPoint;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class PermanentContactPointSeeder extends Seeder
 {
@@ -14,6 +16,6 @@ class PermanentContactPointSeeder extends Seeder
      */
     public function run()
     {
-        //
+        PermanentContactPoint::factory()->count(1)->create();
     }
 }

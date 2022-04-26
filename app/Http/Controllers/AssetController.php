@@ -8,6 +8,7 @@ use App\Http\Requests\StoreAssetRequest;
 use App\Http\Requests\UpdateAssetRequest;
 use App\Models\AssetType;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -64,23 +65,20 @@ class AssetController extends Controller
         $asset = new Asset;
         $asset->fill([
             "name" => $request->input("name"),
-            "type" => $request->input("type"),
-            "manager" => $request->input("manager"),
+            "asset_type_id" => $request->input("type"),
+            "manager_id" => $request->input("manager"),
             "description" => $request->input("description"),
             "sku" => $request->input("sku"),
             "manufacturer" => $request->input("manufacturer"),
             "location" => $request->input("location"),
             "manufacturer_contract_type" => $request->input("manufacturer_contract_type"),
-            "manufacturer_contract_beginning_date" => $request->input("manufacturer_contract_beginning_date"),
-            "manufacturer_contract_ending_date" => $request->input("manufacturer_contract_ending_date"),
+            "manufacturer_contract_beginning_date" => empty($request->input("manufacturer_contract_beginning_date")) ? null : Carbon::createFromFormat("Y-m-d", $request->input("manufacturer_contract_beginning_date")),
+            "manufacturer_contract_ending_date" => empty($request->input("manufacturer_contract_ending_date")) ? null : Carbon::createFromFormat("Y-m-d", $request->input("manufacturer_contract_ending_date")),
             "manufacturer_contract_provider" => $request->input("manufacturer_contract_provider"),
             "mac_address" => $request->input("mac_address"),
             "ip_address" => $request->input("ip_address"),
-            "availability_appreciation" => $request->input("availability_appreciation"),
-            "integrity_appreciation" => $request->input("integrity_appreciation"),
-            "confidentiality_appreciation" => $request->input("confidentiality_appreciation"),
             "export" => $request->has("export"),
-            "links_to" => $request->input("links_to"),
+            "links_to_id" => $request->input("links_to"),
         ]);
         $asset->save();
         return redirect()->route("assets.index")->with("status", "Asset Created");

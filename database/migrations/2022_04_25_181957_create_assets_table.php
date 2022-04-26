@@ -16,8 +16,8 @@ return new class extends Migration {
             $table->id();
             $table->timestamps();
             $table->string("name");
-            $table->foreignId("type")->references("id")->on("asset_types")->restrictOnDelete();
-            $table->foreignId("manager")->references("id")->on("users")->restrictOnDelete();
+            $table->foreignId("asset_type_id")->constrained()->restrictOnDelete();
+            $table->foreignId("manager_id")->references("id")->on("users")->restrictOnDelete();
             $table->text("description");
             $table->string("sku");
             $table->string("manufacturer");
@@ -38,7 +38,7 @@ return new class extends Migration {
 
         });
         Schema::table('assets', function (Blueprint $table) {
-            $table->foreignId('links_to')->nullable()->references('id')->on('assets')->restrictOnDelete();
+            $table->foreignId('links_to_id')->nullable()->references('id')->on('assets')->restrictOnDelete();
         });
     }
 
