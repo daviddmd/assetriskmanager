@@ -72,7 +72,7 @@ class ControlController extends Controller
      */
     public function show(Control $control)
     {
-        return view("controls.show", $control);
+        return view("controls.show", ["control"=>$control]);
     }
 
     /**
