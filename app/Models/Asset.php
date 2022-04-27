@@ -76,7 +76,7 @@ class Asset extends Model
     {
         return match ($score) {
             1 => "green",
-            2 => "blue",
+            2 => "dodgerblue",
             3 => "yellow",
             4 => "orange",
             5 => "red",
@@ -90,7 +90,7 @@ class Asset extends Model
         return $this->belongsTo(Asset::class,"links_to_id");
     }
     //assets that connect to this asset
-    public function assetsLinked(): HasMany
+    public function children(): HasMany
     {
         return $this->hasMany(Asset::class,"links_to_id");
     }

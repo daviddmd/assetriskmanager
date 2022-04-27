@@ -46,7 +46,12 @@ class UpdateAssetRequest extends FormRequest
             "confidentiality_appreciation" => ["numeric", "min:1", "max:5"],
             "export" => [],
             "active" => [],
-            "links_to" => [Rule::exists("assets", "id"), "nullable",Rule::notIn([$asset->id])]
+            "links_to" => [Rule::exists("assets", "id"), "nullable", Rule::notIn(
+                array_merge(
+                    [$asset->id],
+                    $asset->children()->pluck("id")->toArray()
+                )
+            )]
         ];
     }
 }

@@ -29,31 +29,18 @@ class UserController extends Controller
     {
         $filter = $request->input("filter","");
         $department_id = $request->input("department","");
-        $users = User::where("active","=",true);
         if (!empty($filter) || !empty($department_id)){
-            if (!empty($department_id)){
-                $users = $users->where("department_id","=",$department_id);
-                /*
-                $users = User::where("department_id",$department_id)->where(function ($query) use ($filter){
-                    $query->where("name","like","%".$filter."%")->orWhere("email","like","%".$filter."%");
-                })->paginate(5)->withQueryString();
-                */
-            }
-            $users = $users->where(function ($query) use ($filter){
+            $users = User::where(function ($query) use ($filter){
                 $query->where("name","like","%".$filter."%")->orWhere("email","like","%".$filter."%");
             });
-            /*
-            else{
-                $users = User::where("name","like","%".$filter."%")->orWhere("email","like","%".$filter."%")->paginate(5)->withQueryString();
+            if (!empty($department_id)){
+                $users = $users->where("department_id","=",$department_id);
             }
-            */
+            $users = $users->paginate(5)->withQueryString();
         }
-        /*
         else{
             $users = User::paginate(5)->withQueryString();
         }
-        */
-        $users = $users->paginate(5)->withQueryString();
         $departments = Department::all();
         return view("users.index", ["users" => $users,"departments"=>$departments,"filter"=>$filter,"department_id"=>$department_id]);
     }

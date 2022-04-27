@@ -34,28 +34,31 @@ class AssetController extends Controller
         $filter = $request->input("filter", "");
         $assetTypes = AssetType::all();
         $user = Auth::user();
-        if (in_array($user->role, array(UserRole::SECURITY_OFFICER, UserRole::DATA_PROTECTION_OFFICER))) {
-            //$assets = Asset::paginate(5)->withQueryString();
-            $assets = Asset::all();
-        } else {
-            //$assets = Asset::where("manager_id", "=", $user->id)->paginate(5)->withQueryString();
-            $assets = Asset::where("manager_id", "=", $user->id)->where("active","=",true);
-        }
         if (!empty($asset_type_id) || !empty($filter)) {
+            $assets = Asset::where(function ($query) use ($filter) {
+                $query
+                    ->where("name", "like", "%" . $filter . "%")
+                    ->orWhere("description", "like", "%" . $filter . "%")
+                    ->orWhere("mac_address", "=", $filter)
+                    ->orWhere("ip_address", "=", $filter)
+                    ->orWhere("manufacturer", "like", "%" . $filter . "%")
+                    ->orWhere("sku", "like", "%" . $filter . "%")
+                    ->orWhere("location", "like", "%" . $filter . "%");
+            });
             if (!empty($asset_type_id)) {
-                $assets = $assets->where("asset_type_id", "=", $asset_type_id)->where(function ($query) use ($filter) {
-                    $query
-                        ->where("name", "like", "%" . $filter . "%")
-                        ->orWhere("description", "like", "%" . $filter . "%")
-                        ->orWhere("mac_address", "=", $filter)
-                        ->orWhere("ip_address", "=", $filter)
-                    ->orWhere("");
-                });
+                $assets = $assets->where("asset_type_id", "=", $asset_type_id);
+            }
+            if (!in_array($user->role, array(UserRole::SECURITY_OFFICER, UserRole::DATA_PROTECTION_OFFICER))) {
+                $assets = $assets->where("manager_id", "=", $user->id)->where("active", "=", true);
+            }
+            $assets = $assets->paginate(5)->withQueryString();
+        } else {
+            if (in_array($user->role, array(UserRole::SECURITY_OFFICER, UserRole::DATA_PROTECTION_OFFICER))) {
+                $assets = Asset::paginate(5)->withQueryString();
             } else {
-
+                $assets = Asset::where("manager_id", "=", $user->id)->where("active", "=", true)->paginate(5)->withQueryString();
             }
         }
-
         return view("assets.index", ["assets" => $assets, "assetTypes" => $assetTypes, "asset_type_id" => $asset_type_id, "filter" => $filter]);
     }
 
@@ -102,7 +105,6 @@ class AssetController extends Controller
         ]);
         $asset->save();
         return redirect()->route("assets.index")->with("status", "Asset Created");
-
     }
 
     /**
@@ -127,7 +129,7 @@ class AssetController extends Controller
         $assetTypes = AssetType::all();
         //fixme migrar isto para livewire
         $users = User::all();
-        $assets = Asset::whereNot("id", $asset->id);
+        $assets = Asset::whereNot("id", "=", $asset->id)->whereNotIn("id", $asset->children()->get("id"))->get();
         return view("assets.edit", ["asset" => $asset, "assetTypes" => $assetTypes, "users" => $users, "assets" => $assets]);
     }
 
@@ -158,9 +160,9 @@ class AssetController extends Controller
             "availability_appreciation" => $request->input("availability_appreciation"),
             "integrity_appreciation" => $request->input("integrity_appreciation"),
             "confidentiality_appreciation" => $request->input("confidentiality_appreciation"),
-            "export" => $request->input("export"),
-            "active" => $request->input("active"),
-            "links_to" => $request->input("links_to"),
+            "export" => $request->has("export"),
+            "active" => $request->has("active"),
+            "links_to_id" => $request->input("links_to"),
         ]);
         return redirect()->route("assets.edit", $asset->id)->with("status", "Asset Updated");
     }
