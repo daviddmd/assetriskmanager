@@ -13,6 +13,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AssetController extends Controller
@@ -27,16 +28,35 @@ class AssetController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function index()
+    public function index(Request $request)
     {
-        //fixme adicionar query pelo asset type e nome/descricao/etc
+        $asset_type_id = $request->input("asset_type", "");
+        $filter = $request->input("filter", "");
+        $assetTypes = AssetType::all();
         $user = Auth::user();
         if (in_array($user->role, array(UserRole::SECURITY_OFFICER, UserRole::DATA_PROTECTION_OFFICER))) {
-            $assets = Asset::paginate(5)->withQueryString();
+            //$assets = Asset::paginate(5)->withQueryString();
+            $assets = Asset::all();
         } else {
-            $assets = Asset::where("manager", $user)->paginate(5)->withQueryString();
+            //$assets = Asset::where("manager_id", "=", $user->id)->paginate(5)->withQueryString();
+            $assets = Asset::where("manager_id", "=", $user->id)->where("active","=",true);
         }
-        return view("assets.index", ["assets" => $assets]);
+        if (!empty($asset_type_id) || !empty($filter)) {
+            if (!empty($asset_type_id)) {
+                $assets = $assets->where("asset_type_id", "=", $asset_type_id)->where(function ($query) use ($filter) {
+                    $query
+                        ->where("name", "like", "%" . $filter . "%")
+                        ->orWhere("description", "like", "%" . $filter . "%")
+                        ->orWhere("mac_address", "=", $filter)
+                        ->orWhere("ip_address", "=", $filter)
+                    ->orWhere("");
+                });
+            } else {
+
+            }
+        }
+
+        return view("assets.index", ["assets" => $assets, "assetTypes" => $assetTypes, "asset_type_id" => $asset_type_id, "filter" => $filter]);
     }
 
     /**
