@@ -86,7 +86,6 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //TODO add list of assets
         $departments = Department::all();
         return view("users.edit", ["user" => $user,"departments"=>$departments]);
     }

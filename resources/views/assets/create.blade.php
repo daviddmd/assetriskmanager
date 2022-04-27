@@ -76,11 +76,12 @@
                                    value="{{old("location")}}"
                                    required>
                         </div>
-                        <div class="mb-6">
+                        <div class="mb-6" x-data="{ visible: {{!empty(old("manufacturer_contract_type")) && old("manufacturer_contract_type") != \App\Enums\ManufacturerContractType::NONE ? "true" : "false"}} , provider: '' , date1: '2022-01-01' , date2: '2022-02-02' }">
                             <label for="manufacturer_contract_type"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Manufacturer Contract Type")}}</label>
                             <select name="manufacturer_contract_type" id="manufacturer_contract_type"
                                     class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                    x-on:change="visible = $event.target.value != '{{\App\Enums\ManufacturerContractType::NONE->value}}' ; provider = '' ; date1 = '' ; date2 = '' "
                                     required>
                                 @foreach(\App\Enums\ManufacturerContractType::cases() as $role)
                                     <option
@@ -90,58 +91,65 @@
                                     </option>
                                 @endforeach
                             </select>
-                        </div>
-                        <div
-                            class="{{!empty(old("manufacturer_contract_type")) && old("manufacturer_contract_type") != \App\Enums\ManufacturerContractType::NONE ? "" : "hidden"}}"
-                            id="contract_details">
-                            <div class="mb-6">
-                                <label for="manufacturer_contract_provider"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Manufacturer Contract Provider")}}</label>
-                                <input type="text" id="manufacturer_contract_provider"
-                                       name="manufacturer_contract_provider"
-                                       value="{{old("manufacturer_contract_provider")}}"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            </div>
-                            <div class="mb-6">
-                                <label for="contract_date_range_picker"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Manufacturer Contract Date")}}</label>
-                                <div date-rangepicker  datepicker-format="yyyy-mm-dd" class="flex items-center" id="contract_date_range_picker">
-                                    <div class="relative">
-                                        <div
-                                            class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor"
-                                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd"
-                                                      d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                                      clip-rule="evenodd"></path>
-                                            </svg>
+                            <div
+                                x-show="visible"
+                                id="contract_details">
+                                <div class="mb-6">
+                                    <label for="manufacturer_contract_provider"
+                                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Manufacturer Contract Provider")}}</label>
+                                    <input type="text" id="manufacturer_contract_provider"
+                                           name="manufacturer_contract_provider"
+                                           value="{{old("manufacturer_contract_provider")}}"
+                                           x-model="provider"
+                                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                </div>
+                                <div class="mb-6">
+                                    <label for="contract_date_range_picker"
+                                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Manufacturer Contract Date")}}</label>
+                                    <div date-rangepicker datepicker-format="yyyy-mm-dd" class="flex items-center"
+                                         id="contract_date_range_picker">
+                                        <div class="relative">
+                                            <div
+                                                class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                                                     fill="currentColor"
+                                                     viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd"
+                                                          d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                                          clip-rule="evenodd"></path>
+                                                </svg>
+                                            </div>
+                                            <input name="manufacturer_contract_beginning_date"
+                                                   id="manufacturer_contract_beginning_date" type="text"
+                                                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                   value="{{old("manufacturer_contract_beginning_date")}}"
+                                                   x-model="date1"
+                                                   placeholder="{{__('Contract Starting Date')}}">
                                         </div>
-                                        <input name="manufacturer_contract_beginning_date"
-                                               id="manufacturer_contract_beginning_date" type="text"
-                                               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                               value="{{old("manufacturer_contract_beginning_date")}}"
-                                               placeholder="{{__('Contract Starting Date')}}">
-                                    </div>
-                                    <span class="mx-4 text-gray-500">{{__("to")}}</span>
-                                    <div class="relative">
-                                        <div
-                                            class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor"
-                                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd"
-                                                      d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                                      clip-rule="evenodd"></path>
-                                            </svg>
+                                        <span class="mx-4 text-gray-500">{{__("to")}}</span>
+                                        <div class="relative">
+                                            <div
+                                                class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                                                     fill="currentColor"
+                                                     viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd"
+                                                          d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                                          clip-rule="evenodd"></path>
+                                                </svg>
+                                            </div>
+                                            <input name="manufacturer_contract_ending_date"
+                                                   id="manufacturer_contract_ending_date" type="text"
+                                                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                   value="{{old("manufacturer_contract_ending_date")}}"
+                                                   x-model="date2"
+                                                   placeholder="{{__('Contract Ending Date')}}">
                                         </div>
-                                        <input name="manufacturer_contract_ending_date"
-                                               id="manufacturer_contract_ending_date" type="text"
-                                               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                               value="{{old("manufacturer_contract_ending_date")}}"
-                                               placeholder="{{__('Contract Ending Date')}}">
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="mb-6">
                             <label for="mac_address"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("MAC Address")}}</label>
@@ -188,18 +196,3 @@
         </div>
     </div>
 </x-app-layout>
-<script>
-    let select = document.getElementById("manufacturer_contract_type");
-    select.onchange = function () {
-        if (select.value !== "{{\App\Enums\ManufacturerContractType::NONE->value}}") {
-            document.getElementById("contract_details").classList.remove("hidden");
-        } else {
-            document.getElementById("contract_details").classList.add("hidden");
-            document.getElementById("manufacturer_contract_provider").value = "";
-            document.getElementById("manufacturer_contract_beginning_date").value = "";
-            document.getElementById("manufacturer_contract_ending_date").value = "";
-
-
-        }
-    }
-</script>

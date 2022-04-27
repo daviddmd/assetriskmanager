@@ -14,7 +14,7 @@ class UpdateAssetRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -24,7 +24,7 @@ class UpdateAssetRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         $asset = $this->route()->parameter("asset");
         return [
@@ -46,12 +46,16 @@ class UpdateAssetRequest extends FormRequest
             "confidentiality_appreciation" => ["numeric", "min:1", "max:5"],
             "export" => [],
             "active" => [],
-            "links_to" => [Rule::exists("assets", "id"), "nullable", Rule::notIn(
-                array_merge(
-                    [$asset->id],
-                    $asset->children()->pluck("id")->toArray()
+            "links_to" => [
+                Rule::exists("assets", "id"),
+                "nullable",
+                Rule::notIn(
+                    array_merge(
+                        [$asset->id],
+                        $asset->children()->pluck("id")->toArray()
+                    )
                 )
-            )]
+            ]
         ];
     }
 }
