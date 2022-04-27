@@ -52,26 +52,6 @@ class Asset extends Model
         return max([$this->availability_appreciation,$this->integrity_appreciation,$this->confidentiality_appreciation]);
     }
     //fixme função idêntica para calcular a cor dos riscos num assetrisk
-    /*
-     *         if ($score >= 0 && $score < 1){
-            return "white";
-        }
-        elseif ($score >= 1 && $score < 2){
-            return "green";
-        }
-        elseif ($score >= 2 && $score < 3){
-            return "blue";
-        }
-        elseif ($score >= 3 && $score < 4){
-            return "yellow";
-        }
-        elseif ($score >= 4 && $score < 5){
-            return "orange";
-        }
-        else{
-            return "red";
-        }
-     */
     public function color($score): string
     {
         return match ($score) {

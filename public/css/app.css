@@ -1581,6 +1581,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }.underline {
   -webkit-text-decoration-line: underline;
           text-decoration-line: underline;
+}.no-underline {
+  -webkit-text-decoration-line: none;
+          text-decoration-line: none;
 }.antialiased {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -1725,6 +1728,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }.hover\:text-gray-600:hover {
   --tw-text-opacity: 1;
   color: rgb(75 85 99 / var(--tw-text-opacity));
+}.hover\:underline:hover {
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
 }.focus\:z-10:focus {
   z-index: 10;
 }.focus\:border-blue-300:focus {

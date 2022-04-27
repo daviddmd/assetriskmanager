@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ManufacturerContractType;
 use App\Enums\UserRole;
 use App\Models\Asset;
 use App\Http\Requests\StoreAssetRequest;
@@ -85,6 +86,7 @@ class AssetController extends Controller
     public function store(StoreAssetRequest $request)
     {
         $validated = $request->validated();
+        $manufacturer_contract_type = $request->input("manufacturer_contract_type");
         $asset = new Asset;
         $asset->fill([
             "name" => $request->input("name"),
@@ -94,10 +96,10 @@ class AssetController extends Controller
             "sku" => $request->input("sku"),
             "manufacturer" => $request->input("manufacturer"),
             "location" => $request->input("location"),
-            "manufacturer_contract_type" => $request->input("manufacturer_contract_type"),
-            "manufacturer_contract_beginning_date" => empty($request->input("manufacturer_contract_beginning_date")) ? null : Carbon::createFromFormat("Y-m-d", $request->input("manufacturer_contract_beginning_date")),
-            "manufacturer_contract_ending_date" => empty($request->input("manufacturer_contract_ending_date")) ? null : Carbon::createFromFormat("Y-m-d", $request->input("manufacturer_contract_ending_date")),
-            "manufacturer_contract_provider" => $request->input("manufacturer_contract_provider"),
+            "manufacturer_contract_type" => $manufacturer_contract_type,
+            "manufacturer_contract_beginning_date" => empty($request->input("manufacturer_contract_beginning_date")) || $manufacturer_contract_type == ManufacturerContractType::NONE->value ? null : Carbon::createFromFormat("Y-m-d", $request->input("manufacturer_contract_beginning_date")),
+            "manufacturer_contract_ending_date" => empty($request->input("manufacturer_contract_ending_date")) || $manufacturer_contract_type == ManufacturerContractType::NONE->value ? null : Carbon::createFromFormat("Y-m-d", $request->input("manufacturer_contract_ending_date")),
+            "manufacturer_contract_provider" => $manufacturer_contract_type == ManufacturerContractType::NONE->value ? null : $request->input("manufacturer_contract_provider"),
             "mac_address" => $request->input("mac_address"),
             "ip_address" => $request->input("ip_address"),
             "export" => $request->has("export"),
@@ -143,18 +145,20 @@ class AssetController extends Controller
     public function update(UpdateAssetRequest $request, Asset $asset)
     {
         $validated = $request->validated();
+        $user = Auth::user();
+        $manufacturer_contract_type = $request->input("manufacturer_contract_type");
         $asset->update([
             "name" => $request->input("name"),
             "type" => $request->input("type"),
-            "manager" => $request->input("manager"),
+            "manager" => $user->role == UserRole::SECURITY_OFFICER ? $request->input("manager") : $asset->manager_id,
             "description" => $request->input("description"),
             "sku" => $request->input("sku"),
             "manufacturer" => $request->input("manufacturer"),
             "location" => $request->input("location"),
-            "manufacturer_contract_type" => $request->input("manufacturer_contract_type"),
-            "manufacturer_contract_beginning_date" => empty($request->input("manufacturer_contract_beginning_date")) ? null : Carbon::createFromFormat("Y-m-d", $request->input("manufacturer_contract_beginning_date")),
-            "manufacturer_contract_ending_date" => empty($request->input("manufacturer_contract_ending_date")) ? null : Carbon::createFromFormat("Y-m-d", $request->input("manufacturer_contract_ending_date")),
-            "manufacturer_contract_provider" => $request->input("manufacturer_contract_provider"),
+            "manufacturer_contract_type" => $manufacturer_contract_type,
+            "manufacturer_contract_beginning_date" => empty($request->input("manufacturer_contract_beginning_date")) || $manufacturer_contract_type == ManufacturerContractType::NONE->value ? null : Carbon::createFromFormat("Y-m-d", $request->input("manufacturer_contract_beginning_date")),
+            "manufacturer_contract_ending_date" => empty($request->input("manufacturer_contract_ending_date")) || $manufacturer_contract_type == ManufacturerContractType::NONE->value ? null : Carbon::createFromFormat("Y-m-d", $request->input("manufacturer_contract_ending_date")),
+            "manufacturer_contract_provider" => $manufacturer_contract_type == ManufacturerContractType::NONE->value ? null : $request->input("manufacturer_contract_provider"),
             "mac_address" => $request->input("mac_address"),
             "ip_address" => $request->input("ip_address"),
             "availability_appreciation" => $request->input("availability_appreciation"),
@@ -162,7 +166,7 @@ class AssetController extends Controller
             "confidentiality_appreciation" => $request->input("confidentiality_appreciation"),
             "export" => $request->has("export"),
             "active" => $request->has("active"),
-            "links_to_id" => $request->input("links_to"),
+            "links_to_id" => $user->role == UserRole::SECURITY_OFFICER ? $request->input("links_to") : $asset->links_to_id,
         ]);
         return redirect()->route("assets.edit", $asset->id)->with("status", "Asset Updated");
     }

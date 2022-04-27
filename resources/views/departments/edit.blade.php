@@ -35,29 +35,58 @@
                         <button type="submit"
                                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{__("Update")}}</button>
                     </form>
-                    <hr>
-                    @if($department->users->count()>0)
-                        <div class="mb-6">
-                            <label for="users"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Users")}}</label>
-                            <div id="users">
-                                <ul class="list-disc">
-                                    @foreach($department->users as $user)
-                                        <li>
-                                            <a href="{{route("users.edit",$user->id)}}" target="_blank">{{$user->name}}</a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                        <hr>
-                    @endif
                     <form method="POST" action="{{route('departments.destroy',$department->id)}}">
                         @csrf
                         @method("DELETE")
                         <button type="submit" onclick="confirm('{{__("Are you sure you want to delete?")}}')"
                                 class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">{{__("Delete")}}</button>
                     </form>
+                    @if($department->users->count()>0)
+                        <hr>
+                        <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">{{__("Members of Department")}}</h2>
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                            <thead
+                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    {{__("ID")}}
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    {{__("Name")}}
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    {{__("E-Mail")}}
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    {{__("Department")}}
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    {{__("Assets")}}
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    {{__("Action")}}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($department->users as $user)
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <td class="px-6 py-4">{{$user->id}}</td>
+                                    <td class="px-6 py-4">{{$user->name}}</td>
+                                    <td class="px-6 py-4">{{$user->email}}</td>
+                                    <td class="px-6 py-4">{{!empty($user->department) ? $user->department->name : __("None")}}</td>
+                                    <td class="px-6 py-4">{{$user->assets->count()}}</td>
+                                    <td class="px-6 py-4">
+                                        <a href="{{route("users.edit",$user->id)}}"
+                                           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                            {{__("Manage")}}
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    @endif
                 </div>
             </div>
         </div>
