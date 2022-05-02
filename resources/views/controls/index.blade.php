@@ -10,6 +10,10 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        @can("create",\App\Models\Threat::class)
+                            <a class="inline-flex items-center h-10 px-5 m-2 text-sm text-green-100 transition-colors duration-150 bg-green-700 rounded-lg focus:shadow-outline hover:bg-green-800"
+                               href="{{route('controls.create')}}" target="_blank">Create</a>
+                        @endcan
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead
                                 class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -24,7 +28,7 @@
                                     {{__("Description")}}
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    {{__("Threat")}}
+                                    {{__("Threats")}}
                                 </th>
                                 <!--
                                 <th scope="col" class="px-6 py-3">
@@ -42,7 +46,7 @@
                                     <td class="px-6 py-4">{{$control->id}}</td>
                                     <td class="px-6 py-4">{{$control->name}}</td>
                                     <td class="px-6 py-4">{{$control->description}}</td>
-                                    <td class="px-6 py-4">{{$control->threat->name}}</td>
+                                    <td class="px-6 py-4">{{$control->threats->count()}}</td>
                                     <td class="px-6 py-4">
                                         @can("update",$control)
                                             <a href="{{route("controls.edit",$control->id)}}"

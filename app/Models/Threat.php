@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Threat extends Model
@@ -12,8 +13,9 @@ class Threat extends Model
     protected $fillable = [
         'name','description'
     ];
-    public function controls(): HasMany
+    public function controls(): BelongsToMany
     {
-        return $this->hasMany(Control::class);
+        return $this->belongsToMany(Control::class);
+        //return $this->hasMany(Control::class);
     }
 }

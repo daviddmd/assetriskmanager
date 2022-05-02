@@ -14,6 +14,10 @@ use function GuzzleHttp\Promise\all;
 
 class ControlController extends Controller
 {
+    //fixme adicionar formulário de pesquisa
+    //fixme tabela intermedia controlos->ameacas, um controlo pode estar associado a + de q 1 ameaca
+    //fixme formulario criacao controlos -> pagina controlos
+    //fixme num ativo ter caixa para pesquisar por controlos e associar controlos ao mesmo ativo
     public function __construct()
     {
         $this->authorizeResource(Control::class, 'control');
@@ -26,7 +30,6 @@ class ControlController extends Controller
      */
     public function index()
     {
-        //FIXME vale a pena adicionar pesquisa ou filtros? Se sim, que filtros?
         $controls = Control::paginate(5)->withQueryString();
         return view("controls.index", ["controls" => $controls]);
     }
@@ -34,11 +37,11 @@ class ControlController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return RedirectResponse
+     * @return Application|Factory|View
      */
     public function create()
     {
-        return redirect()->route("controls.index")->with("error", "The Controls for a Threat Must be Created in the Threat Page");
+        return view("controls.create");
     }
 
     /**
@@ -52,15 +55,13 @@ class ControlController extends Controller
         $validated = $request->validated();
         $name = $request->input("name");
         $description = $request->input("description");
-        $threat_id = $request->input("threat");
         $control = new Control;
         $control->fill([
             "name" => $name,
-            "description" => $description,
-            "threat_id" => $threat_id
+            "description" => $description
         ]);
         $control->save();
-        return redirect()->route("threats.edit", $threat_id)->with("status", "Control Created");
+        return redirect()->route("controls.index")->with("status", "Control Created");
 
     }
 

@@ -5,15 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Control extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        'name','description','threat_id'
+        'name', 'description'
     ];
-    public function threat(): BelongsTo
+
+    public function threats(): BelongsToMany
     {
-        return $this->belongsTo(Threat::class);
+        return $this->belongsToMany(Threat::class);
     }
 }

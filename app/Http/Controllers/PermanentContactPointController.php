@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class PermanentContactPointController extends Controller
 {
+    //fixme view permitir vários
     public function __construct()
     {
         $this->authorizeResource(PermanentContactPoint::class, 'permanent_contact_point');

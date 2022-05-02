@@ -128,6 +128,7 @@ class AssetController extends Controller
      */
     public function edit(Asset $asset)
     {
+        //fixme tabela para avaliações dos ativos: headers sao availability....celulas sao inputs
         $assetTypes = AssetType::all();
         //fixme migrar isto para livewire
         $users = User::all();

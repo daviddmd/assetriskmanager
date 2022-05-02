@@ -16,6 +16,6 @@ class PermanentContactPointSeeder extends Seeder
      */
     public function run()
     {
-        PermanentContactPoint::factory()->count(1)->create();
+        PermanentContactPoint::factory()->count(5)->create();
     }
 }
