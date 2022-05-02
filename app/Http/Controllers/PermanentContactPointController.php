@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class PermanentContactPointController extends Controller
 {
-    //fixme view permitir vários
     public function __construct()
     {
         $this->authorizeResource(PermanentContactPoint::class, 'permanent_contact_point');
@@ -31,14 +30,11 @@ class PermanentContactPointController extends Controller
     public function index(Request $request)
     {
         if ($request->has("export")) {
-            return Excel::download(new PermanentContactPointExport, "permanent_contact_point.xlsx");
+            //return (new InvoicesExport)->download('invoices.ods', \Maatwebsite\Excel\Excel::ODS);
+            return Excel::download(new PermanentContactPointExport, "permanent_contact_point.ods");
         }
-        $permanentContactPoint = PermanentContactPoint::first();
-        if (empty($permanentContactPoint)) {
-            return view("permanent-contact-point.create");
-        } else {
-            return view("permanent-contact-point.edit", ["permanent_contact_point" => $permanentContactPoint]);
-        }
+        $permanentContactPoints = PermanentContactPoint::all();
+        return view("permanent-contact-point.index",["permanentContactPoints"=>$permanentContactPoints]);
     }
 
     /**

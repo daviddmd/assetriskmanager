@@ -4,10 +4,13 @@ namespace App\Exports;
 
 use App\Models\SecurityOfficer;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class SecurityOfficerExport implements FromCollection, WithMapping, WithHeadings
+class SecurityOfficerExport implements FromCollection, WithMapping, WithHeadings, WithStyles, ShouldAutoSize
 {
     /**
      * @return \Illuminate\Support\Collection
@@ -20,12 +23,12 @@ class SecurityOfficerExport implements FromCollection, WithMapping, WithHeadings
     public function headings(): array
     {
         return [
-            'Entity Name',
-            'Name',
-            "Role",
-            'Email Address',
-            'Landline Phone Number',
-            'Mobile Phone Number',
+            'Nome da Entidade',
+            'Nome do Responsável de Segurança',
+            "Cargo do Responsável de Segurança",
+            'Endereço de Correio Eletrónico',
+            'Número de Telefone Fixo',
+            'Número de Telefone Móvel',
         ];
     }
 
@@ -38,6 +41,13 @@ class SecurityOfficerExport implements FromCollection, WithMapping, WithHeadings
             $row->email_address,
             $row->landline_phone_number,
             $row->mobile_phone_number,
+        ];
+    }
+
+    public function styles(Worksheet $sheet)
+    {
+        return [
+            1 => ['font' => ['bold' => true]],
         ];
     }
 }
