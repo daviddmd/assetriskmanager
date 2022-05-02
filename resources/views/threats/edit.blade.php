@@ -41,49 +41,7 @@
                                 class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">{{__("Delete")}}</button>
                     </form>
                     <hr>
-                    <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">Controls</h2>
-                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-5">
-                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                            <thead
-                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                            <tr>
-                                <th scope="col" class="px-6 py-3">
-                                    {{__("ID")}}
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    {{__("Name")}}
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    {{__("Description")}}
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    {{__("Action")}}
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($threat->controls as $control)
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <td class="px-6 py-4">{{$control->id}}</td>
-                                    <td class="px-6 py-4">{{$control->name}}</td>
-                                    <td class="px-6 py-4">{{$control->description}}</td>
-                                    <td class="px-6 py-4">
-                                        @can("update",$control)
-                                            <a href="{{route("controls.edit",$control->id)}}"
-                                               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                                {{__("Manage")}}
-                                            </a>
-                                        @else
-                                            <a href="{{route("controls.show",$control->id)}}"
-                                               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                            {{__("View")}}
-                                        @endcan
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                    <livewire:threat-control-manage :threat="$threat"></livewire:threat-control-manage>
                     <!--
                     <hr>
                     <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">Create Control</h2>

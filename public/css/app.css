@@ -1023,6 +1023,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-bottom: 1.25rem;
 }.-mt-px {
   margin-top: -1px;
+}.mb-3 {
+  margin-bottom: 0.75rem;
 }.block {
   display: block;
 }.inline-block {
@@ -1824,6 +1826,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }.focus\:ring-red-300:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(248 180 180 / var(--tw-ring-opacity));
+}.focus\:ring-green-300:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(132 225 188 / var(--tw-ring-opacity));
 }.focus\:ring-opacity-50:focus {
   --tw-ring-opacity: 0.5;
 }.active\:bg-gray-100:active {
@@ -1878,6 +1883,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }.dark .dark\:bg-gray-900 {
   --tw-bg-opacity: 1;
   background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+}.dark .dark\:bg-green-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(5 122 85 / var(--tw-bg-opacity));
 }.dark .dark\:bg-opacity-80 {
   --tw-bg-opacity: 0.8;
 }.dark .dark\:text-white {
@@ -1916,6 +1924,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }.dark .dark\:hover\:bg-red-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(200 30 30 / var(--tw-bg-opacity));
+}.dark .dark\:hover\:bg-green-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(4 108 78 / var(--tw-bg-opacity));
 }.dark .dark\:hover\:text-white:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
@@ -1937,6 +1948,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }.dark .dark\:focus\:ring-red-900:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(119 29 29 / var(--tw-ring-opacity));
+}.dark .dark\:focus\:ring-green-800:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(3 84 63 / var(--tw-ring-opacity));
 }@media (min-width: 640px) {.sm\:col-span-4 {
     grid-column: span 4 / span 4;
   }.sm\:mx-0 {
@@ -2070,6 +2084,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   }.lg\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+}@media (min-width: 1280px) {.xl\:w-96 {
+    width: 24rem;
   }
 }
 
