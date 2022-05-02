@@ -30,7 +30,6 @@ class PermanentContactPointController extends Controller
     public function index(Request $request)
     {
         if ($request->has("export")) {
-            //return (new InvoicesExport)->download('invoices.ods', \Maatwebsite\Excel\Excel::ODS);
             return Excel::download(new PermanentContactPointExport, "permanent_contact_point.ods");
         }
         $permanentContactPoints = PermanentContactPoint::all();
