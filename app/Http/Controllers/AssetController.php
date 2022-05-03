@@ -79,10 +79,7 @@ class AssetController extends Controller
     public function create()
     {
         $assetTypes = AssetType::all();
-        //fixme migrar isto para livewire
-        $users = User::all();
-        $assets = Asset::all();
-        return view("assets.create", ["assetTypes" => $assetTypes, "users" => $users, "assets" => $assets]);
+        return view("assets.create", ["assetTypes" => $assetTypes]);
     }
 
     /**
@@ -125,7 +122,8 @@ class AssetController extends Controller
      */
     public function show(Asset $asset)
     {
-        //fixme colocar como no edit
+        //fixme parte dos controls+risks remover livewire para tabela regular
+        //fixme migrar de svg inline para local
         return view("assets.show", ["asset" => $asset]);
     }
 

@@ -10,9 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        @can("create",\App\Models\Department::class)
-                            <a class="inline-flex items-center h-10 px-5 m-2 text-sm text-green-100 transition-colors duration-150 bg-green-700 rounded-lg focus:shadow-outline hover:bg-green-800" href="{{route('departments.create')}}" target="_blank">Create</a>
-                        @endcan
+
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead
                                 class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -57,6 +55,12 @@
                             @endforeach
                             </tbody>
                         </table>
+                        @can("create",\App\Models\Department::class)
+                            <div class="flex justify-center">
+                                <a class="inline-flex items-center h-10 px-5 m-2 text-sm text-green-100 transition-colors duration-150 bg-green-700 rounded-lg focus:shadow-outline hover:bg-green-800"
+                                   href="{{route('departments.create')}}" target="_blank">Create</a>
+                            </div>
+                        @endcan
                     </div>
                 </div>
             </div>

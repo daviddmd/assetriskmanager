@@ -10,14 +10,11 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use function GuzzleHttp\Promise\all;
 
 class ControlController extends Controller
 {
-    //fixme adicionar formulário de pesquisa
-    //fixme tabela intermedia controlos->ameacas, um controlo pode estar associado a + de q 1 ameaca
-    //fixme formulario criacao controlos -> pagina controlos
-    //fixme num ativo ter caixa para pesquisar por controlos e associar controlos ao mesmo ativo
     public function __construct()
     {
         $this->authorizeResource(Control::class, 'control');
@@ -28,10 +25,18 @@ class ControlController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $controls = Control::paginate(5)->withQueryString();
-        return view("controls.index", ["controls" => $controls]);
+        $filter = $request->input("filter", "");
+        if (!empty($filter)){
+            $controls = Control::where("name", "like", "%" . $filter . "%")->
+            orWhere("description", "like", "%" . $filter . "%")->
+            paginate(5)->withQueryString();
+        }
+        else{
+            $controls = Control::paginate(5)->withQueryString();
+        }
+        return view("controls.index", ["controls" => $controls,"filter"=>$filter]);
     }
 
     /**

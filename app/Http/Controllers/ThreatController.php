@@ -9,6 +9,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class ThreatController extends Controller
 {
@@ -22,11 +23,18 @@ class ThreatController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function index()
+    public function index(Request $request)
     {
-        //FIXME vale a pena adicionar pesquisa?
-        $threats = Threat::paginate(5)->withQueryString();
-        return view("threats.index", ["threats" => $threats]);
+        $filter = $request->input("filter", "");
+        if (!empty($filter)) {
+            $threats = Threat::where("name", "like", "%" . $filter . "%")->
+            orWhere("description", "like", "%" . $filter . "%")->
+            paginate(5)->withQueryString();
+        }
+        else {
+            $threats = Threat::paginate(5)->withQueryString();
+        }
+        return view("threats.index", ["threats" => $threats,"filter"=>$filter]);
     }
 
     /**

@@ -37,21 +37,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="mb-6">
-                            <label for="manager"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Manager")}}</label>
-                            <select name="manager" id="manager"
-                                    class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                    required>
-                                @foreach($users as $user)
-                                    <option
-                                        {{old("manager") == $user->id ? "selected" : ""}}
-                                        value="{{ $user->id }}">
-                                        {{ "$user->name:$user->email" }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                        <livewire:user-search></livewire:user-search>
                         <div class="mb-6">
                             <label for="sku"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("SKU/Inventory ID")}}</label>
@@ -171,21 +157,7 @@
                                 class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                 type="checkbox" name="export" id="export" {{!empty(old("export")) ? "checked" : ""}}>
                         </div>
-                        <div class="mb-6">
-                            <label for="links_to"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Links To Asset")}}</label>
-                            <select name="links_to" id="links_to"
-                                    class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
-                                <option selected value="">{{"None"}}</option>
-                                @foreach($assets as $asset)
-                                    <option
-                                        {{old("links_to") == $asset->id ? "selected" : ""}}
-                                        value="{{ $asset->id }}">
-                                        {{ "$asset->id:$asset->name" }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                        <livewire:asset-search></livewire:asset-search>
                         <button type="submit"
                                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{__("Create")}}</button>
                     </form>

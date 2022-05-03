@@ -6,8 +6,6 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <a class="inline-flex items-center h-10 px-5 m-2 text-sm text-green-100 transition-colors duration-150 bg-green-700 rounded-lg focus:shadow-outline hover:bg-green-800"
-                       href="{{route('security-officer.index',["export"=>true])}}" target="_blank">Export</a>
                     <form method="POST" action="{{route('security-officer.update',$security_officer->id)}}">
                         @csrf
                         @method("PUT")
@@ -68,6 +66,10 @@
                         <button type="submit" onclick="confirm('{{__("Are you sure you want to delete?")}}')"
                                 class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">{{__("Delete")}}</button>
                     </form>
+                    <div class="flex justify-center">
+                        <a class="inline-flex items-center h-10 px-5 m-2 text-sm text-green-100 transition-colors duration-150 bg-green-700 rounded-lg focus:shadow-outline hover:bg-green-800"
+                           href="{{route('security-officer.index',["export"=>true])}}" target="_blank">Export</a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -7,8 +7,8 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <a class="inline-flex items-center h-10 px-5 m-2 text-sm text-green-100 transition-colors duration-150 bg-green-700 rounded-lg focus:shadow-outline hover:bg-green-800" href="{{route('permanent-contact-point.index',["export"=>true])}}" target="_blank">Export</a>
-                    <form method="POST" action="{{route('permanent-contact-point.update',$permanent_contact_point->id)}}">
+                    <form method="POST"
+                          action="{{route('permanent-contact-point.update',$permanent_contact_point->id)}}">
                         @csrf
                         @method("PUT")
                         <div class="mb-6">
@@ -85,7 +85,8 @@
                         <button type="submit"
                                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{__("Create")}}</button>
                     </form>
-                    <form method="POST" action="{{route('permanent-contact-point.destroy',$permanent_contact_point->id)}}">
+                    <form method="POST"
+                          action="{{route('permanent-contact-point.destroy',$permanent_contact_point->id)}}">
                         @csrf
                         @method("DELETE")
                         <button type="submit" onclick="confirm('{{__("Are you sure you want to delete?")}}')"
