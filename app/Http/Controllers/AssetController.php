@@ -132,7 +132,17 @@ class AssetController extends Controller
         $assetTypes = AssetType::all();
         //fixme migrar isto para livewire
         $users = User::all();
-        $assets = Asset::whereNot("id", "=", $asset->id)->whereNotIn("id", $asset->children()->get("id"))->get();
+        if (Auth::user()->role == UserRole::SECURITY_OFFICER) {
+            $assets = Asset::whereNot("id", "=", $asset->id)->
+            whereNotIn("id", $asset->children()->get("id"))->
+            get();
+        } else {
+            $assets = Asset::whereNot("id", "=", $asset->id)->
+            whereNotIn("id", $asset->children()->get("id"))->
+            where("manager_id", "=", Auth::user()->id)->
+            orWhere("id", "=", $asset->links_to_id)->
+            get();
+        }
         return view("assets.edit", ["asset" => $asset, "assetTypes" => $assetTypes, "users" => $users, "assets" => $assets]);
     }
 
@@ -150,8 +160,8 @@ class AssetController extends Controller
         $manufacturer_contract_type = $request->input("manufacturer_contract_type");
         $asset->update([
             "name" => $request->input("name"),
-            "type" => $request->input("type"),
-            "manager" => $user->role == UserRole::SECURITY_OFFICER ? $request->input("manager") : $asset->manager_id,
+            "asset_type_id" => $request->input("type"),
+            "manager_id" => $user->role == UserRole::SECURITY_OFFICER ? $request->input("manager") : $asset->manager_id,
             "description" => $request->input("description"),
             "sku" => $request->input("sku"),
             "manufacturer" => $request->input("manufacturer"),
