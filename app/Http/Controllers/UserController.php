@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Enums\UserRole;
@@ -20,6 +21,13 @@ class UserController extends Controller
         $this->authorizeResource(User::class, 'user');
     }
 
+    public static function filterUser($filter)
+    {
+        return User::where(function ($query) use ($filter) {
+            $query->where("name", "like", "%" . $filter . "%")->orWhere("email", "like", "%" . $filter . "%")->orWhere("id", "=", $filter);
+        });
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,22 +35,20 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $filter = $request->input("filter","");
-        $department_id = $request->input("department","");
-        if (!empty($filter) || !empty($department_id)){
-            $users = User::where(function ($query) use ($filter){
-                $query->where("name","like","%".$filter."%")->orWhere("email","like","%".$filter."%");
-            });
-            if (!empty($department_id)){
-                $users = $users->where("department_id","=",$department_id);
+        $filter = $request->input("filter", "");
+        $department_id = $request->input("department", "");
+        if (!empty($filter) || !empty($department_id)) {
+            $users = $this->filterUser($filter);
+            if (!empty($department_id)) {
+                $users = $users->where("department_id", "=", $department_id);
             }
             $users = $users->paginate(5)->withQueryString();
         }
-        else{
+        else {
             $users = User::paginate(5)->withQueryString();
         }
         $departments = Department::all();
-        return view("users.index", ["users" => $users,"departments"=>$departments,"filter"=>$filter,"department_id"=>$department_id]);
+        return view("users.index", ["users" => $users, "departments" => $departments, "filter" => $filter, "department_id" => $department_id]);
     }
 
     /**
@@ -75,7 +81,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         $departments = Department::all();
-        return view("users.show", ["user" => $user,"departments"=>$departments]);
+        return view("users.show", ["user" => $user, "departments" => $departments]);
     }
 
     /**
@@ -87,7 +93,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $departments = Department::all();
-        return view("users.edit", ["user" => $user,"departments"=>$departments]);
+        return view("users.edit", ["user" => $user, "departments" => $departments]);
     }
 
     /**
@@ -104,7 +110,7 @@ class UserController extends Controller
             "name" => $request->input("name"),
             "department_id" => $request->input("department"),
             "active" => $request->has("active"),
-            "role"=>Auth::user()->role == UserRole::ADMINISTRATOR ? $request->input("role") : $user->role,
+            "role" => Auth::user()->role == UserRole::ADMINISTRATOR ? $request->input("role") : $user->role,
         ]);
         return redirect()->route("users.index")->with("status", "User Updated");
     }

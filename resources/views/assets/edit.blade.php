@@ -36,14 +36,14 @@
                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Name")}}</label>
                                     <input type="text" id="name" name="name"
                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                           value="{{old("name") ? old("name") : $asset->name}}"
+                                           value="{{$asset->name}}"
                                            required>
                                 </div>
                                 <div class="mb-6">
                                     <label for="description"
                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Description")}}</label>
                                     <textarea name="description" id="description"
-                                              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{old("description")?old("description"):$asset->description}}</textarea>
+                                              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{$asset->description}}</textarea>
                                 </div>
                                 <div class="mb-6">
                                     <label for="type"
@@ -53,39 +53,20 @@
                                             required>
                                         @foreach($assetTypes as $assetType)
                                             <option
-                                                {{old("type") ? (old("type") == $assetType->id ? "selected" : "") : ($asset->type->id == $assetType->id ? "selected" : "")}}
+                                                {{$asset->type->id == $assetType->id ? "selected" : ""}}
                                                 value="{{ $assetType->id }}">
                                                 {{ $assetType->name  }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
-                                @if(in_array(Auth::user()->role,[\App\Enums\UserRole::SECURITY_OFFICER,\App\Enums\UserRole::DATA_PROTECTION_OFFICER]))
-                                    <div class="mb-6">
-                                        <label for="manager"
-                                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Manager")}}</label>
-                                        <select name="manager" id="manager"
-                                                class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                                required>
-                                            @foreach($users as $user)
-                                                <option
-                                                    {{old("manager") ? (old("manager") == $user->id ? "selected" : "") : ($asset->manager->id == $user->id ? "selected" : "")}}
-                                                    value="{{ $user->id }}">
-                                                    {{ "$user->name:$user->email" }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                @else
-                                    <input type="hidden" name="manager" value="{{$asset->manager_id}}">
-                                @endif
-
+                                @livewire("asset-manager-manage",["asset"=>$asset])
                                 <div class="mb-6">
                                     <label for="sku"
                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("SKU/Inventory ID")}}</label>
                                     <input type="text" id="sku" name="sku"
                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                           value="{{old("sku") ? old("sku") : $asset->sku}}"
+                                           value="{{$asset->sku}}"
                                            required>
                                 </div>
                                 <div class="mb-6">
@@ -93,7 +74,7 @@
                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Manufacturer")}}</label>
                                     <input type="text" id="manufacturer" name="manufacturer"
                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                           value="{{old("manufacturer") ? old("manufacturer") : $asset->manufacturer}}"
+                                           value="{{$asset->manufacturer}}"
                                            required>
                                 </div>
                                 <div class="mb-6">
@@ -101,11 +82,11 @@
                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Location")}}</label>
                                     <input type="text" id="location" name="location"
                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                           value="{{old("location") ? old("location") : $asset->location}}"
+                                           value="{{$asset->location}}"
                                            required>
                                 </div>
                                 <div class="mb-6"
-                                     x-data="{ visible: {{(!empty(old("manufacturer_contract_type")) && old("manufacturer_contract_type") != \App\Enums\ManufacturerContractType::NONE) || $asset->manufacturer_contract_type != \App\Enums\ManufacturerContractType::NONE ? "true" : "false"}} }">
+                                     x-data="{ visible: {{$asset->manufacturer_contract_type != \App\Enums\ManufacturerContractType::NONE ? "true" : "false"}} }">
                                     <label for="manufacturer_contract_type"
                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Manufacturer Contract Type")}}</label>
                                     <select name="manufacturer_contract_type" id="manufacturer_contract_type"
@@ -114,7 +95,7 @@
                                             required>
                                         @foreach(\App\Enums\ManufacturerContractType::cases() as $role)
                                             <option
-                                                {{old("manufacturer_contract_type") ? (old("manufacturer_contract_type") == $role->value ? "selected" : "")  : ($asset->manufacturer_contract_type == $role ? "selected" : "")}}
+                                                {{$asset->manufacturer_contract_type == $role ? "selected" : ""}}
                                                 value="{{ $role->value }}">
                                                 {{ __("enums.".$role->name)  }}
                                             </option>
@@ -128,7 +109,7 @@
                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Manufacturer Contract Provider")}}</label>
                                             <input type="text" id="manufacturer_contract_provider"
                                                    name="manufacturer_contract_provider"
-                                                   value="{{old("manufacturer_contract_provider") ? old("manufacturer_contract_provider") : $asset->manufacturer_contract_provider}}"
+                                                   value="{{$asset->manufacturer_contract_provider}}"
                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         </div>
                                         <div class="mb-6">
@@ -151,7 +132,7 @@
                                                     <input name="manufacturer_contract_beginning_date"
                                                            id="manufacturer_contract_beginning_date" type="text"
                                                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                           value="{{old("manufacturer_contract_beginning_date") ? old("manufacturer_contract_beginning_date") : $asset->manufacturer_contract_beginning_date}}"
+                                                           value="{{$asset->manufacturer_contract_beginning_date}}"
                                                            placeholder="{{__('Contract Starting Date')}}">
                                                 </div>
                                                 <span class="mx-4 text-gray-500">{{__("to")}}</span>
@@ -169,7 +150,7 @@
                                                     <input name="manufacturer_contract_ending_date"
                                                            id="manufacturer_contract_ending_date" type="text"
                                                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                           value="{{old("manufacturer_contract_ending_date") ? old("manufacturer_contract_ending_date") : $asset->manufacturer_contract_ending_date}}"
+                                                           value="{{$asset->manufacturer_contract_ending_date}}"
                                                            placeholder="{{__('Contract Ending Date')}}">
                                                 </div>
                                             </div>
@@ -182,7 +163,7 @@
                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("MAC Address")}}</label>
                                     <input type="text" id="mac_address" name="mac_address"
                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                           value="{{old("mac_address") ? old("mac_address") : $asset->mac_address}}"
+                                           value="{{$asset->mac_address}}"
                                            required>
                                 </div>
                                 <div class="mb-6">
@@ -190,7 +171,7 @@
                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("IP Address")}}</label>
                                     <input type="text" id="ip_address" name="ip_address"
                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                           value="{{old("ip_address") ? old("ip_address") : $asset->ip_address}}"
+                                           value="{{$asset->ip_address}}"
                                            required>
                                 </div>
                                 <div class="mb-6">
@@ -218,27 +199,27 @@
                                                 <input type="number" id="availability_appreciation"
                                                        name="availability_appreciation"
                                                        min="1" max="5"
-                                                       value="{{old("availability_appreciation") ? old("availability_appreciation") : $asset->availability_appreciation }}"
+                                                       value="{{ $asset->availability_appreciation }}"
                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                       style="background-color: {{$asset->color(old("availability_appreciation") ? old("availability_appreciation") : $asset->availability_appreciation)}}"
+                                                       style="background-color: {{$asset->color($asset->availability_appreciation)}}"
                                                        required>
                                             </td>
                                             <td class="px-6 py-4">
                                                 <input type="number" id="integrity_appreciation"
                                                        name="integrity_appreciation"
                                                        min="1" max="5"
-                                                       value="{{old("integrity_appreciation") ? old("integrity_appreciation") : $asset->integrity_appreciation }}"
+                                                       value="{{$asset->integrity_appreciation }}"
                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                       style="background-color: {{$asset->color(old("integrity_appreciation") ? old("integrity_appreciation") : $asset->integrity_appreciation)}}"
+                                                       style="background-color: {{$asset->color($asset->integrity_appreciation)}}"
                                                        required>
                                             </td>
                                             <td class="px-6 py-4">
                                                 <input type="number" id="confidentiality_appreciation"
                                                        name="confidentiality_appreciation"
                                                        min="1" max="5"
-                                                       value="{{old("confidentiality_appreciation") ? old("confidentiality_appreciation") : $asset->confidentiality_appreciation }}"
+                                                       value="{{$asset->confidentiality_appreciation }}"
                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                       style="background-color: {{$asset->color(old("confidentiality_appreciation") ? old("confidentiality_appreciation") : $asset->confidentiality_appreciation)}}"
+                                                       style="background-color: {{$asset->color($asset->confidentiality_appreciation)}}"
                                                        required>
                                             </td>
                                             <td class="px-6 py-4">
@@ -258,7 +239,7 @@
                                     <input
                                         class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                         type="checkbox" name="export"
-                                        id="export" {{!empty(old("export")) ? "checked" : ($asset->export ? "checked" : "")}}>
+                                        id="export" {{$asset->export ? "checked" : ""}}>
                                 </div>
                                 <div class="mb-6">
                                     <label for="active"
@@ -266,39 +247,25 @@
                                     <input
                                         class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                         type="checkbox" name="active"
-                                        id="active" {{!empty(old("active")) ? "checked" : ($asset->active ? "checked" : "")}}>
+                                        id="active" {{$asset->active ? "checked" : ""}}>
                                 </div>
-                                <div class="mb-6">
-                                    <label for="links_to"
-                                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Links To Asset")}}</label>
-                                    <select name="links_to" id="links_to"
-                                            class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
-                                        <option selected value="">{{"None"}}</option>
-                                        <!--Colocar o asset atual com asset->links_to->id,name, com botões para editar, que mostra um formulário de pesquisa com botão e um select-->
-                                        @foreach($assets as $assetIter)
-                                            <option
-                                                {{old("links_to") ? (old("links_to") == $assetIter->id ? "selected" : "" ) : (empty($asset->linksTo) ? "" : ($asset->linksTo->id == $assetIter->id ? "selected" : ""))}}
-                                                value="{{ $assetIter->id }}">
-                                                {{ "$assetIter->id:$assetIter->name" }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
+                                @livewire("asset-links-to-manage",["asset"=>$asset])
                                 <button type="submit"
                                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{__("Update")}}</button>
                             </form>
+
                             @can("delete",$asset)
                                 <form method="POST" action="{{route("assets.destroy",$asset->id)}}">
                                     @csrf
                                     @method("DELETE")
                                     <button type="submit"
-                                            onclick="confirm('{{__("Are you sure you want to delete this asset? This will delete all asssociated information with it.")}}')"
+                                            onclick="confirm('{{__("Are you sure you want to delete this asset? This will delete all associated information with it.")}}')"
                                             class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">{{__("Delete")}}</button>
                                 </form>
                             @endcan
-                            @if($asset->children->count()>0 && in_array(Auth::user()->role,[\App\Enums\UserRole::SECURITY_OFFICER,\App\Enums\UserRole::DATA_PROTECTION_OFFICER]))
-                                <hr>
+
+                            @if($asset->children->count()>0 && Auth::user()->role == \App\Enums\UserRole::SECURITY_OFFICER)
+                                <div class="flex-grow border-t border-gray-400"></div>
                                 <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">Children</h2>
                                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-5">
                                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -367,7 +334,7 @@
 
                         <div class="hidden p-4 bg-gray-50 rounded-lg dark:bg-gray-800" id="risks" role="tabpanel"
                              aria-labelledby="risks-controls-tab">
-                            <b>Risks</b>
+                            @livewire("asset-risks-controls-manage",["asset"=>$asset])
                         </div>
                     </div>
 

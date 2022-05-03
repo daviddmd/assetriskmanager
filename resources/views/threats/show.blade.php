@@ -29,7 +29,7 @@
                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                   disabled>{{$threat->description}}</textarea>
                     </div>
-                    <hr>
+                    <div class="flex-grow border-t border-gray-400"></div>
                     <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">Controls</h2>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-5">
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">

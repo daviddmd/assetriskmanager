@@ -9,7 +9,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
-class ThreatControlManage extends Component
+class ThreatControlsManage extends Component
 {
     public $threat;
     public $control;
@@ -23,7 +23,7 @@ class ThreatControlManage extends Component
     {
         $controls = $this->threat->controls();
         $all_controls = Control::whereNotIn("id", $controls->pluck("control_id")->toArray())->get();
-        return view('livewire.threat-control-manage', [
+        return view('livewire.threat-controls-manage', [
                 "controls" => $controls->get(),
                 "all_controls" => $all_controls
             ]

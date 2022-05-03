@@ -24,6 +24,21 @@ class AssetController extends Controller
         $this->authorizeResource(Asset::class, 'asset');
     }
 
+    public static function filterAsset($filter)
+    {
+        return Asset::where(function ($query) use ($filter) {
+            $query
+                ->where("name", "like", "%" . $filter . "%")
+                ->orWhere("description", "like", "%" . $filter . "%")
+                ->orWhere("mac_address", "=", $filter)
+                ->orWhere("ip_address", "=", $filter)
+                ->orWhere("manufacturer", "like", "%" . $filter . "%")
+                ->orWhere("sku", "like", "%" . $filter . "%")
+                ->orWhere("location", "like", "%" . $filter . "%")
+                ->orWhere("id", "=", $filter);
+        });
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -36,16 +51,7 @@ class AssetController extends Controller
         $assetTypes = AssetType::all();
         $user = Auth::user();
         if (!empty($asset_type_id) || !empty($filter)) {
-            $assets = Asset::where(function ($query) use ($filter) {
-                $query
-                    ->where("name", "like", "%" . $filter . "%")
-                    ->orWhere("description", "like", "%" . $filter . "%")
-                    ->orWhere("mac_address", "=", $filter)
-                    ->orWhere("ip_address", "=", $filter)
-                    ->orWhere("manufacturer", "like", "%" . $filter . "%")
-                    ->orWhere("sku", "like", "%" . $filter . "%")
-                    ->orWhere("location", "like", "%" . $filter . "%");
-            });
+            $assets = $this->filterAsset($filter);
             if (!empty($asset_type_id)) {
                 $assets = $assets->where("asset_type_id", "=", $asset_type_id);
             }
@@ -53,10 +59,12 @@ class AssetController extends Controller
                 $assets = $assets->where("manager_id", "=", $user->id)->where("active", "=", true);
             }
             $assets = $assets->paginate(5)->withQueryString();
-        } else {
+        }
+        else {
             if (in_array($user->role, array(UserRole::SECURITY_OFFICER, UserRole::DATA_PROTECTION_OFFICER))) {
                 $assets = Asset::paginate(5)->withQueryString();
-            } else {
+            }
+            else {
                 $assets = Asset::where("manager_id", "=", $user->id)->where("active", "=", true)->paginate(5)->withQueryString();
             }
         }
@@ -117,6 +125,7 @@ class AssetController extends Controller
      */
     public function show(Asset $asset)
     {
+        //fixme colocar como no edit
         return view("assets.show", ["asset" => $asset]);
     }
 
@@ -128,22 +137,8 @@ class AssetController extends Controller
      */
     public function edit(Asset $asset)
     {
-        //fixme tabela para avaliações dos ativos: headers sao availability....celulas sao inputs
         $assetTypes = AssetType::all();
-        //fixme migrar isto para livewire
-        $users = User::all();
-        if (Auth::user()->role == UserRole::SECURITY_OFFICER) {
-            $assets = Asset::whereNot("id", "=", $asset->id)->
-            whereNotIn("id", $asset->children()->get("id"))->
-            get();
-        } else {
-            $assets = Asset::whereNot("id", "=", $asset->id)->
-            whereNotIn("id", $asset->children()->get("id"))->
-            where("manager_id", "=", Auth::user()->id)->
-            orWhere("id", "=", $asset->links_to_id)->
-            get();
-        }
-        return view("assets.edit", ["asset" => $asset, "assetTypes" => $assetTypes, "users" => $users, "assets" => $assets]);
+        return view("assets.edit", ["asset" => $asset, "assetTypes" => $assetTypes]);
     }
 
     /**
@@ -177,7 +172,7 @@ class AssetController extends Controller
             "confidentiality_appreciation" => $request->input("confidentiality_appreciation"),
             "export" => $request->has("export"),
             "active" => $request->has("active"),
-            "links_to_id" => $user->role == UserRole::SECURITY_OFFICER ? $request->input("links_to") : $asset->links_to_id,
+            "links_to_id" => $request->input("links_to"),
         ]);
         return redirect()->route("assets.edit", $asset->id)->with("status", "Asset Updated");
     }
