@@ -332,9 +332,9 @@
                             @endif
                         </div>
 
-                        <div class="hidden p-4 bg-gray-50 rounded-lg dark:bg-gray-800" id="risks" role="tabpanel"
+                        <div class="hidden p-4" id="risks" role="tabpanel"
                              aria-labelledby="risks-controls-tab">
-                            @livewire("asset-risks-controls-manage",["asset"=>$asset])
+                            @livewire("asset-threats-controls-manage",["asset"=>$asset])
                         </div>
                     </div>
 

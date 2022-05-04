@@ -10,12 +10,18 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Threat extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        'name','description'
+        'name', 'description'
     ];
+
     public function controls(): BelongsToMany
     {
         return $this->belongsToMany(Control::class);
-        //return $this->hasMany(Control::class);
+    }
+
+    public function assets(): BelongsToMany
+    {
+        return $this->belongsToMany(Asset::class)->using(AssetThreat::class);
     }
 }

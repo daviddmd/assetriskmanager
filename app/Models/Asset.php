@@ -6,11 +6,13 @@ use App\Enums\ManufacturerContractType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Asset extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'name',
         'asset_type_id',
@@ -38,20 +40,24 @@ class Asset extends Model
      * @var array
      */
     protected $casts = [
-        'manufacturer_contract_type'=>ManufacturerContractType::class,
+        'manufacturer_contract_type' => ManufacturerContractType::class,
     ];
+
     public function type()
     {
-        return $this->belongsTo(AssetType::class,"asset_type_id");
+        return $this->belongsTo(AssetType::class, "asset_type_id");
     }
+
     public function manager()
     {
-        return $this->belongsTo(User::class,"manager_id","id");
+        return $this->belongsTo(User::class, "manager_id", "id");
     }
-    public function totalAppreciation(){
-        return max([$this->availability_appreciation,$this->integrity_appreciation,$this->confidentiality_appreciation]);
+
+    public function totalAppreciation()
+    {
+        return max([$this->availability_appreciation, $this->integrity_appreciation, $this->confidentiality_appreciation]);
     }
-    //fixme função idêntica para calcular a cor dos riscos num assetrisk
+
     public function color($score): string
     {
         return match ($score) {
@@ -64,14 +70,33 @@ class Asset extends Model
         };
 
     }
-    //asset that this asset connects to
+
+    /**
+     * @return BelongsTo Asset that this asset connects to
+     */
     public function linksTo(): BelongsTo
     {
-        return $this->belongsTo(Asset::class,"links_to_id");
+        return $this->belongsTo(Asset::class, "links_to_id");
     }
-    //assets that connect to this asset
+
+    /**
+     * @return HasMany Assets that connect to this asset
+     */
     public function children(): HasMany
     {
-        return $this->hasMany(Asset::class,"links_to_id");
+        return $this->hasMany(Asset::class, "links_to_id");
+    }
+
+    public function threats(): BelongsToMany
+    {
+        return $this->belongsToMany(Threat::class)->using(AssetThreat::class)->withPivot(
+            "id",
+            "probability",
+            "confidentiality_impact",
+            "availability_impact",
+            "integrity_impact",
+            "residual_risk",
+            "residual_risk_accepted"
+        );
     }
 }

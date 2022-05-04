@@ -52,8 +52,7 @@ object Control
 Control : ID = PK
 Control : Name
 Control : Description
-Control : Threat
-Control *-> Threat
+Control <-> Threat : Pivot
 object SecurityOfficer
 SecurityOfficer : ID = PK
 SecurityOfficer : EntityName
@@ -76,7 +75,7 @@ PermanentContactPoint : OtherAlternativeContacts
 object AssetThreat
 AssetThreat : ID = PK
 AssetThreat : Asset = FK
-AssetThreat : Risk = FK
+AssetThreat : Threat = FK
 AssetThreat : Probability
 AssetThreat : ConfidentialityImpact
 AssetThreat : AvailabilityImpact
