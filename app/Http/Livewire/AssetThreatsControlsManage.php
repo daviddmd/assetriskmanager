@@ -126,8 +126,10 @@ class AssetThreatsControlsManage extends Component
     public function toggleValidationControl($asset_threat_control_id)
     {
         $this->authorize("delete", $this->asset);
-        $asset_threat_control = AssetThreatControl::where("id", "=", $asset_threat_control_id);
-        $asset_threat_control->update(["validated" => !$asset_threat_control->validated]);
+        $asset_threat_control = AssetThreatControl::where("id", "=", $asset_threat_control_id)->first();
+        $asset_threat_control->update([
+            "validated" => !$asset_threat_control->validated
+        ]);
     }
 
     public function addThreat()

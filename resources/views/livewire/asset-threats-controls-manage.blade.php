@@ -112,7 +112,14 @@
                         <td class="px-6 py-4">{{$control->name}}</td>
                         <td class="px-6 py-4">{{$control->description}}</td>
                         <td class="px-6 py-4">{{  __("enums.".$control->pivot->control_type->name) }}</td>
-                        <td class="px-6 py-4">{{$control->pivot->validated}}</td>
+
+                        <td class="px-6 py-4">
+                            <input
+                                wire:click="toggleValidationControl({{$control->pivot->id}})"
+                                class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                type="checkbox" {{Auth::user()->role!=\App\Enums\UserRole::SECURITY_OFFICER ? "disabled" : ""}}
+                                {{$control->pivot->validated ? "checked" : ""}}>
+                        </td>
                         <td class="px-6 py-4">
                             @can("update",$asset)
                                 <button wire:click="removeControl({{$threat->pivot->id}},{{$control->id}})"
