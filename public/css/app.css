@@ -957,10 +957,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   grid-column: span 6 / span 6;
 }.float-left {
   float: left;
-}.m-2 {
-  margin: 0.5rem;
 }.m-0 {
   margin: 0px;
+}.m-2 {
+  margin: 0.5rem;
 }.mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -1017,18 +1017,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-bottom: 0.5rem;
 }.mb-1 {
   margin-bottom: 0.25rem;
+}.-mb-px {
+  margin-bottom: -1px;
 }.mt-0 {
   margin-top: 0px;
 }.mb-5 {
   margin-bottom: 1.25rem;
-}.-mt-px {
-  margin-top: -1px;
 }.mb-3 {
   margin-bottom: 0.75rem;
-}.-mb-px {
-  margin-bottom: -1px;
-}.box-border {
-  box-sizing: border-box;
+}.-mt-px {
+  margin-top: -1px;
 }.block {
   display: block;
 }.inline-block {
@@ -1063,8 +1061,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 2.5rem;
 }.h-20 {
   height: 5rem;
-}.h-32 {
-  height: 8rem;
 }.min-h-screen {
   min-height: 100vh;
 }.w-5 {
@@ -1099,8 +1095,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 5rem;
 }.w-64 {
   width: 16rem;
-}.w-32 {
-  width: 8rem;
 }.min-w-0 {
   min-width: 0px;
 }.max-w-screen-xl {
@@ -1221,10 +1215,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-space-x-reverse: 0;
   margin-right: calc(0.5rem * var(--tw-space-x-reverse));
   margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
-}.divide-y > :not([hidden]) ~ :not([hidden]) {
-  --tw-divide-y-reverse: 0;
-  border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
-  border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
 }.overflow-hidden {
   overflow: hidden;
 }.overflow-x-auto {
@@ -1296,8 +1286,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-right-width: 1px;
 }.border-solid {
   border-style: solid;
-}.border-dashed {
-  border-style: dashed;
 }.border-double {
   border-style: double;
 }.border-gray-300 {
@@ -1320,15 +1308,15 @@ Ensure the default browser behavior of the `hidden` attribute.
 }.border-blue-600 {
   --tw-border-opacity: 1;
   border-color: rgb(28 100 242 / var(--tw-border-opacity));
+}.border-black {
+  --tw-border-opacity: 1;
+  border-color: rgb(0 0 0 / var(--tw-border-opacity));
 }.border-red-400 {
   --tw-border-opacity: 1;
   border-color: rgb(249 128 128 / var(--tw-border-opacity));
 }.border-gray-400 {
   --tw-border-opacity: 1;
   border-color: rgb(156 163 175 / var(--tw-border-opacity));
-}.border-black {
-  --tw-border-opacity: 1;
-  border-color: rgb(0 0 0 / var(--tw-border-opacity));
 }.bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
@@ -1909,12 +1897,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 }.dark .dark\:bg-red-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(224 36 36 / var(--tw-bg-opacity));
-}.dark .dark\:bg-gray-900 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
 }.dark .dark\:bg-green-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(5 122 85 / var(--tw-bg-opacity));
+}.dark .dark\:bg-gray-900 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
 }.dark .dark\:bg-opacity-80 {
   --tw-bg-opacity: 0.8;
 }.dark .dark\:text-white {
@@ -1968,12 +1956,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 }.dark .dark\:focus\:border-blue-500:focus {
   --tw-border-opacity: 1;
   border-color: rgb(63 131 248 / var(--tw-border-opacity));
-}.dark .dark\:focus\:ring-blue-800:focus {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(30 66 159 / var(--tw-ring-opacity));
 }.dark .dark\:focus\:ring-blue-500:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(63 131 248 / var(--tw-ring-opacity));
+}.dark .dark\:focus\:ring-blue-800:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(30 66 159 / var(--tw-ring-opacity));
 }.dark .dark\:focus\:ring-red-900:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(119 29 29 / var(--tw-ring-opacity));

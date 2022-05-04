@@ -9,6 +9,12 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
+/**
+ * This livewire component allows the search of an asset for a security officer. This is used in the asset creation
+ * form to pre-define the asset that an asset may link to, since there is no need to have strict rules around what
+ * assets may be returned in the search (such as not returning assets that are linked to itself, assets that are managed
+ * by the own user, asset with the same ID,etc.)
+ */
 class AssetSearch extends Component
 {
     use AuthorizesRequests;

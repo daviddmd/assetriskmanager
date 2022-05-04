@@ -46,13 +46,17 @@
             </tbody>
         </table>
         <div class="mb-3 xl:w-96">
+            <input
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                type="text" wire:model.lazy="searchTerm"
+                placeholder="{{__("Control Name/Description")}}">
             <select
                 class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 aria-label="Select Control to Add"
                 wire:model.defer="control">
-                <option selected hidden value="">{{__("Select Control to Add")}}</option>
-                @foreach($all_controls as $control)
-                    <option value="{{$control->id}}">{{$control->id.":".$control->name}}</option>
+                <option value="" disabled selected>{{__("Select Control to Add")}}</option>
+                @foreach($controls_search as $control)
+                    <option value="{{$control->id}}">{{$control->id.":".$control->name.":".$control->description}}</option>
                 @endforeach
             </select>
             <button wire:click="addControl" type="button"

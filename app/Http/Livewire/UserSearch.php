@@ -7,6 +7,9 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
+/**
+ * Livewire component to allow searching of all users in the platform. Used on the asset creation and management forms.
+ */
 class UserSearch extends Component
 {
     use AuthorizesRequests;
