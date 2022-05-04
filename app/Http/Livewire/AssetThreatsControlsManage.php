@@ -2,10 +2,14 @@
 
 namespace App\Http\Livewire;
 
+use App\Enums\ControlType;
 use App\Models\AssetThreat;
+use App\Models\AssetThreatControl;
+use App\Models\Control;
 use App\Models\Threat;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Enum;
 use Livewire\Component;
 
 
@@ -15,6 +19,7 @@ use Livewire\Component;
  * It'll present a form that allows to search and add threats, and for each threat it'll present the applied controls with all
  * the pivot attributes. All the threats and controls may be added, validated, removed and remaining risk confirmed.
  */
+//FIXME MODULARIZAR O MAIS POSSÍVEL, especialmente parte de adicionar controlos a uma ameaça de um ativo
 class AssetThreatsControlsManage extends Component
 {
     use AuthorizesRequests;
@@ -25,7 +30,6 @@ class AssetThreatsControlsManage extends Component
     public $threatSearchTerm = "";
     public $threatsSearch = array();
     public $selectedThreat = "";
-    public $selectedControl = "";
 
     public $probability = 0;
     public $availability_impact = 0;
@@ -33,6 +37,12 @@ class AssetThreatsControlsManage extends Component
     public $confidentiality_impact = 0;
     public $residual_risk = 0;
     public $residual_risk_accepted = "";
+
+    public $selectedAssetThreat = "";
+    public $assetThreatControlAddDialogOpen = false;
+    public $availableControls = array();
+    public $selectedControl = "";
+    public $selectedControlType = "";
 
     public function mount($asset)
     {
@@ -43,13 +53,21 @@ class AssetThreatsControlsManage extends Component
     {
         $this->threatSearchTerm = "";
         $this->selectedThreat = "";
+
         $this->probability = 0;
         $this->integrity_impact = 0;
         $this->availability_impact = 0;
         $this->confidentiality_impact = 0;
         $this->residual_risk = 0;
         $this->residual_risk_accepted = "";
+
+
+        $this->selectedAssetThreat = "";
         $this->selectedControl = "";
+        $this->availableControls = array();
+        $this->selectedControlType = "";
+
+
     }
 
     public function render()
@@ -73,9 +91,43 @@ class AssetThreatsControlsManage extends Component
         ]);
     }
 
-    public function openCreateThreatDialog(){
+    public function openCreateThreatDialog()
+    {
         $this->resetForm();
         $this->assetThreatAddDialogOpen = true;
+    }
+
+    public function openCreateThreatControlDialog($asset_threat_id)
+    {
+        $this->resetForm();
+        $this->availableControls = AssetThreat::findOrFail($asset_threat_id)->availableControls();
+        $this->selectedAssetThreat = $asset_threat_id;
+        $this->assetThreatControlAddDialogOpen = true;
+    }
+
+    public function addControl()
+    {
+        $this->authorize("update", $this->asset);
+        $validated = $this->validate([
+            "selectedAssetThreat" => [Rule::exists("asset_threat", "id"), "required"],
+            "selectedControl" => [Rule::exists("controls", "id"), "required"],
+            "selectedControlType" => ["required", new Enum(ControlType::class)],
+        ]);
+        $asset_threat = AssetThreat::where("id", "=", $this->selectedAssetThreat)->first();
+        $asset_threat->controls()->attach($this->selectedControl, ["control_type" => $this->selectedControlType]);
+        $this->assetThreatControlAddDialogOpen = false;
+        $this->resetForm();
+    }
+
+    /**
+     * @return void
+     * Only the Security Officer may Validate a Control, so the permission to delete an asset is used instead.
+     */
+    public function toggleValidationControl($asset_threat_control_id)
+    {
+        $this->authorize("delete", $this->asset);
+        $asset_threat_control = AssetThreatControl::where("id", "=", $asset_threat_control_id);
+        $asset_threat_control->update(["validated" => !$asset_threat_control->validated]);
     }
 
     public function addThreat()
@@ -135,5 +187,12 @@ class AssetThreatsControlsManage extends Component
         $this->availability_impact = $asset_threat->availability_impact;
         $this->confidentiality_impact = $asset_threat->confidentiality_impact;
         $this->assetThreatEditDialogOpen = true;
+    }
+
+    public function removeControl($asset_threat_id, $control_id)
+    {
+        $this->authorize("update", $this->asset);
+        $asset_threat = AssetThreat::where("id", "=", $asset_threat_id)->first();
+        $asset_threat->controls()->detach($control_id);
     }
 }

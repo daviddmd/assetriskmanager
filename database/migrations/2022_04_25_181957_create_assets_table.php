@@ -33,7 +33,6 @@ return new class extends Migration {
             $table->integer("confidentiality_appreciation")->default(0);
             $table->boolean("export")->default(true);
             $table->boolean("active")->default(true);
-            //$table->enum("status", ["INITIAL","AWAITS_THREATS", "AWAITS_TREATMENTS", "AWAITS_VALIDATION", "AWAITS_CONFIRMATION","COMPLETE"])->default("INITIAL");
 
 
         });

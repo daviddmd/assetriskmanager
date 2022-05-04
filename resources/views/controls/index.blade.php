@@ -39,11 +39,6 @@
                                 <th scope="col" class="px-6 py-3">
                                     {{__("Threats")}}
                                 </th>
-                                <!--
-                                <th scope="col" class="px-6 py-3">
-                                    {{__("Assets")}}
-                                </th>
-                                -->
                                 <th scope="col" class="px-6 py-3">
                                     {{__("Action")}}
                                 </th>

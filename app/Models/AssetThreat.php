@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class AssetThreat extends Pivot
 {
-    //fixme métodos: all controls validated? -> definir e aceitar risco restante; absolute risk; final risk score;
-    //fixme função idêntica para calcular a cor das ameaças num assetrisk
+    //fixme métodos: all controls validated? -> definir e aceitar risco restante;
     protected $fillable = [
         "probability",
         "confidentiality_impact",
@@ -17,7 +18,7 @@ class AssetThreat extends Pivot
         "residual_risk_accepted",
     ];
 
-    public function color($score)
+    public function color($score): string
     {
         return match ($score) {
             1 => "green",
@@ -29,7 +30,7 @@ class AssetThreat extends Pivot
         };
     }
 
-    public function absoluteRiskColor($score)
+    public function absoluteRiskColor($score): string
     {
         if ($score >= 0 && $score <= 5) {
             return "green";
@@ -49,9 +50,18 @@ class AssetThreat extends Pivot
         return "white";
     }
 
-    public function absoluteRisk()
+    public function absoluteRisk(): float|int
     {
         return max([$this->confidentiality_impact, $this->availability_impact, $this->integrity_impact]) * $this->probability;
     }
-    //fixme risco final definido na tabela para evitar lookups
+
+    public function controls()
+    {
+        return $this->belongsToMany(Control::class, "asset_threat_control", "asset_threat_id")->using(AssetThreatControl::class)->withPivot("validated", "control_type","id");
+    }
+
+    public function availableControls()
+    {
+        return DB::table("controls")->whereNotIn("control_id", $this->controls()->pluck("control_id")->toArray())->join("control_threat", "control_threat.control_id", "=", "controls.id")->where("control_threat.threat_id", "=", $this->threat_id)->get();
+    }
 }
