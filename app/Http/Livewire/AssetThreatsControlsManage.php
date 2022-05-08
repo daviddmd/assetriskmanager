@@ -171,7 +171,7 @@ class AssetThreatsControlsManage extends Component
             "availability_impact" => ["required", "min:1", "max:5"],
             "confidentiality_impact" => ["required", "min:1", "max:5"],
             "integrity_impact" => ["required", "min:1", "max:5"],
-            "residual_risk" => ["required", "min:1", "max:5"]
+            "residual_risk" => ["required", "min:0", "max:5"]
         ]);
         AssetThreat::findOrFail($this->selectedAssetThreat)->update(
             [

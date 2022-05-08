@@ -26,6 +26,11 @@
                         </ul>
                     </div>
                     <div id="tabsContent">
+                        <div class="hidden p-4" id="threats_controls" role="tabpanel"
+                             aria-labelledby="threats-controls-tab">
+                            <livewire:asset-threats-controls-manage
+                                :asset="$asset"></livewire:asset-threats-controls-manage>
+                        </div>
                         <div class="hidden p-4" id="details" role="tabpanel"
                              aria-labelledby="details-tab">
                             <form method="POST" action="{{route('assets.update',$asset->id)}}">
@@ -266,7 +271,7 @@
                                     @csrf
                                     @method("DELETE")
                                     <button type="submit"
-                                            onclick="confirm('{{__("Are you sure you want to delete this asset? This will delete all associated information with it.")}}')"
+                                            onclick="return confirm('{{__("Are you sure you want to delete this asset? This will delete all associated information with it.")}}')"
                                             class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">{{__("Delete")}}</button>
                                 </form>
                             @endcan
@@ -309,24 +314,24 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($asset->children as $asset)
+                                        @foreach($asset->children as $child)
                                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                                <td class="px-6 py-4">{{$asset->id}}</td>
-                                                <td class="px-6 py-4">{{$asset->name}}</td>
-                                                <td class="px-6 py-4">{{$asset->type->name}}</td>
-                                                <td class="px-6 py-4">{{$asset->sku}}</td>
-                                                <td class="px-6 py-4">{{$asset->ip_address}}</td>
-                                                <td class="px-6 py-4">{{$asset->mac_address}}</td>
-                                                <td class="px-6 py-4">{{$asset->manufacturer}}</td>
-                                                <td class="px-6 py-4">{{$asset->location}}</td>
+                                                <td class="px-6 py-4">{{$child->id}}</td>
+                                                <td class="px-6 py-4">{{$child->name}}</td>
+                                                <td class="px-6 py-4">{{$child->type->name}}</td>
+                                                <td class="px-6 py-4">{{$child->sku}}</td>
+                                                <td class="px-6 py-4">{{$child->ip_address}}</td>
+                                                <td class="px-6 py-4">{{$child->mac_address}}</td>
+                                                <td class="px-6 py-4">{{$child->manufacturer}}</td>
+                                                <td class="px-6 py-4">{{$child->location}}</td>
                                                 <td class="px-6 py-4">
-                                                    @can("update",$asset)
-                                                        <a href="{{route("assets.edit",$asset->id)}}"
+                                                    @can("update",$child)
+                                                        <a href="{{route("assets.edit",$child->id)}}"
                                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                                                             {{__("Manage")}}
                                                         </a>
                                                     @else
-                                                        <a href="{{route("assets.show",$asset->id)}}"
+                                                        <a href="{{route("assets.show",$child->id)}}"
                                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                                                         {{__("View")}}
                                                     @endcan
@@ -337,11 +342,6 @@
                                     </table>
                                 </div>
                             @endif
-                        </div>
-
-                        <div class="hidden p-4" id="threats_controls" role="tabpanel"
-                             aria-labelledby="threats-controls-tab">
-                            @livewire("asset-threats-controls-manage",["asset"=>$asset])
                         </div>
                     </div>
 

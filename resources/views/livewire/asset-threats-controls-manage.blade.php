@@ -60,7 +60,9 @@
                         class="px-3 py-4">{{$threat->confidentiality_impact}}</td>
                     <td style="background-color: {{$threat->absoluteRiskColor($threat->absoluteRisk())}}"
                         class="px-3 py-4">{{$threat->absoluteRisk()}}</td>
-                    <td class="px-3 py-4">{{$threat->absoluteRisk()*$asset->totalAppreciation()}}</td>
+                    <td style="background-color: {{$threat->absoluteRiskColor(($threat->absoluteRisk()*$asset->totalAppreciation())/5)}}"
+                        class="px-3 py-4">
+                        {{$threat->absoluteRisk()*$asset->totalAppreciation()}},{{$asset->name}}</td>
                     <td class="px-3 py-4">
                         @can("update",$asset)
                             <button wire:click="editThreat({{$threat->id}})" type="button"
@@ -296,7 +298,7 @@
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                             {{__("Residual Risk After Controls")}}
                         </label>
-                        <input type="number" id="residual_risk" min="1" max="5"
+                        <input type="number" id="residual_risk" min="0" max="5"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                wire:model.defer="residual_risk">
                         @error('residual_risk') <span class="error">{{ $message }}</span> @enderror

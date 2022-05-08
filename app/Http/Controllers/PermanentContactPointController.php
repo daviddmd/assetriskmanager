@@ -30,10 +30,10 @@ class PermanentContactPointController extends Controller
     public function index(Request $request)
     {
         if ($request->has("export")) {
-            return Excel::download(new PermanentContactPointExport, "permanent_contact_point.ods");
+            return Excel::download(new PermanentContactPointExport, config("constants.permanent_contact_point_file_name"));
         }
         $permanentContactPoints = PermanentContactPoint::all();
-        return view("permanent-contact-point.index",["permanentContactPoints"=>$permanentContactPoints]);
+        return view("permanent-contact-point.index", ["permanentContactPoints" => $permanentContactPoints]);
     }
 
     /**
@@ -127,6 +127,6 @@ class PermanentContactPointController extends Controller
     public function destroy(PermanentContactPoint $permanentContactPoint)
     {
         $permanentContactPoint->delete();
-        return redirect()->route("permanent-contact-point.index")->with("status","Permanent Contact Point Deleted");
+        return redirect()->route("permanent-contact-point.index")->with("status", "Permanent Contact Point Deleted");
     }
 }
