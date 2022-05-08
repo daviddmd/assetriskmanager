@@ -18,6 +18,9 @@
                         <x-jet-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                             {{ __('Users') }}
                         </x-jet-nav-link>
+                        <x-jet-nav-link :href="route('reports')" :active="request()->routeIs('reports')">
+                            {{ __('Reports') }}
+                        </x-jet-nav-link>
                     @endcan
                     <x-jet-nav-link :href="route('assets.index')" :active="request()->routeIs('assets.index')">
                         {{ __('Assets') }}

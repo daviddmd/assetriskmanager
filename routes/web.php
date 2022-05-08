@@ -5,6 +5,7 @@ use App\Http\Controllers\AssetTypeController;
 use App\Http\Controllers\ControlController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\PermanentContactPointController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SecurityOfficerController;
 use App\Http\Controllers\ThreatController;
 use App\Http\Controllers\UserController;
@@ -41,5 +42,5 @@ Route::middleware([
     Route::resource("threats", ThreatController::class);
     Route::resource("controls", ControlController::class);
     Route::resource("assets", AssetController::class);
-
+    Route::get("reports", ReportController::class)->name("reports");
 });

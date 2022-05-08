@@ -123,8 +123,7 @@ class AssetController extends Controller
      */
     public function show(Asset $asset)
     {
-        //fixme parte dos controls+risks remover livewire para tabela regular
-        //fixme migrar de svg inline para local
+        //fixme ícone svg/geral customizável ou simplesmente app name como laravel stock
         return view("assets.show", ["asset" => $asset]);
     }
 

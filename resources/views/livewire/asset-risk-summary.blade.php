@@ -1,5 +1,4 @@
 <div>
-    <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">Risk Summary</h2>
     @can("delete",$this->asset)
         <div class="flex justify-center">
             @if($this->asset->remainingRiskAccepted)

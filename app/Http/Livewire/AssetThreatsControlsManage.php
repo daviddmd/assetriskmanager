@@ -104,7 +104,11 @@ class AssetThreatsControlsManage extends Component
         $this->selectedAssetThreat = $asset_threat_id;
         $this->assetThreatControlAddDialogOpen = true;
     }
-
+    public function unsetRemainingRiskAcceptance(){
+        $this->asset->update(
+            ["remainingRiskAccepted"=>false]
+        );
+    }
     public function addControl()
     {
         $this->authorize("update", $this->asset);
@@ -118,6 +122,7 @@ class AssetThreatsControlsManage extends Component
             "control_id" => $this->selectedControl,
             "control_type" => $this->selectedControlType
         ]);
+        $this->unsetRemainingRiskAcceptance();
         $this->assetThreatControlAddDialogOpen = false;
     }
 
@@ -152,6 +157,7 @@ class AssetThreatsControlsManage extends Component
             "confidentiality_impact" => $this->confidentiality_impact,
             "integrity_impact" => $this->integrity_impact
         ]);
+        $this->unsetRemainingRiskAcceptance();
         $this->assetThreatAddDialogOpen = false;
     }
 
@@ -159,7 +165,7 @@ class AssetThreatsControlsManage extends Component
     {
         $this->authorize("update", $this->asset);
         AssetThreat::findOrFail($id)->delete();
-
+        $this->unsetRemainingRiskAcceptance();
     }
 
     public function updateThreat()
@@ -182,6 +188,7 @@ class AssetThreatsControlsManage extends Component
                 "residual_risk_accepted" => $this->residual_risk_accepted
             ]
         );
+        $this->unsetRemainingRiskAcceptance();
         $this->assetThreatEditDialogOpen = false;
     }
 
@@ -204,5 +211,6 @@ class AssetThreatsControlsManage extends Component
     {
         $this->authorize("update", $this->asset);
         AssetThreatControl::findOrFail($control_id)->delete();
+        $this->unsetRemainingRiskAcceptance();
     }
 }

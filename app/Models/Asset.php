@@ -11,12 +11,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Asset extends Model
 {
-    //fixme novo controlador logs -> tabs para cada tipo logs -> com paginacao log asset : pesquisa tipo operacao e id asset
-    //log asset : data, operacao, asset, responsavel (operacao), ip
-    //fixme logs em BD APENAS para asset e ficheiro texto para todos os outros (incluindo asset)
-    //data:ip:utilizador:ADICIONAR AMEACA (ID:X) A ATIVO(Y)
-    //fixme readme passos instalacao
-    //fixme no grafico de dependencias, quadrados estao colorizados pelo seu risco final, e formas para asset type com legenda canto inferior, IP, fqdn, asset type
+    /*
+     * TODO logs texto para todas operações sistema: data, ip, utilizador, operação por extenso, com separador
+     * TODO Controlador logs apenas para assets, com operações pelo tipo de operação, asset, order by date, responsável operação
+     * TODO README/INSTALLATION com passos para instalação/configuração em ambiente dev e produção (docker/sail)
+     * TODO grafo de dependências com NeoEloquent, GraphViz ou JS, nós colorizados pelo seu risco final com IP, FQDN e asset type e nome
+     * Elementos para grafo: Nós: Asset (ID: FQDN; IP; MAC e cor do nó); Relação entre asset ID_A->ID_B
+     */
     use HasFactory;
 
     protected $fillable = [
@@ -107,6 +108,7 @@ class Asset extends Model
 
     public function highestRemainingRisk()
     {
-        return max($this->threats()->pluck("residual_risk")->toArray());
+        $residual_risks = $this->threats()->get()->pluck("residual_risk")->toArray();
+        return empty($residual_risks) ? 0 : max($residual_risks);
     }
 }
