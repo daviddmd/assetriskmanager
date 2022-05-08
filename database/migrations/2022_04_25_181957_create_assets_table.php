@@ -26,8 +26,8 @@ return new class extends Migration {
             $table->date("manufacturer_contract_beginning_date")->nullable();
             $table->date("manufacturer_contract_ending_date")->nullable();
             $table->string("manufacturer_contract_provider")->nullable();
-            $table->string("mac_address");
-            $table->string("ip_address");
+            $table->string("mac_address")->nullable();
+            $table->string("ip_address")->nullable();
             $table->integer("availability_appreciation")->default(0);
             $table->integer("integrity_appreciation")->default(0);
             $table->integer("confidentiality_appreciation")->default(0);

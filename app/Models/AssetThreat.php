@@ -59,14 +59,17 @@ class AssetThreat extends Model
     {
         return $this->hasMany(AssetThreatControl::class);
     }
+
     public function threat(): BelongsTo
     {
-        return $this->belongsTo(Threat::class,"threat_id");
+        return $this->belongsTo(Threat::class, "threat_id");
     }
+
     public function asset(): BelongsTo
     {
-        return $this->belongsTo(Asset::class,"asset_id");
+        return $this->belongsTo(Asset::class, "asset_id");
     }
+
     public function availableControls()
     {
         return Control::whereNotIn("id", $this->controls()->pluck("control_id")->toArray())->

@@ -19,8 +19,8 @@
                             <li class="mr-2" role="presentation">
                                 <button
                                     class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                                    id="settings-tab" data-tabs-target="#risks" type="button" role="tab"
-                                    aria-controls="risks" aria-selected="false">Risks/Controls
+                                    id="settings-tab" data-tabs-target="#threats_controls" type="button" role="tab"
+                                    aria-controls="threats_controls" aria-selected="false">Threats/Controls
                                 </button>
                             </li>
                         </ul>
@@ -157,13 +157,20 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="mb-6">
                                     <label for="mac_address"
                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("MAC Address")}}</label>
                                     <input type="text" id="mac_address" name="mac_address"
                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                            value="{{$asset->mac_address}}"
+                                           required>
+                                </div>
+                                <div class="mb-6">
+                                    <label for="fqdn"
+                                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("FQDN")}}</label>
+                                    <input type="text" id="fqdn" name="fqdn"
+                                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                           value="{{$asset->fqdn}}"
                                            required>
                                 </div>
                                 <div class="mb-6">
@@ -332,8 +339,8 @@
                             @endif
                         </div>
 
-                        <div class="hidden p-4" id="risks" role="tabpanel"
-                             aria-labelledby="risks-controls-tab">
+                        <div class="hidden p-4" id="threats_controls" role="tabpanel"
+                             aria-labelledby="threats-controls-tab">
                             @livewire("asset-threats-controls-manage",["asset"=>$asset])
                         </div>
                     </div>

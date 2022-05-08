@@ -16,7 +16,7 @@ return new class extends Migration {
         Schema::create('asset_threat_controls', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId("asset_threat_id")->constrained()->restrictOnDelete();
+            $table->foreignId("asset_threat_id")->constrained()->cascadeOnDelete();
             $table->foreignId("control_id")->constrained()->restrictOnDelete();
             $table->boolean("validated")->default(false);
             $table->enum("control_type", ["MITIGATE", "TRANSFER", "ACCEPT"])->default("ACCEPT");

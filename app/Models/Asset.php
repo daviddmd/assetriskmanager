@@ -33,6 +33,7 @@ class Asset extends Model
         "manufacturer_contract_ending_date",
         "manufacturer_contract_provider",
         "mac_address",
+        "fqdn",
         "ip_address",
         "availability_appreciation",
         "integrity_appreciation",
@@ -110,6 +111,7 @@ class Asset extends Model
     }
     //fixme adicionar boolean remainingRiskAccepted -> botao num novo separador:
     /**
+     * fixme
      * Tabela com todas ameacas e risco remanescente apos aplicar controlos -> associado a ativo A tabela: nome ameaca, descricao, total disk, remaining risk -> botao accept all remaining risk
      */
 }

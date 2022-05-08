@@ -72,7 +72,7 @@
                                 {{__("Remove")}}
                             </button>
                         @else
-                            <a href="{{route("threats.show",$threat->id)}}"
+                            <a href="{{route("threats.show",$threat->threat->id)}}"
                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                             {{__("View")}}
                         @endcan
@@ -128,7 +128,7 @@
                                     {{__("Remove")}}
                                 </button>
                             @else
-                                <a href="{{route("controls.show",$control->id)}}"
+                                <a href="{{route("controls.show",$control->control->id)}}"
                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                                 {{__("View")}}
                             @endcan
@@ -280,6 +280,26 @@
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                wire:model.defer="integrity_impact">
                         @error('integrity_impact') <span class="error">{{ $message }}</span> @enderror
+                    </div>
+                    <div class="mb-6">
+                        <label for="residual_risk_accepted"
+                               class="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                            {{__("Residual Risk Accepted?")}}
+                        </label>
+                        <input type="checkbox" id="residual_risk_accepted"
+                               {{$this->residual_risk_accepted ? "checked" : ""}}
+                               class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                               wire:model.defer="residual_risk_accepted">
+                    </div>
+                    <div class="mb-6">
+                        <label for="residual_risk"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                            {{__("Residual Risk After Controls")}}
+                        </label>
+                        <input type="number" id="residual_risk" min="1" max="5"
+                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                               wire:model.defer="residual_risk">
+                        @error('residual_risk') <span class="error">{{ $message }}</span> @enderror
                     </div>
                     <div class="flex justify-center">
                         <x-jet-button type="submit" class="ml-2" wire:loading.attr="disabled">

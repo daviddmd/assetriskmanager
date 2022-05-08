@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('asset_threats', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId("asset_id")->constrained()->restrictOnDelete();
+            $table->foreignId("asset_id")->constrained()->cascadeOnDelete();
             $table->foreignId("threat_id")->constrained()->restrictOnDelete();
             $table->integer("probability")->default(0);
             $table->integer("confidentiality_impact")->default(0);

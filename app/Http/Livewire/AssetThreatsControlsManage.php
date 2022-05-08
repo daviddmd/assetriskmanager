@@ -37,7 +37,7 @@ class AssetThreatsControlsManage extends Component
     public $integrity_impact = 0;
     public $confidentiality_impact = 0;
     public $residual_risk = 0;
-    public $residual_risk_accepted = "";
+    public $residual_risk_accepted = false;
 
     public $selectedAssetThreat = "";
     public $assetThreatControlAddDialogOpen = false;
@@ -60,7 +60,7 @@ class AssetThreatsControlsManage extends Component
         $this->availability_impact = 0;
         $this->confidentiality_impact = 0;
         $this->residual_risk = 0;
-        $this->residual_risk_accepted = "";
+        $this->residual_risk_accepted = false;
 
 
         $this->selectedAssetThreat = "";
@@ -170,14 +170,17 @@ class AssetThreatsControlsManage extends Component
             "probability" => ["required", "min:1", "max:5"],
             "availability_impact" => ["required", "min:1", "max:5"],
             "confidentiality_impact" => ["required", "min:1", "max:5"],
-            "integrity_impact" => ["required", "min:1", "max:5"]
+            "integrity_impact" => ["required", "min:1", "max:5"],
+            "residual_risk" => ["required", "min:1", "max:5"]
         ]);
         AssetThreat::findOrFail($this->selectedAssetThreat)->update(
             [
                 "probability" => $this->probability,
                 "availability_impact" => $this->availability_impact,
                 "confidentiality_impact" => $this->confidentiality_impact,
-                "integrity_impact" => $this->integrity_impact
+                "integrity_impact" => $this->integrity_impact,
+                "residual_risk" => $this->residual_risk_accepted ? $this->residual_risk : 0,
+                "residual_risk_accepted" => $this->residual_risk_accepted
             ]
         );
         $this->assetThreatEditDialogOpen = false;
@@ -193,6 +196,8 @@ class AssetThreatsControlsManage extends Component
         $this->integrity_impact = $asset_threat->integrity_impact;
         $this->availability_impact = $asset_threat->availability_impact;
         $this->confidentiality_impact = $asset_threat->confidentiality_impact;
+        $this->residual_risk = $asset_threat->residual_risk;
+        $this->residual_risk_accepted = $asset_threat->residual_risk_accepted;
         $this->assetThreatEditDialogOpen = true;
     }
 
