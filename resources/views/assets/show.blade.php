@@ -482,14 +482,70 @@
                                             <div class="w-full border-t-8 border-gray-300"></div>
                                         </div>
                                     @endif
-
                                 @endforeach
                             </div>
 
                         </div>
                         <div class="hidden p-4" id="risk_summary" role="tabpanel"
                              aria-labelledby="risk_summary-tab">
-                            <b>Risk Summary</b>
+                            <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">Risk Summary</h2>
+                            <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-5">
+                                <table
+                                    class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-separate">
+                                    <thead
+                                        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                    <tr>
+                                        <th scope="col" class="px-3 py-3">
+                                            {{__("ID")}}
+                                        </th>
+                                        <th scope="col" class="px-3 py-3">
+                                            {{__("Threat Name")}}
+                                        </th>
+                                        <th scope="col" class="px-3 py-3">
+                                            {{__("Threat Description")}}
+                                        </th>
+                                        <th scope="col" class="px-3 py-3">
+                                            {{__("Controls Applied")}}
+                                        </th>
+                                        <th scope="col" class="px-3 py-3">
+                                            {{__("Total Risk")}}
+                                        </th>
+                                        <th scope="col" class="px-3 py-3">
+                                            {{__("Remaining Risk After Controls")}}
+                                        </th>
+                                        <th scope="col" class="px-3 py-3">
+                                            {{__("Action")}}
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($asset->threats as $threat)
+                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-gray-900">
+                                            <td class="px-3 py-4">{{$threat->id}}</td>
+                                            <td class="px-3 py-4">{{$threat->threat->name}}</td>
+                                            <td class="px-3 py-4">{{$threat->threat->description}}</td>
+                                            <td class="px-3 py-4">{{$threat->controls()->count()}}</td>
+                                            <td style="background-color: {{$threat->absoluteRiskColor(($threat->totalRisk($asset->totalAppreciation()))/5)}}"
+                                                class="px-3 py-4">
+                                                {{$threat->totalRisk($asset->totalAppreciation())}}</td>
+                                            <td style="background-color: {{$threat->color($threat->residual_risk)}}"
+                                                class="px-3 py-4">
+                                                {{$threat->residual_risk}}
+                                            </td>
+                                            <td class="px-3 py-4">
+                                                <a href="{{route("threats.show",$threat->threat->id)}}"
+                                                   class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                                                   target="_blank">
+                                                    {{__("View")}}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
+
                         </div>
                     </div>
 
