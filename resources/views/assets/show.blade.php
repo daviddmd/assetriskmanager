@@ -1,9 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{__("Edit Asset")}}</h2>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{__("View Asset")}}</h2>
     </x-slot>
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="mb-4 border-b border-gray-200">
@@ -21,6 +21,13 @@
                                     class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
                                     id="settings-tab" data-tabs-target="#threats_controls" type="button" role="tab"
                                     aria-controls="threats_controls" aria-selected="false">Threats/Controls
+                                </button>
+                            </li>
+                            <li class="mr-2" role="presentation">
+                                <button
+                                    class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                    id="settings-tab" data-tabs-target="#risk_summary" type="button" role="tab"
+                                    aria-controls="risk_summary" aria-selected="false">Risk Summary
                                 </button>
                             </li>
                         </ul>
@@ -321,26 +328,26 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($asset->children as $asset)
+                                        @foreach($asset->children as $child)
                                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                                <td class="px-6 py-4">{{$asset->id}}</td>
-                                                <td class="px-6 py-4">{{$asset->name}}</td>
-                                                <td class="px-6 py-4">{{$asset->type->name}}</td>
-                                                <td class="px-6 py-4">{{$asset->sku}}</td>
-                                                <td class="px-6 py-4">{{$asset->ip_address}}</td>
-                                                <td class="px-6 py-4">{{$asset->mac_address}}</td>
-                                                <td class="px-6 py-4">{{$asset->manufacturer}}</td>
-                                                <td class="px-6 py-4">{{$asset->location}}</td>
+                                                <td class="px-6 py-4">{{$child->id}}</td>
+                                                <td class="px-6 py-4">{{$child->name}}</td>
+                                                <td class="px-6 py-4">{{$child->type->name}}</td>
+                                                <td class="px-6 py-4">{{$child->sku}}</td>
+                                                <td class="px-6 py-4">{{$child->ip_address}}</td>
+                                                <td class="px-6 py-4">{{$child->mac_address}}</td>
+                                                <td class="px-6 py-4">{{$child->manufacturer}}</td>
+                                                <td class="px-6 py-4">{{$child->location}}</td>
                                                 <td class="px-6 py-4">
-                                                    @can("update",$asset)
-                                                        <a href="{{route("assets.edit",$asset->id)}}"
+                                                    @can("update",$child)
+                                                        <a href="{{route("assets.edit",$child->id)}}"
                                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                                                             {{__("Manage")}}
                                                         </a>
                                                     @else
-                                                        <a href="{{route("assets.show",$asset->id)}}"
+                                                        <a href="{{route("assets.show",$child->id)}}"
                                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                                        {{__("View")}}
+                                                            {{__("View")}}</a>
                                                     @endcan
                                                 </td>
                                             </tr>
@@ -354,7 +361,135 @@
                         <div class="hidden p-4 bg-gray-50 rounded-lg dark:bg-gray-800" id="threats_controls"
                              role="tabpanel"
                              aria-labelledby="threats-controls-tab">
-                            <b>Risks+Controls</b>
+                            <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-5">
+                                @foreach($asset->threats as $threat)
+                                    <table
+                                        class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-separate">
+                                        <thead
+                                            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                        <tr>
+                                            <th scope="col" class="px-3 py-3">
+                                                {{__("ID")}}
+                                            </th>
+                                            <th scope="col" class="px-3 py-3">
+                                                {{__("Name")}}
+                                            </th>
+                                            <th scope="col" class="px-3 py-3">
+                                                {{__("Description")}}
+                                            </th>
+                                            <th scope="col" class="px-3 py-3">
+                                                {{__("Probability")}}
+                                            </th>
+                                            <th scope="col" class="px-3 py-3">
+                                                {{__("Availability Impact")}}
+                                            </th>
+                                            <th scope="col" class="px-3 py-3">
+                                                {{__("Integrity Impact")}}
+                                            </th>
+                                            <th scope="col" class="px-3 py-3">
+                                                {{__("Confidentiality Impact")}}
+                                            </th>
+                                            <th scope="col" class="px-3 py-3">
+                                                {{__("Absolute Risk")}}
+                                            </th>
+                                            <th scope="col" class="px-3 py-3">
+                                                {{__("Total Risk")}}
+                                            </th>
+                                            <th scope="col" class="px-3 py-3">
+                                                {{__("Action")}}
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-gray-900">
+                                            <td class="px-3 py-4">{{$threat->id}}</td>
+                                            <td class="px-3 py-4">{{$threat->threat->name}}</td>
+                                            <td class="px-3 py-4">{{$threat->threat->description}}</td>
+                                            <td style="background-color: {{$threat->color($threat->probability)}}"
+                                                class="px-3 py-4">{{$threat->probability}}</td>
+                                            <td style="background-color: {{$threat->color($threat->availability_impact)}}"
+                                                class="px-3 py-4">{{$threat->availability_impact}}</td>
+                                            <td style="background-color: {{$threat->color($threat->integrity_impact)}}"
+                                                class="px-3 py-4">{{$threat->integrity_impact}}</td>
+                                            <td style="background-color: {{$threat->color($threat->confidentiality_impact)}}"
+                                                class="px-3 py-4">{{$threat->confidentiality_impact}}</td>
+                                            <td style="background-color: {{$threat->absoluteRiskColor($threat->absoluteRisk())}}"
+                                                class="px-3 py-4">{{$threat->absoluteRisk()}}</td>
+                                            <td style="background-color: {{$threat->absoluteRiskColor(($threat->totalRisk($asset->totalAppreciation()))/5)}}"
+                                                class="px-3 py-4">
+                                                {{$threat->totalRisk($asset->totalAppreciation())}}</td>
+                                            <td class="px-3 py-4">
+                                                <a href="{{route("threats.show",$threat->threat->id)}}"
+                                                   class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                                                   target="_blank">
+                                                    {{__("View")}}</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    @if($threat->controls()->count()>0)
+                                        <h2 class="text-center text-xl font-normal leading-normal mt-0 mb-2">
+                                            Controls</h2>
+                                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                            <thead
+                                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                            <tr>
+                                                <th scope="col" class="px-6 py-3">
+                                                    {{__("ID")}}
+                                                </th>
+                                                <th scope="col" class="px-6 py-3">
+                                                    {{__("Name")}}
+                                                </th>
+                                                <th scope="col" class="px-6 py-3">
+                                                    {{__("Description")}}
+                                                </th>
+                                                <th scope="col" class="px-6 py-3">
+                                                    {{__("Control Type")}}
+                                                </th>
+                                                <th scope="col" class="px-6 py-3">
+                                                    {{__("Validated?")}}
+                                                </th>
+                                                <th scope="col" class="px-6 py-3">
+                                                    {{__("Action")}}
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($threat->controls as $control)
+                                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-gray-900">
+                                                    <td class="px-6 py-4">{{$control->id}}</td>
+                                                    <td class="px-6 py-4">{{$control->control->name}}</td>
+                                                    <td class="px-6 py-4">{{$control->control->description}}</td>
+                                                    <td class="px-6 py-4">{{  __("enums.".$control->control_type->name) }}</td>
+
+                                                    <td class="px-6 py-4">
+                                                        <input
+                                                            class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                                            type="checkbox" disabled
+                                                            {{$control->validated ? "checked" : ""}}>
+                                                    </td>
+                                                    <td class="px-6 py-4">
+                                                        <a href="{{route("controls.show",$control->control->id)}}"
+                                                           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                                                           target="_blank">
+                                                            {{__("View")}}</a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                        <div class="py-16">
+                                            <div class="w-full border-t-8 border-gray-300"></div>
+                                        </div>
+                                    @endif
+
+                                @endforeach
+                            </div>
+
+                        </div>
+                        <div class="hidden p-4" id="risk_summary" role="tabpanel"
+                             aria-labelledby="risk_summary-tab">
+                            <b>Risk Summary</b>
                         </div>
                     </div>
 
