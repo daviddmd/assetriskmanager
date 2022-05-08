@@ -9,7 +9,7 @@
     </div>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-5">
         @foreach($threats as $threat)
-            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-separate">
                 <thead
                     class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -60,9 +60,9 @@
                         class="px-3 py-4">{{$threat->confidentiality_impact}}</td>
                     <td style="background-color: {{$threat->absoluteRiskColor($threat->absoluteRisk())}}"
                         class="px-3 py-4">{{$threat->absoluteRisk()}}</td>
-                    <td style="background-color: {{$threat->absoluteRiskColor(($threat->absoluteRisk()*$asset->totalAppreciation())/5)}}"
+                    <td style="background-color: {{$threat->absoluteRiskColor(($threat->totalRisk($asset->totalAppreciation()))/5)}}"
                         class="px-3 py-4">
-                        {{$threat->absoluteRisk()*$asset->totalAppreciation()}},{{$asset->name}}</td>
+                        {{$threat->totalRisk($asset->totalAppreciation())}}</td>
                     <td class="px-3 py-4">
                         @can("update",$asset)
                             <button wire:click="editThreat({{$threat->id}})" type="button"

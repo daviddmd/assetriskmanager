@@ -19,7 +19,6 @@ use Livewire\Component;
  * It'll present a form that allows to search and add threats, and for each threat it'll present the applied controls with all
  * the pivot attributes. All the threats and controls may be added, validated, removed and remaining risk confirmed.
  */
-//FIXME MODULARIZAR O MAIS POSSÍVEL, especialmente parte de adicionar controlos a uma ameaça de um ativo
 class AssetThreatsControlsManage extends Component
 {
     use AuthorizesRequests;

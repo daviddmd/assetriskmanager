@@ -17,7 +17,6 @@ class Asset extends Model
     //data:ip:utilizador:ADICIONAR AMEACA (ID:X) A ATIVO(Y)
     //fixme readme passos instalacao
     //fixme no grafico de dependencias, quadrados estao colorizados pelo seu risco final, e formas para asset type com legenda canto inferior, IP, fqdn, asset type
-    //fixme adicionar fqdn
     use HasFactory;
 
     protected $fillable = [
@@ -40,7 +39,8 @@ class Asset extends Model
         "confidentiality_appreciation",
         "export",
         "active",
-        "links_to_id"
+        "links_to_id",
+        "remainingRiskAccepted"
     ];
     /**
      * The attributes that should be cast.
@@ -109,9 +109,4 @@ class Asset extends Model
     {
         return max($this->threats()->pluck("residual_risk")->toArray());
     }
-    //fixme adicionar boolean remainingRiskAccepted -> botao num novo separador:
-    /**
-     * fixme
-     * Tabela com todas ameacas e risco remanescente apos aplicar controlos -> associado a ativo A tabela: nome ameaca, descricao, total disk, remaining risk -> botao accept all remaining risk
-     */
 }

@@ -23,13 +23,23 @@
                                     aria-controls="threats_controls" aria-selected="false">Threats/Controls
                                 </button>
                             </li>
+                            <li class="mr-2" role="presentation">
+                                <button
+                                    class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                    id="settings-tab" data-tabs-target="#risk_summary" type="button" role="tab"
+                                    aria-controls="risk_summary" aria-selected="false">Risk Summary
+                                </button>
+                            </li>
                         </ul>
                     </div>
                     <div id="tabsContent">
                         <div class="hidden p-4" id="threats_controls" role="tabpanel"
                              aria-labelledby="threats-controls-tab">
-                            <livewire:asset-threats-controls-manage
-                                :asset="$asset"></livewire:asset-threats-controls-manage>
+                            @livewire("asset-threats-controls-manage",["asset"=>$asset])
+                        </div>
+                        <div class="hidden p-4" id="risk_summary" role="tabpanel"
+                             aria-labelledby="risk_summary">
+                            @livewire("asset-risk-summary",["asset"=>$asset])
                         </div>
                         <div class="hidden p-4" id="details" role="tabpanel"
                              aria-labelledby="details-tab">

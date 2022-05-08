@@ -69,7 +69,10 @@ class AssetThreat extends Model
     {
         return $this->belongsTo(Asset::class, "asset_id");
     }
-
+    public function totalRisk($assetAppreciation): float|int
+    {
+        return $this->absoluteRisk()*$assetAppreciation;
+    }
     public function availableControls()
     {
         return Control::whereNotIn("id", $this->controls()->pluck("control_id")->toArray())->
