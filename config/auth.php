@@ -58,7 +58,10 @@ return [
     | Supported: "database", "eloquent"
     |
     */
-
+    /**
+     * to change from ActiveDirectory to OpenLDAP, change from LdapRecord\Models\ActiveDirectory\User::class
+     * to LdapRecord\Models\OpenLDAP\User::class
+     */
     'providers' => [
         'users' => [
             'driver' => 'ldap',

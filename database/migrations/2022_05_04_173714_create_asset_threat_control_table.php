@@ -13,10 +13,10 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('asset_threat_control', function (Blueprint $table) {
+        Schema::create('asset_threat_controls', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId("asset_threat_id")->constrained("asset_threat")->restrictOnDelete();
+            $table->foreignId("asset_threat_id")->constrained()->restrictOnDelete();
             $table->foreignId("control_id")->constrained()->restrictOnDelete();
             $table->boolean("validated")->default(false);
             $table->enum("control_type", ["MITIGATE", "TRANSFER", "ACCEPT"])->default("ACCEPT");
@@ -30,6 +30,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('asset_threat_control');
+        Schema::dropIfExists('asset_threat_controls');
     }
 };

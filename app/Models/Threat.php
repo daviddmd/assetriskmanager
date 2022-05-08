@@ -21,8 +21,9 @@ class Threat extends Model
         return $this->belongsToMany(Control::class);
     }
 
-    public function assets(): BelongsToMany
+    public function assets(): HasMany
     {
-        return $this->belongsToMany(Asset::class)->using(AssetThreat::class);
+        return $this->hasMany(AssetThreat::class,"threat_id");
+        //return $this->belongsToMany(Asset::class)->using(AssetThreat::class);
     }
 }

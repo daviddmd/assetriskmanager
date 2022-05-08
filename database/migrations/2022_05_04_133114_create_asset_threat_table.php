@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('asset_threat', function (Blueprint $table) {
+        Schema::create('asset_threats', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->foreignId("asset_id")->constrained()->restrictOnDelete();
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('asset_threat');
+        Schema::dropIfExists('asset_threats');
     }
 };

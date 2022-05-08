@@ -24,9 +24,10 @@ class AssetThreatsControlsManage extends Component
 {
     use AuthorizesRequests;
 
+    public $asset;
+
     public $assetThreatEditDialogOpen = false;
     public $assetThreatAddDialogOpen = false;
-    public $asset;
     public $threatSearchTerm = "";
     public $threatsSearch = array();
     public $selectedThreat = "";
@@ -109,14 +110,16 @@ class AssetThreatsControlsManage extends Component
     {
         $this->authorize("update", $this->asset);
         $validated = $this->validate([
-            "selectedAssetThreat" => [Rule::exists("asset_threat", "id"), "required"],
+            "selectedAssetThreat" => [Rule::exists("asset_threats", "id"), "required"],
             "selectedControl" => [Rule::exists("controls", "id"), "required"],
             "selectedControlType" => ["required", new Enum(ControlType::class)],
         ]);
-        $asset_threat = AssetThreat::where("id", "=", $this->selectedAssetThreat)->first();
-        $asset_threat->controls()->attach($this->selectedControl, ["control_type" => $this->selectedControlType]);
+        AssetThreatControl::create([
+            "asset_threat_id" => $this->selectedAssetThreat,
+            "control_id" => $this->selectedControl,
+            "control_type" => $this->selectedControlType
+        ]);
         $this->assetThreatControlAddDialogOpen = false;
-        $this->resetForm();
     }
 
     /**
@@ -126,7 +129,7 @@ class AssetThreatsControlsManage extends Component
     public function toggleValidationControl($asset_threat_control_id)
     {
         $this->authorize("delete", $this->asset);
-        $asset_threat_control = AssetThreatControl::where("id", "=", $asset_threat_control_id)->first();
+        $asset_threat_control = AssetThreatControl::findOrFail($asset_threat_control_id);
         $asset_threat_control->update([
             "validated" => !$asset_threat_control->validated
         ]);
@@ -142,20 +145,21 @@ class AssetThreatsControlsManage extends Component
             "confidentiality_impact" => ["required", "min:1", "max:5"],
             "integrity_impact" => ["required", "min:1", "max:5"]
         ]);
-        $this->asset->threats()->attach($this->selectedThreat, [
+        AssetThreat::create([
+            "asset_id" => $this->asset->id,
+            "threat_id" => $this->selectedThreat,
             "probability" => $this->probability,
             "availability_impact" => $this->availability_impact,
             "confidentiality_impact" => $this->confidentiality_impact,
             "integrity_impact" => $this->integrity_impact
         ]);
         $this->assetThreatAddDialogOpen = false;
-        $this->resetForm();
     }
 
     public function removeThreat($id)
     {
         $this->authorize("update", $this->asset);
-        $this->asset->threats()->detach($id);
+        AssetThreat::findOrFail($id)->delete();
 
     }
 
@@ -168,22 +172,23 @@ class AssetThreatsControlsManage extends Component
             "confidentiality_impact" => ["required", "min:1", "max:5"],
             "integrity_impact" => ["required", "min:1", "max:5"]
         ]);
-        $this->asset->threats()->updateExistingPivot($this->selectedThreat, [
-            "probability" => $this->probability,
-            "availability_impact" => $this->availability_impact,
-            "confidentiality_impact" => $this->confidentiality_impact,
-            "integrity_impact" => $this->integrity_impact
-        ]);
+        AssetThreat::findOrFail($this->selectedAssetThreat)->update(
+            [
+                "probability" => $this->probability,
+                "availability_impact" => $this->availability_impact,
+                "confidentiality_impact" => $this->confidentiality_impact,
+                "integrity_impact" => $this->integrity_impact
+            ]
+        );
         $this->assetThreatEditDialogOpen = false;
-        $this->resetForm();
     }
 
     public function editThreat($id)
     {
         $this->resetForm();
         $this->authorize("update", $this->asset);
-        $asset_threat = AssetThreat::where("id", "=", $id)->first();
-        $this->selectedThreat = $asset_threat->threat_id;
+        $asset_threat = AssetThreat::findOrFail($id);
+        $this->selectedAssetThreat = $id;
         $this->probability = $asset_threat->probability;
         $this->integrity_impact = $asset_threat->integrity_impact;
         $this->availability_impact = $asset_threat->availability_impact;
@@ -191,10 +196,9 @@ class AssetThreatsControlsManage extends Component
         $this->assetThreatEditDialogOpen = true;
     }
 
-    public function removeControl($asset_threat_id, $control_id)
+    public function removeControl($control_id)
     {
         $this->authorize("update", $this->asset);
-        $asset_threat = AssetThreat::where("id", "=", $asset_threat_id)->first();
-        $asset_threat->controls()->detach($control_id);
+        AssetThreatControl::findOrFail($control_id)->delete();
     }
 }

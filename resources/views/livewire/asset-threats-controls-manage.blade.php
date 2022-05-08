@@ -47,23 +47,23 @@
                 </thead>
                 <tbody>
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-gray-900">
-                    <td class="px-3 py-4">{{$threat->pivot->id}}</td>
-                    <td class="px-3 py-4">{{$threat->name}}</td>
-                    <td class="px-3 py-4">{{$threat->description}}</td>
-                    <td style="background-color: {{$threat->pivot->color($threat->pivot->probability)}}"
-                        class="px-3 py-4">{{$threat->pivot->probability}}</td>
-                    <td style="background-color: {{$threat->pivot->color($threat->pivot->availability_impact)}}"
-                        class="px-3 py-4">{{$threat->pivot->availability_impact}}</td>
-                    <td style="background-color: {{$threat->pivot->color($threat->pivot->integrity_impact)}}"
-                        class="px-3 py-4">{{$threat->pivot->integrity_impact}}</td>
-                    <td style="background-color: {{$threat->pivot->color($threat->pivot->confidentiality_impact)}}"
-                        class="px-3 py-4">{{$threat->pivot->confidentiality_impact}}</td>
-                    <td style="background-color: {{$threat->pivot->absoluteRiskColor($threat->pivot->absoluteRisk())}}"
-                        class="px-3 py-4">{{$threat->pivot->absoluteRisk()}}</td>
-                    <td class="px-3 py-4">{{$threat->pivot->absoluteRisk()*$asset->totalAppreciation()}}</td>
+                    <td class="px-3 py-4">{{$threat->id}}</td>
+                    <td class="px-3 py-4">{{$threat->threat->name}}</td>
+                    <td class="px-3 py-4">{{$threat->threat->description}}</td>
+                    <td style="background-color: {{$threat->color($threat->probability)}}"
+                        class="px-3 py-4">{{$threat->probability}}</td>
+                    <td style="background-color: {{$threat->color($threat->availability_impact)}}"
+                        class="px-3 py-4">{{$threat->availability_impact}}</td>
+                    <td style="background-color: {{$threat->color($threat->integrity_impact)}}"
+                        class="px-3 py-4">{{$threat->integrity_impact}}</td>
+                    <td style="background-color: {{$threat->color($threat->confidentiality_impact)}}"
+                        class="px-3 py-4">{{$threat->confidentiality_impact}}</td>
+                    <td style="background-color: {{$threat->absoluteRiskColor($threat->absoluteRisk())}}"
+                        class="px-3 py-4">{{$threat->absoluteRisk()}}</td>
+                    <td class="px-3 py-4">{{$threat->absoluteRisk()*$asset->totalAppreciation()}}</td>
                     <td class="px-3 py-4">
                         @can("update",$asset)
-                            <button wire:click="editThreat({{$threat->pivot->id}})" type="button"
+                            <button wire:click="editThreat({{$threat->id}})" type="button"
                                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                                 {{__("Edit")}}
                             </button>
@@ -106,23 +106,23 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($threat->pivot->controls as $control)
+                @foreach($threat->controls as $control)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-gray-900">
-                        <td class="px-6 py-4">{{$control->pivot->id}}</td>
-                        <td class="px-6 py-4">{{$control->name}}</td>
-                        <td class="px-6 py-4">{{$control->description}}</td>
-                        <td class="px-6 py-4">{{  __("enums.".$control->pivot->control_type->name) }}</td>
+                        <td class="px-6 py-4">{{$control->id}}</td>
+                        <td class="px-6 py-4">{{$control->control->name}}</td>
+                        <td class="px-6 py-4">{{$control->control->description}}</td>
+                        <td class="px-6 py-4">{{  __("enums.".$control->control_type->name) }}</td>
 
                         <td class="px-6 py-4">
                             <input
-                                wire:click="toggleValidationControl({{$control->pivot->id}})"
+                                wire:click="toggleValidationControl({{$control->id}})"
                                 class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                 type="checkbox" {{Auth::user()->role!=\App\Enums\UserRole::SECURITY_OFFICER ? "disabled" : ""}}
-                                {{$control->pivot->validated ? "checked" : ""}}>
+                                {{$control->validated ? "checked" : ""}}>
                         </td>
                         <td class="px-6 py-4">
                             @can("update",$asset)
-                                <button wire:click="removeControl({{$threat->pivot->id}},{{$control->id}})"
+                                <button wire:click="removeControl({{$control->id}})"
                                         type="button"
                                         class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
                                     {{__("Remove")}}
@@ -140,7 +140,7 @@
             </table>
             <div class="flex justify-center">
                 <button type="button"
-                        wire:click="openCreateThreatControlDialog({{$threat->pivot->id}})"
+                        wire:click="openCreateThreatControlDialog({{$threat->id}})"
                         class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                     {{__("Add Control")}}
                 </button>
@@ -315,7 +315,7 @@
                             <option selected disabled value="">{{__("Select a Control to Add")}}</option>
                             @foreach($availableControls as $control)
                                 <option
-                                    value="{{ $control->control_id }}">
+                                    value="{{ $control->id }}">
                                     {{ $control->name}}
                                 </option>
                             @endforeach

@@ -11,6 +11,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Asset extends Model
 {
+    //fixme novo controlador logs -> tabs para cada tipo logs -> com paginacao log asset : pesquisa tipo operacao e id asset
+    //log asset : data, operacao, asset, responsavel (operacao), ip
+    //fixme logs em BD APENAS para asset e ficheiro texto para todos os outros (incluindo asset)
+    //data:ip:utilizador:ADICIONAR AMEACA (ID:X) A ATIVO(Y)
+    //fixme readme passos instalacao
+    //fixme no grafico de dependencias, quadrados estao colorizados pelo seu risco final, e formas para asset type com legenda canto inferior, IP, fqdn, asset type
+    //fixme adicionar fqdn
     use HasFactory;
 
     protected $fillable = [
@@ -87,16 +94,22 @@ class Asset extends Model
         return $this->hasMany(Asset::class, "links_to_id");
     }
 
-    public function threats(): BelongsToMany
+    public function threats(): HasMany
     {
-        return $this->belongsToMany(Threat::class)->using(AssetThreat::class)->withPivot(
-            "id",
-            "probability",
-            "confidentiality_impact",
-            "availability_impact",
-            "integrity_impact",
-            "residual_risk",
-            "residual_risk_accepted"
-        );
+        return $this->hasMany(AssetThreat::class, "asset_id");
     }
+
+    public function availableThreats()
+    {
+        return Threat::whereNotIn("id", $this->asset->threats()->pluck("threat_id")->toArray())->get();
+    }
+
+    public function highestRemainingRisk()
+    {
+        return max($this->threats()->pluck("residual_risk")->toArray());
+    }
+    //fixme adicionar boolean remainingRiskAccepted -> botao num novo separador:
+    /**
+     * Tabela com todas ameacas e risco remanescente apos aplicar controlos -> associado a ativo A tabela: nome ameaca, descricao, total disk, remaining risk -> botao accept all remaining risk
+     */
 }

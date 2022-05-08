@@ -1282,10 +1282,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-bottom-width: 1px;
 }.border-t-0 {
   border-top-width: 0px;
-}.border-r {
-  border-right-width: 1px;
 }.border-t-8 {
   border-top-width: 8px;
+}.border-r {
+  border-right-width: 1px;
 }.border-solid {
   border-style: solid;
 }.border-double {
@@ -1313,12 +1313,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 }.border-black {
   --tw-border-opacity: 1;
   border-color: rgb(0 0 0 / var(--tw-border-opacity));
-}.border-red-400 {
-  --tw-border-opacity: 1;
-  border-color: rgb(249 128 128 / var(--tw-border-opacity));
 }.border-gray-400 {
   --tw-border-opacity: 1;
   border-color: rgb(156 163 175 / var(--tw-border-opacity));
+}.border-red-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(249 128 128 / var(--tw-border-opacity));
 }.bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));

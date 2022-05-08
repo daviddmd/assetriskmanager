@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\Pivot;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class AssetThreat extends Pivot
+class AssetThreat extends Model
 {
-    //fixme métodos: all controls validated? -> definir e aceitar risco restante;
     protected $fillable = [
+        "asset_id",
+        "threat_id",
         "probability",
         "confidentiality_impact",
         "availability_impact",
@@ -57,11 +57,20 @@ class AssetThreat extends Pivot
 
     public function controls()
     {
-        return $this->belongsToMany(Control::class, "asset_threat_control", "asset_threat_id")->using(AssetThreatControl::class)->withPivot("validated", "control_type","id");
+        return $this->hasMany(AssetThreatControl::class);
     }
-
+    public function threat(): BelongsTo
+    {
+        return $this->belongsTo(Threat::class,"threat_id");
+    }
+    public function asset(): BelongsTo
+    {
+        return $this->belongsTo(Asset::class,"asset_id");
+    }
     public function availableControls()
     {
-        return DB::table("controls")->whereNotIn("control_id", $this->controls()->pluck("control_id")->toArray())->join("control_threat", "control_threat.control_id", "=", "controls.id")->where("control_threat.threat_id", "=", $this->threat_id)->get();
+        return Control::whereNotIn("id", $this->controls()->pluck("control_id")->toArray())->
+        whereIn("id", ControlThreat::where("threat_id", "=", $this->threat_id)->pluck("control_id")->toArray())->
+        get();
     }
 }
