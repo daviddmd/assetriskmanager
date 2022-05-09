@@ -33,10 +33,10 @@
                     {{__("Threat Description")}}
                 </th>
                 <th scope="col" class="px-3 py-3">
-                    {{__("Controls Applied")}}
+                    {{__("Total Risk")}}
                 </th>
                 <th scope="col" class="px-3 py-3">
-                    {{__("Total Risk")}}
+                    {{__("Controls Applied")}}
                 </th>
                 <th scope="col" class="px-3 py-3">
                     {{__("Remaining Risk After Controls")}}
@@ -52,10 +52,11 @@
                     <td class="px-3 py-4">{{$threat->id}}</td>
                     <td class="px-3 py-4">{{$threat->threat->name}}</td>
                     <td class="px-3 py-4">{{$threat->threat->description}}</td>
-                    <td class="px-3 py-4">{{$threat->controls()->count()}}</td>
                     <td style="background-color: {{$threat->absoluteRiskColor(($threat->totalRisk($asset->totalAppreciation()))/5)}}"
                         class="px-3 py-4">
                         {{$threat->totalRisk($asset->totalAppreciation())}}</td>
+                    <td class="px-3 py-4">{{$threat->controls()->count()}}</td>
+
                     <td style="background-color: {{$threat->color($threat->residual_risk)}}"
                         class="px-3 py-4">
                         {{$threat->residual_risk}}

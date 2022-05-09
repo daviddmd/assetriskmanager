@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AssetController extends Controller
 {
+    //FIXME show e edit, mostrar children a asset manager, para cada um apenas mostrar se manager for o próprio
     public function __construct()
     {
         $this->authorizeResource(Asset::class, 'asset');
@@ -35,7 +36,8 @@ class AssetController extends Controller
                 ->orWhere("manufacturer", "like", "%" . $filter . "%")
                 ->orWhere("sku", "like", "%" . $filter . "%")
                 ->orWhere("location", "like", "%" . $filter . "%")
-                ->orWhere("id", "=", $filter);
+                ->orWhere("id", "=", $filter)
+                ->orWhere("fqdn", "like", "%" . $filter . "%");
         });
     }
 

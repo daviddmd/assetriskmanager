@@ -14,7 +14,7 @@ class UserSearch extends Component
 {
     use AuthorizesRequests;
 
-    public $users = [];
+    public $users = array();
     public $searchTerm;
 
     public function render()

@@ -76,13 +76,22 @@ class AssetThreatsControlsManage extends Component
         $threats = $this->asset->threats();
         if (!empty($this->threatSearchTerm)) {
             $filter = $this->threatSearchTerm;
-            $this->threatsSearch = Threat::whereNotIn("id", $this->asset->threats()->pluck("threat_id")->toArray())->
+            $search = Threat::whereNotIn("id", $this->asset->threats()->pluck("threat_id")->toArray())->
             where(function ($query) use ($filter) {
                 $query->where("name", "like", "%" . $filter . "%")->orWhere("description", "like", "%" . $filter . "%");
             })->get();
+            if ($search->count() > 0) {
+                $this->threatsSearch = $search;
+                $this->selectedThreat = $search->get(0)->id;
+            }
+            else {
+                $this->selectedThreat = "";
+                $this->threatsSearch = array();
+            }
         }
         else {
             $this->threatsSearch = array();
+            $this->selectedThreat = "";
         }
         return view('livewire.asset-threats-controls-manage', [
             "asset" => $this->asset,
@@ -104,11 +113,14 @@ class AssetThreatsControlsManage extends Component
         $this->selectedAssetThreat = $asset_threat_id;
         $this->assetThreatControlAddDialogOpen = true;
     }
-    public function unsetRemainingRiskAcceptance(){
+
+    public function unsetRemainingRiskAcceptance()
+    {
         $this->asset->update(
-            ["remainingRiskAccepted"=>false]
+            ["remainingRiskAccepted" => false]
         );
     }
+
     public function addControl()
     {
         $this->authorize("update", $this->asset);

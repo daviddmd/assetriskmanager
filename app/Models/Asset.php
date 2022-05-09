@@ -16,6 +16,8 @@ class Asset extends Model
      * TODO Controlador logs apenas para assets, com operações pelo tipo de operação, asset, order by date, responsável operação
      * TODO README/INSTALLATION com passos para instalação/configuração em ambiente dev e produção (docker/sail)
      * TODO grafo de dependências com NeoEloquent, GraphViz ou JS, nós colorizados pelo seu risco final com IP, FQDN e asset type e nome
+     * TODO envio de e-mails em que circumstância?
+     * FIXME Substituir residual por remaining
      * Elementos para grafo: Nós: Asset (ID: FQDN; IP; MAC e cor do nó); Relação entre asset ID_A->ID_B
      */
     use HasFactory;

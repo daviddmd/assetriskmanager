@@ -8,6 +8,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 /**
@@ -27,19 +28,32 @@ class ThreatControlsManage extends Component
         $this->threat = $threat;
     }
 
+    public function clearForm()
+    {
+        $this->controls_search = array();
+        $this->control = "";
+    }
+
     public function render(): Factory|View|Application
     {
         $this->authorize("update", $this->threat);
         $controls = $this->threat->controls();
         if (!empty($this->searchTerm)) {
             $filter = $this->searchTerm;
-            $this->controls_search = Control::whereNotIn("id", $controls->pluck("control_id")->toArray())->
+            $search = Control::whereNotIn("id", $controls->pluck("control_id")->toArray())->
             where(function ($query) use ($filter) {
                 $query->where("name", "like", "%" . $filter . "%")->orWhere("description", "like", "%" . $filter . "%");
             })->get();
+            if ($search->count() > 0) {
+                $this->controls_search = $search;
+                $this->control = $search->get(0)->id;
+            }
+            else {
+                $this->clearForm();
+            }
         }
         else {
-            $this->controls_search = array();
+            $this->clearForm();
         }
         return view('livewire.threat-controls-manage', [
                 "controls" => $controls->get(),
@@ -51,11 +65,12 @@ class ThreatControlsManage extends Component
     public function addControl()
     {
         $this->authorize("update", $this->threat);
-        if (!empty($this->control)) {
-            $this->threat->controls()->attach($this->control);
-            $this->control = "";
-            $this->searchTerm = "";
-        }
+        $validated = $this->validate([
+            "control" => [Rule::exists("controls", "id"), "required"],
+        ]);
+        $this->threat->controls()->attach($this->control);
+        $this->control = "";
+        $this->searchTerm = "";
     }
 
     public function removeControl($id)

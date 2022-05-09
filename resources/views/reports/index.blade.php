@@ -21,7 +21,7 @@
                                 <button
                                     class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
                                     id="settings-tab" data-tabs-target="#risk_records" type="button" role="tab"
-                                    aria-controls="risk_records" aria-selected="false">{{__("Risk Records")}}
+                                    aria-controls="risk_records" aria-selected="false">{{__("Risk Map")}}
                                 </button>
                             </li>
                             <li role="presentation">

@@ -11,7 +11,10 @@ use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-
+    //FIXME verificar se as tabelas estão no formato certo
+    //TODO exportar tabelas para CSV
+    //TODO risk map: adicionar coluna probabilidade, substituir coluna risco absoluto por risco total, substituir risco residual por escala 0-125
+    //TODO asset list: substituir risk after controls por escala 0-125
     /**
      * Handle the incoming request.
      *
