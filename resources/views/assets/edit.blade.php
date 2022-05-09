@@ -186,8 +186,7 @@
                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("FQDN")}}</label>
                                     <input type="text" id="fqdn" name="fqdn"
                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                           value="{{$asset->fqdn}}"
-                                           required>
+                                           value="{{$asset->fqdn}}">
                                 </div>
                                 <div class="mb-6">
                                     <label for="ip_address"
@@ -287,7 +286,7 @@
                                 </form>
                             @endcan
 
-                            @if($asset->children->count()>0 && Auth::user()->role == \App\Enums\UserRole::SECURITY_OFFICER)
+                            @if($asset->children->count()>0)
                                 <div class="flex-grow border-t border-gray-400"></div>
                                 <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">Children</h2>
                                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-5">
@@ -326,29 +325,31 @@
                                         </thead>
                                         <tbody>
                                         @foreach($asset->children as $child)
-                                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                                <td class="px-6 py-4">{{$child->id}}</td>
-                                                <td class="px-6 py-4">{{$child->name}}</td>
-                                                <td class="px-6 py-4">{{$child->type->name}}</td>
-                                                <td class="px-6 py-4">{{$child->sku}}</td>
-                                                <td class="px-6 py-4">{{$child->ip_address}}</td>
-                                                <td class="px-6 py-4">{{$child->mac_address}}</td>
-                                                <td class="px-6 py-4">{{$child->manufacturer}}</td>
-                                                <td class="px-6 py-4">{{$child->location}}</td>
-                                                <td class="px-6 py-4">
-                                                    @can("update",$child)
-                                                        <a href="{{route("assets.edit",$child->id)}}"
-                                                           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                                            {{__("Manage")}}
-                                                        </a>
-                                                    @else
-                                                        <a href="{{route("assets.show",$child->id)}}"
-                                                           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                                            {{__("View")}}
-                                                        </a>
-                                                    @endcan
-                                                </td>
-                                            </tr>
+                                            @if($child->manager_id == Auth::user()->id || in_array(Auth::user()->role,[\App\Enums\UserRole::SECURITY_OFFICER,\App\Enums\UserRole::DATA_PROTECTION_OFFICER]))
+                                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                    <td class="px-6 py-4">{{$child->id}}</td>
+                                                    <td class="px-6 py-4">{{$child->name}}</td>
+                                                    <td class="px-6 py-4">{{$child->type->name}}</td>
+                                                    <td class="px-6 py-4">{{$child->sku}}</td>
+                                                    <td class="px-6 py-4">{{$child->ip_address}}</td>
+                                                    <td class="px-6 py-4">{{$child->mac_address}}</td>
+                                                    <td class="px-6 py-4">{{$child->manufacturer}}</td>
+                                                    <td class="px-6 py-4">{{$child->location}}</td>
+                                                    <td class="px-6 py-4">
+                                                        @can("update",$child)
+                                                            <a href="{{route("assets.edit",$child->id)}}"
+                                                               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                                                {{__("Manage")}}
+                                                            </a>
+                                                        @else
+                                                            <a href="{{route("assets.show",$child->id)}}"
+                                                               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                                                {{__("View")}}
+                                                            </a>
+                                                        @endcan
+                                                    </td>
+                                                </tr>
+                                            @endif
                                         @endforeach
                                         </tbody>
                                     </table>

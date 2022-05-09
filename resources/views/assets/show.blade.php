@@ -290,7 +290,7 @@
                                 </div>
                             @endif
 
-                            @if($asset->children->count()>0 && in_array(Auth::user()->role,[\App\Enums\UserRole::SECURITY_OFFICER,\App\Enums\UserRole::DATA_PROTECTION_OFFICER]))
+                            @if($asset->children->count()>0)
                                 <div class="flex-grow border-t border-gray-400"></div>
                                 <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">Children</h2>
                                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-5">
@@ -329,28 +329,30 @@
                                         </thead>
                                         <tbody>
                                         @foreach($asset->children as $child)
-                                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                                <td class="px-6 py-4">{{$child->id}}</td>
-                                                <td class="px-6 py-4">{{$child->name}}</td>
-                                                <td class="px-6 py-4">{{$child->type->name}}</td>
-                                                <td class="px-6 py-4">{{$child->sku}}</td>
-                                                <td class="px-6 py-4">{{$child->ip_address}}</td>
-                                                <td class="px-6 py-4">{{$child->mac_address}}</td>
-                                                <td class="px-6 py-4">{{$child->manufacturer}}</td>
-                                                <td class="px-6 py-4">{{$child->location}}</td>
-                                                <td class="px-6 py-4">
-                                                    @can("update",$child)
-                                                        <a href="{{route("assets.edit",$child->id)}}"
-                                                           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                                            {{__("Manage")}}
-                                                        </a>
-                                                    @else
-                                                        <a href="{{route("assets.show",$child->id)}}"
-                                                           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                                            {{__("View")}}</a>
-                                                    @endcan
-                                                </td>
-                                            </tr>
+                                            @if(Auth::user()->id == $child->manager_id || in_array(Auth::user()->role,[\App\Enums\UserRole::SECURITY_OFFICER,\App\Enums\UserRole::DATA_PROTECTION_OFFICER]))
+                                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                    <td class="px-6 py-4">{{$child->id}}</td>
+                                                    <td class="px-6 py-4">{{$child->name}}</td>
+                                                    <td class="px-6 py-4">{{$child->type->name}}</td>
+                                                    <td class="px-6 py-4">{{$child->sku}}</td>
+                                                    <td class="px-6 py-4">{{$child->ip_address}}</td>
+                                                    <td class="px-6 py-4">{{$child->mac_address}}</td>
+                                                    <td class="px-6 py-4">{{$child->manufacturer}}</td>
+                                                    <td class="px-6 py-4">{{$child->location}}</td>
+                                                    <td class="px-6 py-4">
+                                                        @can("update",$child)
+                                                            <a href="{{route("assets.edit",$child->id)}}"
+                                                               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                                                {{__("Manage")}}
+                                                            </a>
+                                                        @else
+                                                            <a href="{{route("assets.show",$child->id)}}"
+                                                               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                                                {{__("View")}}</a>
+                                                        @endcan
+                                                    </td>
+                                                </tr>
+                                            @endif
                                         @endforeach
                                         </tbody>
                                     </table>
@@ -504,10 +506,10 @@
                                             {{__("Threat Description")}}
                                         </th>
                                         <th scope="col" class="px-3 py-3">
-                                            {{__("Controls Applied")}}
+                                            {{__("Total Risk")}}
                                         </th>
                                         <th scope="col" class="px-3 py-3">
-                                            {{__("Total Risk")}}
+                                            {{__("Controls Applied")}}
                                         </th>
                                         <th scope="col" class="px-3 py-3">
                                             {{__("Remaining Risk After Controls")}}
@@ -523,10 +525,11 @@
                                             <td class="px-3 py-4">{{$threat->id}}</td>
                                             <td class="px-3 py-4">{{$threat->threat->name}}</td>
                                             <td class="px-3 py-4">{{$threat->threat->description}}</td>
-                                            <td class="px-3 py-4">{{$threat->controls()->count()}}</td>
                                             <td style="background-color: {{$threat->totalRiskColor($threat->totalRisk($asset->totalAppreciation()))}}"
                                                 class="px-3 py-4">
                                                 {{$threat->totalRisk($asset->totalAppreciation())}}</td>
+                                            <td class="px-3 py-4">{{$threat->controls()->count()}}</td>
+
                                             <td style="background-color: {{$threat->totalRiskColor($threat->residual_risk)}}"
                                                 class="px-3 py-4">
                                                 {{$threat->residual_risk}}

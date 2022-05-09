@@ -15,9 +15,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ReportController extends Controller
 {
-    //FIXME verificar se as tabelas estão no formato certo
-    //TODO exportar tabelas para CSV
-    //TODO risk map: adicionar coluna probabilidade, substituir coluna risco absoluto por risco total, substituir risco residual por escala 0-125
     /**
      * Handle the incoming request.
      *

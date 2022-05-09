@@ -43,14 +43,6 @@ class AssetLinksToManage extends Component
                 whereNotIn("id", $this->asset->children()->get("id"));
             }
             else {
-                //FIXME é desejável o atual estar sempre na lista, mesmo que não seja relevante para a pesquisa?
-                /*
-                    $search = $search->whereNot("id", "=", $this->asset->id)->
-                    whereNotIn("id", $this->asset->children()->get("id"))->
-                    where("manager_id", "=", Auth::user()->id)->
-                    orWhere("id", "=", $this->asset->links_to_id)->
-                    get();
-                */
                 $search = $search->whereNot("id", "=", $this->asset->id)->
                 whereNotIn("id", $this->asset->children()->get("id"))->
                 where("manager_id", "=", Auth::user()->id);
