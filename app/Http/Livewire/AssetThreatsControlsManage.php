@@ -7,6 +7,7 @@ use App\Models\AssetThreat;
 use App\Models\AssetThreatControl;
 use App\Models\Control;
 use App\Models\Threat;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
@@ -72,6 +73,9 @@ class AssetThreatsControlsManage extends Component
 
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function render()
     {
         $this->authorize('update', $this->asset);
@@ -124,6 +128,9 @@ class AssetThreatsControlsManage extends Component
         $this->emit("threatModified");
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function addControl()
     {
         $this->authorize("update", $this->asset);
@@ -142,8 +149,10 @@ class AssetThreatsControlsManage extends Component
     }
 
     /**
+     * @param $asset_threat_control_id
      * @return void
      * Only the Security Officer may Validate a Control, so the permission to delete an asset is used instead.
+     * @throws AuthorizationException
      */
     public function toggleValidationControl($asset_threat_control_id)
     {
@@ -154,6 +163,9 @@ class AssetThreatsControlsManage extends Component
         ]);
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function addThreat()
     {
         $this->authorize("update", $this->asset);
@@ -176,6 +188,9 @@ class AssetThreatsControlsManage extends Component
         $this->assetThreatAddDialogOpen = false;
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function removeThreat($id)
     {
         $this->authorize("update", $this->asset);
@@ -183,6 +198,9 @@ class AssetThreatsControlsManage extends Component
         $this->unsetRemainingRiskAcceptance();
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function updateThreat()
     {
         $this->authorize("update", $this->asset);
@@ -207,10 +225,13 @@ class AssetThreatsControlsManage extends Component
         $this->assetThreatEditDialogOpen = false;
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function editThreat($id)
     {
-        $this->resetForm();
         $this->authorize("update", $this->asset);
+        $this->resetForm();
         $asset_threat = AssetThreat::findOrFail($id);
         $this->selectedAssetThreat = $id;
         $this->probability = $asset_threat->probability;
@@ -223,6 +244,9 @@ class AssetThreatsControlsManage extends Component
         $this->total_risk = $asset_threat->absoluteRisk() * $this->asset->totalAppreciation();
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function removeControl($control_id)
     {
         $this->authorize("update", $this->asset);

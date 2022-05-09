@@ -11,8 +11,6 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use function GuzzleHttp\Promise\all;
-
 class ControlController extends Controller
 {
     public function __construct()

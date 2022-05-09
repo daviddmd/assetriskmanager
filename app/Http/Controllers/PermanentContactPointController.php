@@ -75,6 +75,7 @@ class PermanentContactPointController extends Controller
      * Display the specified resource.
      *
      * @param PermanentContactPoint $permanentContactPoint
+     * @return RedirectResponse
      */
     public function show(PermanentContactPoint $permanentContactPoint)
     {

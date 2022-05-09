@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Control;
 use App\Models\Threat;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -34,6 +35,9 @@ class ThreatControlsManage extends Component
         $this->control = "";
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function render(): Factory|View|Application
     {
         $this->authorize("update", $this->threat);
@@ -62,6 +66,9 @@ class ThreatControlsManage extends Component
         );
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function addControl()
     {
         $this->authorize("update", $this->threat);
@@ -73,6 +80,9 @@ class ThreatControlsManage extends Component
         $this->searchTerm = "";
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function removeControl($id)
     {
         $this->authorize("update", $this->threat);

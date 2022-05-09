@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
@@ -22,6 +23,9 @@ class AssetManagerManage extends Component
         $this->asset = $asset;
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function render()
     {
         $this->authorize('update', $this->asset);

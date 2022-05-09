@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Http\Controllers\UserController;
 use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
@@ -17,6 +18,9 @@ class UserSearch extends Component
     public $users = array();
     public $searchTerm;
 
+    /**
+     * @throws AuthorizationException
+     */
     public function render()
     {
         $this->authorize('viewAny', User::class);

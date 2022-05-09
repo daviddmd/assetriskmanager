@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Enums\UserRole;
 use App\Http\Controllers\AssetController;
 use App\Models\Asset;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -33,6 +34,9 @@ class AssetLinksToManage extends Component
         $this->showSearch = empty($asset->links_to_id);
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function render()
     {
         $this->authorize('update', $this->asset);

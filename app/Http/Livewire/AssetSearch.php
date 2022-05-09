@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Enums\UserRole;
 use App\Http\Controllers\AssetController;
 use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -20,6 +21,10 @@ class AssetSearch extends Component
     use AuthorizesRequests;
     public $assets = [];
     public $searchTerm;
+
+    /**
+     * @throws AuthorizationException
+     */
     public function render()
     {
         /*
