@@ -16,16 +16,17 @@ class AssetRiskSummary extends Component
         $this->asset = $asset;
     }
 
+    protected $listeners = ["threatModified" => "render"];
+
     public function render()
     {
         $this->authorize('update', $this->asset);
-        return view('livewire.asset-risk-summary'
-        );
+        return view('livewire.asset-risk-summary');
     }
 
     public function toggleRemainingRiskAccepted()
     {
-        $this->authorize("delete", $this->asset);
+        $this->authorize("update", $this->asset);
         $this->asset->update(
             ["remainingRiskAccepted" => !$this->asset->remainingRiskAccepted]
         );

@@ -60,7 +60,7 @@
                         class="px-3 py-4">{{$threat->confidentiality_impact}}</td>
                     <td style="background-color: {{$threat->absoluteRiskColor($threat->absoluteRisk())}}"
                         class="px-3 py-4">{{$threat->absoluteRisk()}}</td>
-                    <td style="background-color: {{$threat->absoluteRiskColor(($threat->totalRisk($asset->totalAppreciation()))/5)}}"
+                    <td style="background-color: {{$threat->totalRiskColor($threat->totalRisk($asset->totalAppreciation()))}}"
                         class="px-3 py-4">
                         {{$threat->totalRisk($asset->totalAppreciation())}}</td>
                     <td class="px-3 py-4">
@@ -132,7 +132,7 @@
                             @else
                                 <a href="{{route("controls.show",$control->control->id)}}"
                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                                target="_blank">
+                                   target="_blank">
                                     {{__("View")}}</a>
                             @endcan
                         </td>
@@ -249,6 +249,10 @@
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                             {{__("Probability")}}
                         </label>
+                        <label for="probability"
+                               class="block mb-2 text-xs font-light text-gray-900 dark:text-gray-300">
+                            {{__("1-Nonexistent, 2-Low, 3-Average, 4-Frequent, 5-High")}}
+                        </label>
                         <input type="number" id="probability" min="1" max="5"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                wire:model.defer="probability">
@@ -258,6 +262,10 @@
                         <label for="availability_impact"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                             {{__("Availability Impact")}}
+                        </label>
+                        <label for="availability_impact"
+                               class="block mb-2 text-xs font-light text-gray-900 dark:text-gray-300">
+                            {{__("1-Nonexistent, 2-Low, 3-Average, 4-Medium, 5-High")}}
                         </label>
                         <input type="number" id="availability_impact" min="1" max="5"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -269,6 +277,10 @@
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                             {{__("Confidentiality Impact")}}
                         </label>
+                        <label for="confidentiality_impact"
+                               class="block mb-2 text-xs font-light text-gray-900 dark:text-gray-300">
+                            {{__("1-Nonexistent, 2-Low, 3-Average, 4-Medium, 5-High")}}
+                        </label>
                         <input type="number" id="confidentiality_impact" min="1" max="5"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                wire:model.defer="confidentiality_impact">
@@ -279,15 +291,32 @@
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                             {{__("Integrity Impact")}}
                         </label>
+                        <label for="integrity_impact"
+                               class="block mb-2 text-xs font-light text-gray-900 dark:text-gray-300">
+                            {{__("1-Nonexistent, 2-Low, 3-Average, 4-Medium, 5-High")}}
+                        </label>
                         <input type="number" id="integrity_impact" min="1" max="5"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                wire:model.defer="integrity_impact">
                         @error('integrity_impact') <span class="error">{{ $message }}</span> @enderror
                     </div>
                     <div class="mb-6">
+                        <label for="total_risk"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                            {{__("Total Risk")}}
+                        </label>
+                        <label for="total_risk"
+                               class="block mb-2 text-xs font-light text-gray-900 dark:text-gray-300">
+                            {{__("Highest Impact*Probability*Total Asset Valuation")}}
+                        </label>
+                        <input type="number" id="total_risk"
+                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                               wire:model.defer="total_risk" disabled>
+                    </div>
+                    <div class="mb-6">
                         <label for="residual_risk_accepted"
                                class="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                            {{__("Residual Risk Accepted?")}}
+                            {{__("Remaining Risk Accepted?")}}
                         </label>
                         <input type="checkbox" id="residual_risk_accepted"
                                {{$this->residual_risk_accepted ? "checked" : ""}}
@@ -297,9 +326,13 @@
                     <div class="mb-6">
                         <label for="residual_risk"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                            {{__("Residual Risk After Controls")}}
+                            {{__("Remaining Risk After Controls")}}
                         </label>
-                        <input type="number" id="residual_risk" min="0" max="5"
+                        <label for="residual_risk"
+                               class="block mb-2 text-xs font-light text-gray-900 dark:text-gray-300">
+                            {{__("1-25 Nonexistent, 25-50 Low, 50-75 Average, 75-100 Medium, 100-125 High")}}
+                        </label>
+                        <input type="number" id="residual_risk" min="0" max="125"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                wire:model.defer="residual_risk">
                         @error('residual_risk') <span class="error">{{ $message }}</span> @enderror

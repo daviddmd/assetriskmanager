@@ -415,7 +415,7 @@
                                                 class="px-3 py-4">{{$threat->confidentiality_impact}}</td>
                                             <td style="background-color: {{$threat->absoluteRiskColor($threat->absoluteRisk())}}"
                                                 class="px-3 py-4">{{$threat->absoluteRisk()}}</td>
-                                            <td style="background-color: {{$threat->absoluteRiskColor(($threat->totalRisk($asset->totalAppreciation()))/5)}}"
+                                            <td style="background-color: {{$threat->totalRiskColor($threat->totalRisk($asset->totalAppreciation()))}}"
                                                 class="px-3 py-4">
                                                 {{$threat->totalRisk($asset->totalAppreciation())}}</td>
                                             <td class="px-3 py-4">
@@ -524,10 +524,10 @@
                                             <td class="px-3 py-4">{{$threat->threat->name}}</td>
                                             <td class="px-3 py-4">{{$threat->threat->description}}</td>
                                             <td class="px-3 py-4">{{$threat->controls()->count()}}</td>
-                                            <td style="background-color: {{$threat->absoluteRiskColor(($threat->totalRisk($asset->totalAppreciation()))/5)}}"
+                                            <td style="background-color: {{$threat->totalRiskColor($threat->totalRisk($asset->totalAppreciation()))}}"
                                                 class="px-3 py-4">
                                                 {{$threat->totalRisk($asset->totalAppreciation())}}</td>
-                                            <td style="background-color: {{$threat->color($threat->residual_risk)}}"
+                                            <td style="background-color: {{$threat->totalRiskColor($threat->residual_risk)}}"
                                                 class="px-3 py-4">
                                                 {{$threat->residual_risk}}
                                             </td>

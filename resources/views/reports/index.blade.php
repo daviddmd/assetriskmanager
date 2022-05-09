@@ -20,8 +20,8 @@
                             <li class="mr-2" role="presentation">
                                 <button
                                     class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                                    id="settings-tab" data-tabs-target="#risk_records" type="button" role="tab"
-                                    aria-controls="risk_records" aria-selected="false">{{__("Risk Map")}}
+                                    id="settings-tab" data-tabs-target="#risk_map" type="button" role="tab"
+                                    aria-controls="risk_map" aria-selected="false">{{__("Risk Map")}}
                                 </button>
                             </li>
                             <li role="presentation">
@@ -100,7 +100,7 @@
                                             style="background-color: {{$asset->color($asset->totalAppreciation())}}"
                                             class="px-6 py-4">{{$asset->totalAppreciation()}}</td>
                                         <td
-                                            style="background-color: {{$asset->color($asset->highestRemainingRisk())}}"
+                                            style="background-color: {{App\Models\AssetThreat::totalRiskColor($asset->highestRemainingRisk())}}"
                                             class="px-6 py-4">{{$asset->highestRemainingRisk()}}</td>
                                         <td class="px-6 py-4">
                                             @can("update",$asset)
@@ -119,9 +119,15 @@
                                 @endforeach
                                 </tbody>
                             </table>
+
+                            <div class="flex justify-center">
+                                <a class="inline-flex items-center h-10 px-5 m-2 text-sm text-blue-100 transition-colors duration-150 bg-blue-700 rounded-lg focus:shadow-outline hover:bg-blue-800"
+                                   href="{{route("reports","export=asset_list")}}" target="_blank">{{__("Export")}}</a>
+                            </div>
                         </div>
-                        <div class="hidden p-4" id="risk_records" role="tabpanel"
-                             aria-labelledby="risk_records-tab">
+                        <div class="hidden p-4" id="risk_map" role="tabpanel"
+                             aria-labelledby="risk_map-tab">
+
                             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-separate">
                                 <thead
                                     class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -130,7 +136,7 @@
                                         {{__("Asset ID")}}
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        {{__("Name")}}
+                                        {{__("Asset Name")}}
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         {{__("Threat")}}
@@ -145,13 +151,19 @@
                                         {{__("Integrity Impact")}}
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        {{__("Absolute Risk")}}
+                                        {{__("Probability")}}
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        {{__("Asset Appreciation")}}
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        {{__("Total Risk")}}
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         {{__("Controls")}}
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        {{__("Residual Risk After Controls")}}
+                                        {{__("Remaining Risk After Controls")}}
                                     </th>
                                 </tr>
                                 </thead>
@@ -164,14 +176,18 @@
                                             <td class="px-6 py-4">{{$threat->threat->name}}</td>
                                             <td style="background-color: {{$threat->color($threat->availability_impact)}}"
                                                 class="px-3 py-4">{{$threat->availability_impact}}</td>
-                                            <td style="background-color: {{$threat->color($threat->integrity_impact)}}"
-                                                class="px-3 py-4">{{$threat->integrity_impact}}</td>
                                             <td style="background-color: {{$threat->color($threat->confidentiality_impact)}}"
                                                 class="px-3 py-4">{{$threat->confidentiality_impact}}</td>
-                                            <td style="background-color: {{$threat->absoluteRiskColor($threat->absoluteRisk())}}"
-                                                class="px-3 py-4">{{$threat->absoluteRisk()}}</td>
+                                            <td style="background-color: {{$threat->color($threat->integrity_impact)}}"
+                                                class="px-3 py-4">{{$threat->integrity_impact}}</td>
+                                            <td style="background-color: {{$threat->color($threat->probability)}}"
+                                                class="px-3 py-4">{{$threat->probability}}</td>
+                                            <td style="background-color: {{$asset->color($asset->totalAppreciation())}}"
+                                                class="px-3 py-4">{{$asset->totalAppreciation()}}</td>
+                                            <td style="background-color: {{$threat->totalRiskColor($threat->totalRisk($asset->totalAppreciation()))}}"
+                                                class="px-3 py-4">{{$threat->totalRisk($asset->totalAppreciation())}}</td>
                                             <td class="px-3 py-4">{{$threat->controls()->count()}}</td>
-                                            <td style="background-color: {{$threat->color($threat->availability_impact)}}"
+                                            <td style="background-color: {{$threat->totalRiskColor($threat->residual_risk)}}"
                                                 class="px-3 py-4">{{$threat->residual_risk}}</td>
                                         </tr>
 
@@ -179,6 +195,10 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            <div class="flex justify-center">
+                                <a class="inline-flex items-center h-10 px-5 m-2 text-sm text-blue-100 transition-colors duration-150 bg-blue-700 rounded-lg focus:shadow-outline hover:bg-blue-800"
+                                   href="{{route("reports","export=risk_map")}}" target="_blank">{{__("Export")}}</a>
+                            </div>
                         </div>
                         <div class="hidden p-4" id="dependency_graph"
                              role="tabpanel"

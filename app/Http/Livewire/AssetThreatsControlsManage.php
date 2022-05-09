@@ -36,6 +36,7 @@ class AssetThreatsControlsManage extends Component
     public $integrity_impact = 0;
     public $confidentiality_impact = 0;
     public $residual_risk = 0;
+    public $total_risk = 0;
     public $residual_risk_accepted = false;
 
     public $selectedAssetThreat = "";
@@ -60,6 +61,7 @@ class AssetThreatsControlsManage extends Component
         $this->confidentiality_impact = 0;
         $this->residual_risk = 0;
         $this->residual_risk_accepted = false;
+        $this->total_risk = 0;
 
 
         $this->selectedAssetThreat = "";
@@ -119,6 +121,7 @@ class AssetThreatsControlsManage extends Component
         $this->asset->update(
             ["remainingRiskAccepted" => false]
         );
+        $this->emit("threatModified");
     }
 
     public function addControl()
@@ -188,7 +191,7 @@ class AssetThreatsControlsManage extends Component
             "availability_impact" => ["required", "min:1", "max:5"],
             "confidentiality_impact" => ["required", "min:1", "max:5"],
             "integrity_impact" => ["required", "min:1", "max:5"],
-            "residual_risk" => ["required", "min:0", "max:5"]
+            "residual_risk" => ["required", "min:0", "max:125"]
         ]);
         AssetThreat::findOrFail($this->selectedAssetThreat)->update(
             [
@@ -217,6 +220,7 @@ class AssetThreatsControlsManage extends Component
         $this->residual_risk = $asset_threat->residual_risk;
         $this->residual_risk_accepted = $asset_threat->residual_risk_accepted;
         $this->assetThreatEditDialogOpen = true;
+        $this->total_risk = $asset_threat->absoluteRisk() * $this->asset->totalAppreciation();
     }
 
     public function removeControl($control_id)

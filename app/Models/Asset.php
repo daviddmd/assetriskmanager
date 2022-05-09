@@ -69,15 +69,20 @@ class Asset extends Model
         return max([$this->availability_appreciation, $this->integrity_appreciation, $this->confidentiality_appreciation]);
     }
 
-    public function color($score): string
+    /**
+     * @param $score
+     * @return string
+     * Used to calculate the color of the cells on the tables for values such as appreciation
+     */
+    public static function color($score): string
     {
         return match ($score) {
-            1 => "green",
-            2 => "dodgerblue",
-            3 => "yellow",
-            4 => "orange",
-            5 => "red",
-            default => "white",
+            1 => config("constants.colors.green"),
+            2 => config("constants.colors.blue"),
+            3 => config("constants.colors.yellow"),
+            4 => config("constants.colors.orange"),
+            5 => config("constants.colors.red"),
+            default => config("constants.colors.white"),
         };
 
     }

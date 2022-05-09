@@ -28,7 +28,7 @@ class SecurityOfficerController extends Controller
     public function index(Request $request)
     {
         if ($request->has("export")) {
-            return Excel::download(new SecurityOfficerExport, config("constants.security_officer_file_name"));
+            return Excel::download(new SecurityOfficerExport, config("constants.exports.security_officer_file_name"));
         }
         $securityOfficer = SecurityOfficer::first();
         if (empty($securityOfficer)) {

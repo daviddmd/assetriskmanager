@@ -30,7 +30,7 @@ class PermanentContactPointController extends Controller
     public function index(Request $request)
     {
         if ($request->has("export")) {
-            return Excel::download(new PermanentContactPointExport, config("constants.permanent_contact_point_file_name"));
+            return Excel::download(new PermanentContactPointExport, config("constants.exports.permanent_contact_point_file_name"));
         }
         $permanentContactPoints = PermanentContactPoint::all();
         return view("permanent-contact-point.index", ["permanentContactPoints" => $permanentContactPoints]);

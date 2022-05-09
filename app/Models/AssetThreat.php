@@ -18,36 +18,51 @@ class AssetThreat extends Model
         "residual_risk_accepted",
     ];
 
-    public function color($score): string
+    /**
+     * @param $score
+     * @return string
+     * Used to calculate the color of cells on tables for values such as impacts and probability
+     */
+    public static function color($score): string
     {
         return match ($score) {
-            1 => "green",
-            2 => "dodgerblue",
-            3 => "yellow",
-            4 => "orange",
-            5 => "red",
-            default => "white",
+            1 => config("constants.colors.green"),
+            2 => config("constants.colors.blue"),
+            3 => config("constants.colors.yellow"),
+            4 => config("constants.colors.orange"),
+            5 => config("constants.colors.red"),
+            default => config("constants.colors.white"),
         };
     }
 
-    public function absoluteRiskColor($score): string
+    public static function absoluteRiskColor($score): string
     {
-        if ($score >= 0 && $score <= 5) {
-            return "green";
+        if ($score > 0 && $score <= 5) {
+            return config("constants.colors.green");
         }
         elseif ($score > 5 && $score <= 10) {
-            return "dodgerblue";
+            return config("constants.colors.blue");
         }
         elseif ($score > 10 && $score <= 15) {
-            return "yellow";
+            return config("constants.colors.yellow");
         }
         elseif ($score > 15 && $score <= 20) {
-            return "orange";
+            return config("constants.colors.orange");
         }
         elseif ($score > 20 && $score <= 25) {
-            return "red";
+            return config("constants.colors.red");
         }
-        return "white";
+        return config("constants.colors.white");
+    }
+
+    public static function totalRiskColor($score): string
+    {
+        return self::absoluteRiskColor($score / 5);
+    }
+
+    public function totalRisk($assetAppreciation): float|int
+    {
+        return $this->absoluteRisk() * $assetAppreciation;
     }
 
     public function absoluteRisk(): float|int
@@ -69,10 +84,7 @@ class AssetThreat extends Model
     {
         return $this->belongsTo(Asset::class, "asset_id");
     }
-    public function totalRisk($assetAppreciation): float|int
-    {
-        return $this->absoluteRisk()*$assetAppreciation;
-    }
+
     public function availableControls()
     {
         return Control::whereNotIn("id", $this->controls()->pluck("control_id")->toArray())->

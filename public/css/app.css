@@ -1522,6 +1522,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   font-weight: 400;
 }.font-bold {
   font-weight: 700;
+}.font-light {
+  font-weight: 300;
 }.uppercase {
   text-transform: uppercase;
 }.leading-5 {

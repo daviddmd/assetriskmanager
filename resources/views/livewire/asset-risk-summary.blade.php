@@ -1,5 +1,5 @@
 <div>
-    @can("delete",$this->asset)
+    @if(Auth::user()->id==$this->asset->manager_id)
         <div class="flex justify-center">
             @if($this->asset->remainingRiskAccepted)
                 <button type="button"
@@ -16,10 +16,25 @@
             @endif
 
         </div>
-    @endcan
+    @else
+        <div class="flex justify-center">
+            @if(!$this->asset->remainingRiskAccepted)
+                <button type="button"
+                        class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                    {{__("Remaining Risk Not Accepted")}}
+                </button>
+            @else
+                <button type="button"
+                        class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                    {{__("Remaining Risk Accepted")}}
+                </button>
+            @endif
 
+        </div>
+    @endif
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-5">
-        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-separate">
+        <table
+            class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-separate">
             <thead
                 class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -52,12 +67,12 @@
                     <td class="px-3 py-4">{{$threat->id}}</td>
                     <td class="px-3 py-4">{{$threat->threat->name}}</td>
                     <td class="px-3 py-4">{{$threat->threat->description}}</td>
-                    <td style="background-color: {{$threat->absoluteRiskColor(($threat->totalRisk($asset->totalAppreciation()))/5)}}"
+                    <td style="background-color: {{$threat->totalRiskColor($threat->totalRisk($asset->totalAppreciation()))}}"
                         class="px-3 py-4">
                         {{$threat->totalRisk($asset->totalAppreciation())}}</td>
                     <td class="px-3 py-4">{{$threat->controls()->count()}}</td>
 
-                    <td style="background-color: {{$threat->color($threat->residual_risk)}}"
+                    <td style="background-color: {{$threat->totalRiskColor($threat->residual_risk)}}"
                         class="px-3 py-4">
                         {{$threat->residual_risk}}
                     </td>
@@ -65,7 +80,7 @@
                         <a href="{{route("threats.show",$threat->threat->id)}}"
                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                            target="_blank">
-                        {{__("View")}}
+                            {{__("View")}}
                         </a>
                     </td>
                 </tr>
@@ -74,4 +89,5 @@
             </tbody>
         </table>
     </div>
+
 </div>
