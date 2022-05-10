@@ -9,6 +9,8 @@ use App\Models\Control;
 use App\Models\Threat;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
 use Livewire\Component;
@@ -131,7 +133,7 @@ class AssetThreatsControlsManage extends Component
     /**
      * @throws AuthorizationException
      */
-    public function addControl()
+    public function addControl(Request $request)
     {
         $this->authorize("update", $this->asset);
         $validated = $this->validate([
@@ -146,27 +148,32 @@ class AssetThreatsControlsManage extends Component
         ]);
         $this->unsetRemainingRiskAcceptance();
         $this->assetThreatControlAddDialogOpen = false;
+        Log::info(sprintf("[%s] [Added Control with ID %s to Asset with ID %s] [%s]", $request->user()->email, $this->selectedControl, $this->asset->id, $request->ip()));
+
     }
 
     /**
+     * @param Request $request
      * @param $asset_threat_control_id
      * @return void
      * Only the Security Officer may Validate a Control, so the permission to delete an asset is used instead.
      * @throws AuthorizationException
      */
-    public function toggleValidationControl($asset_threat_control_id)
+    public function toggleValidationControl(Request $request, $asset_threat_control_id)
     {
         $this->authorize("delete", $this->asset);
         $asset_threat_control = AssetThreatControl::findOrFail($asset_threat_control_id);
         $asset_threat_control->update([
             "validated" => !$asset_threat_control->validated
         ]);
+        $this->unsetRemainingRiskAcceptance();
+        Log::info(sprintf("[%s] [Toggled Validation of Control with ID %s on Asset with ID %s] [%s]", $request->user()->email, $asset_threat_control->control_id, $this->asset->id, $request->ip()));
     }
 
     /**
      * @throws AuthorizationException
      */
-    public function addThreat()
+    public function addThreat(Request $request)
     {
         $this->authorize("update", $this->asset);
         $validated = $this->validate([
@@ -186,22 +193,27 @@ class AssetThreatsControlsManage extends Component
         ]);
         $this->unsetRemainingRiskAcceptance();
         $this->assetThreatAddDialogOpen = false;
+        Log::info(sprintf("[%s] [Added Threat with ID %s to Asset with ID %s] [%s]", $request->user()->email, $this->selectedThreat, $this->asset->id, $request->ip()));
+
     }
 
     /**
      * @throws AuthorizationException
      */
-    public function removeThreat($id)
+    public function removeThreat(Request $request, $id)
     {
         $this->authorize("update", $this->asset);
-        AssetThreat::findOrFail($id)->delete();
+        $assetThreat = AssetThreat::findOrFail($id);
+        $assetThreat->delete();
         $this->unsetRemainingRiskAcceptance();
+        Log::info(sprintf("[%s] [Removed Threat with ID %s from Asset with ID %s] [%s]", $request->user()->email, $assetThreat->threat_id, $this->asset->id, $request->ip()));
+
     }
 
     /**
      * @throws AuthorizationException
      */
-    public function updateThreat()
+    public function updateThreat(Request $request)
     {
         $this->authorize("update", $this->asset);
         $validated = $this->validate([
@@ -211,7 +223,8 @@ class AssetThreatsControlsManage extends Component
             "integrity_impact" => ["required", "min:1", "max:5"],
             "residual_risk" => ["required", "min:0", "max:125"]
         ]);
-        AssetThreat::findOrFail($this->selectedAssetThreat)->update(
+        $assetThreat = AssetThreat::findOrFail($this->selectedAssetThreat);
+        $assetThreat->update(
             [
                 "probability" => $this->probability,
                 "availability_impact" => $this->availability_impact,
@@ -223,6 +236,7 @@ class AssetThreatsControlsManage extends Component
         );
         $this->unsetRemainingRiskAcceptance();
         $this->assetThreatEditDialogOpen = false;
+        Log::info(sprintf("[%s] [Updated Threat Details with ID %s on Asset with ID %s] [%s]", $request->user()->email, $assetThreat->threat_id, $this->asset->id, $request->ip()));
     }
 
     /**
@@ -247,10 +261,13 @@ class AssetThreatsControlsManage extends Component
     /**
      * @throws AuthorizationException
      */
-    public function removeControl($control_id)
+    public function removeControl(Request $request, $control_id)
     {
         $this->authorize("update", $this->asset);
-        AssetThreatControl::findOrFail($control_id)->delete();
+        $assetThreatControl = AssetThreatControl::findOrFail($control_id);
+        $assetThreatControl->delete();
         $this->unsetRemainingRiskAcceptance();
+        Log::info(sprintf("[%s] [Removed Control with ID %s from Asset with ID %s] [%s]", $request->user()->email, $assetThreatControl->control_id, $this->asset->id, $request->ip()));
+
     }
 }

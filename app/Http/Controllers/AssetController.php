@@ -145,7 +145,7 @@ class AssetController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \App\Http\Requests\UpdateAssetRequest $request
+     * @param UpdateAssetRequest $request
      * @param Asset $asset
      * @return RedirectResponse
      */
