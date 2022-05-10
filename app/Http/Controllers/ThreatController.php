@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ThreatController extends Controller
 {
@@ -34,7 +35,7 @@ class ThreatController extends Controller
         else {
             $threats = Threat::paginate(5)->withQueryString();
         }
-        return view("threats.index", ["threats" => $threats,"filter"=>$filter]);
+        return view("threats.index", ["threats" => $threats, "filter" => $filter]);
     }
 
     /**
@@ -61,6 +62,7 @@ class ThreatController extends Controller
         $threat = new Threat;
         $threat->fill(["name" => $name, "description" => $description]);
         $threat->save();
+        Log::info(sprintf("[%s] [Create Threat with ID %s (Name: %s, Description: %s)] [%s]", $request->user()->email, $threat->id, $threat->name, $threat->description, $request->ip()));
         return redirect()->route("threats.index")->with("status", "Threat Created");
     }
 
@@ -102,6 +104,7 @@ class ThreatController extends Controller
                 "description" => $request->input("description")
             ]
         );
+        Log::info(sprintf("[%s] [Update Threat with ID %s (Name: %s, Description: %s)] [%s]", $request->user()->email, $threat->id, $threat->name, $threat->description, $request->ip()));
         return redirect()->route("threats.index")->with("status", "Threat Updated");
 
     }
@@ -112,8 +115,9 @@ class ThreatController extends Controller
      * @param Threat $threat
      * @return RedirectResponse
      */
-    public function destroy(Threat $threat)
+    public function destroy(Request $request, Threat $threat)
     {
+        Log::info(sprintf("[%s] [Delete Threat with ID %s (Name: %s, Description: %s)] [%s]", $request->user()->email, $threat->id, $threat->name, $threat->description, $request->ip()));
         $threat->delete();
         return redirect()->route("threats.index")->with("status", "Threat Deleted");
     }

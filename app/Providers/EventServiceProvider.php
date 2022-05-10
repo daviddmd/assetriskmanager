@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
+use Illuminate\Auth\Events\Login;
+use Illuminate\Auth\Events\Logout;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -27,7 +31,12 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Event::listen(function (Logout $event) {
+            Log::info(sprintf("[%s] [Log out] [%s]", $event->user->email, \Request::ip()));
+        });
+        Event::listen(function (Login $event) {
+            Log::info(sprintf("[%s] [Log in] [%s]",$event->user->email, \Request::ip()));
+        });
     }
 
     /**

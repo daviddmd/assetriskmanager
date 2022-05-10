@@ -37,7 +37,7 @@ return new class extends Migration {
 
         });
         Schema::table('assets', function (Blueprint $table) {
-            $table->foreignId('links_to_id')->nullable()->references('id')->on('assets')->restrictOnDelete();
+            $table->foreignId('links_to_id')->nullable()->references('id')->on('assets')->nullOnDelete();
         });
     }
 

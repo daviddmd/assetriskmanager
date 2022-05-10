@@ -11,6 +11,8 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
 class ControlController extends Controller
 {
     public function __construct()
@@ -26,15 +28,15 @@ class ControlController extends Controller
     public function index(Request $request)
     {
         $filter = $request->input("filter", "");
-        if (!empty($filter)){
+        if (!empty($filter)) {
             $controls = Control::where("name", "like", "%" . $filter . "%")->
             orWhere("description", "like", "%" . $filter . "%")->
             paginate(5)->withQueryString();
         }
-        else{
+        else {
             $controls = Control::paginate(5)->withQueryString();
         }
-        return view("controls.index", ["controls" => $controls,"filter"=>$filter]);
+        return view("controls.index", ["controls" => $controls, "filter" => $filter]);
     }
 
     /**
@@ -64,6 +66,8 @@ class ControlController extends Controller
             "description" => $description
         ]);
         $control->save();
+        Log::info(sprintf("[%s] [Create Control with ID %s (Name: %s, Description: %s)] [%s]", $request->user()->email, $control->id, $control->name, $control->description, $request->ip()));
+
         return redirect()->route("controls.index")->with("status", "Control Created");
 
     }
@@ -76,7 +80,7 @@ class ControlController extends Controller
      */
     public function show(Control $control)
     {
-        return view("controls.show", ["control"=>$control]);
+        return view("controls.show", ["control" => $control]);
     }
 
     /**
@@ -104,6 +108,7 @@ class ControlController extends Controller
             "name" => $request->input("name"),
             "description" => $request->input("description")
         ]);
+        Log::info(sprintf("[%s] [Update Control with ID %s (Name: %s, Description: %s)] [%s]", $request->user()->email, $control->id, $control->name, $control->description, $request->ip()));
         return redirect()->route("threats.edit", $control->threat_id)->with("status", "Control Updated");
 
     }
@@ -114,9 +119,10 @@ class ControlController extends Controller
      * @param Control $control
      * @return RedirectResponse
      */
-    public function destroy(Control $control)
+    public function destroy(Request $request, Control $control)
     {
+        Log::info(sprintf("[%s] [Delete Control with ID %s (Name: %s, Description: %s)] [%s]", $request->user()->email, $control->id, $control->name, $control->description, $request->ip()));
         $control->delete();
-        return redirect()->route("threats.edit", $control->threat_id)->with("status", "Control Deleted");
+        return redirect()->route("controls.index")->with("status", "Control Deleted");
     }
 }

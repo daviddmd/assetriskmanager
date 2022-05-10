@@ -9,6 +9,8 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
@@ -69,13 +71,14 @@ class ThreatControlsManage extends Component
     /**
      * @throws AuthorizationException
      */
-    public function addControl()
+    public function addControl(Request $request)
     {
         $this->authorize("update", $this->threat);
         $validated = $this->validate([
             "control" => [Rule::exists("controls", "id"), "required"],
         ]);
         $this->threat->controls()->attach($this->control);
+        Log::info(sprintf("[%s] [Add Control with ID %s to Threat with ID %s] [%s]", $request->user()->email, $this->control, $this->threat->id, $request->ip()));
         $this->control = "";
         $this->searchTerm = "";
     }
@@ -83,8 +86,9 @@ class ThreatControlsManage extends Component
     /**
      * @throws AuthorizationException
      */
-    public function removeControl($id)
+    public function removeControl(Request $request, $id)
     {
+        Log::info(sprintf("[%s] [Remove Control with ID %s From Threat with ID %s] [%s]", $request->user()->email, $id, $this->threat->id, $request->ip()));
         $this->authorize("update", $this->threat);
         $this->threat->controls()->detach($id);
     }

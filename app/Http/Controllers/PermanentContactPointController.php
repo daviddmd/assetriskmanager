@@ -12,6 +12,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -55,8 +56,8 @@ class PermanentContactPointController extends Controller
     public function store(StorePermanentContactPointRequest $request)
     {
         $validated = $request->validated();
-        $permanet_contact_point = new PermanentContactPoint;
-        $permanet_contact_point->fill([
+        $permanent_contact_point = new PermanentContactPoint;
+        $permanent_contact_point->fill([
             "entity_name" => $request->input("entity_name"),
             "permanent_contact_point_name" => $request->input("permanent_contact_point_name"),
             "main_email_address" => $request->input("main_email_address"),
@@ -67,7 +68,8 @@ class PermanentContactPointController extends Controller
             "secondary_mobile_phone_number" => $request->input("secondary_mobile_phone_number"),
             "other_alternative_contacts" => $request->input("other_alternative_contacts"),
         ]);
-        $permanet_contact_point->save();
+        $permanent_contact_point->save();
+        Log::info(sprintf("[%s] [Create Permanent Contact Point with ID %s] [%s]", $request->user()->email, $permanent_contact_point->id, $request->ip()));
         return redirect()->route("permanent-contact-point.index")->with("status", "Permanent Contact Point Created");
     }
 
@@ -116,6 +118,7 @@ class PermanentContactPointController extends Controller
                 "other_alternative_contacts" => $request->input("other_alternative_contacts"),
             ]
         );
+        Log::info(sprintf("[%s] [Update Permanent Contact Point with ID %s] [%s]", $request->user()->email, $permanentContactPoint->id, $request->ip()));
         return redirect()->route("permanent-contact-point.index")->with("status", "Permanent Contact Point Updated");
     }
 
@@ -125,8 +128,9 @@ class PermanentContactPointController extends Controller
      * @param PermanentContactPoint $permanentContactPoint
      * @return RedirectResponse
      */
-    public function destroy(PermanentContactPoint $permanentContactPoint)
+    public function destroy(Request $request, PermanentContactPoint $permanentContactPoint)
     {
+        Log::info(sprintf("[%s] [Delete Permanent Contact Point with ID %s] [%s]", $request->user()->email, $permanentContactPoint->id, $request->ip()));
         $permanentContactPoint->delete();
         return redirect()->route("permanent-contact-point.index")->with("status", "Permanent Contact Point Deleted");
     }

@@ -9,6 +9,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 
 class DepartmentController extends Controller
 {
@@ -17,6 +18,7 @@ class DepartmentController extends Controller
     {
         $this->authorizeResource(Department::class, 'department');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +27,7 @@ class DepartmentController extends Controller
     public function index()
     {
         $departments = Department::all();
-        return view("departments.index",["departments"=>$departments]);
+        return view("departments.index", ["departments" => $departments]);
     }
 
     /**
@@ -50,9 +52,10 @@ class DepartmentController extends Controller
         $name = $request->input("name");
         $description = $request->input("description");
         $department = new Department;
-        $department->fill(["name"=>$name,"description"=>$description]);
+        $department->fill(["name" => $name, "description" => $description]);
         $department->save();
-        return redirect()->route("departments.index")->with("status","Department Created");
+        Log::info(sprintf("[%s] [Create Department with ID %s (Name: %s, Description: %s)] [%s]", $request->user()->email, $department->id, $department->name, $department->description, $request->ip()));
+        return redirect()->route("departments.index")->with("status", "Department Created");
     }
 
     /**
@@ -63,7 +66,7 @@ class DepartmentController extends Controller
      */
     public function show(Department $department)
     {
-        return view("departments.show",["department"=>$department]);
+        return view("departments.show", ["department" => $department]);
     }
 
     /**
@@ -74,7 +77,7 @@ class DepartmentController extends Controller
      */
     public function edit(Department $department)
     {
-        return view("departments.edit",["department"=>$department]);
+        return view("departments.edit", ["department" => $department]);
     }
 
     /**
@@ -87,8 +90,9 @@ class DepartmentController extends Controller
     public function update(UpdateDepartmentRequest $request, Department $department)
     {
         $validated = $request->validated();
-        $department->update(["name"=>$request->input("name"),"description"=>$request->input("description")]);
-        return redirect()->route("departments.index")->with("status","Department Updated");
+        $department->update(["name" => $request->input("name"), "description" => $request->input("description")]);
+        Log::info(sprintf("[%s] [Update Department with ID %s (Name: %s, Description: %s)] [%s]", $request->user()->email, $department->id, $department->name, $department->description, $request->ip()));
+        return redirect()->route("departments.index")->with("status", "Department Updated");
     }
 
     /**
@@ -99,7 +103,8 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
+        Log::info(sprintf("[%s] [Delete Department with ID %s (Name: %s, Description: %s)] [%s]", $request->user()->email, $department->id, $department->name, $department->description, $request->ip()));
         $department->delete();
-        return redirect()->route("departments.index")->with("status","Department Deleted");
+        return redirect()->route("departments.index")->with("status", "Department Deleted");
     }
 }

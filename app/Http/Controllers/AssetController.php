@@ -16,6 +16,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AssetController extends Controller
 {
@@ -113,6 +114,7 @@ class AssetController extends Controller
             "links_to_id" => $request->input("links_to"),
         ]);
         $asset->save();
+        Log::info(sprintf("[%s] [Create Asset with ID %s] [%s]", $request->user()->email, $asset->id, $request->ip()));
         return redirect()->route("assets.index")->with("status", "Asset Created");
     }
 
@@ -174,17 +176,20 @@ class AssetController extends Controller
             "active" => $request->has("active"),
             "links_to_id" => $request->input("links_to"),
         ]);
+        Log::info(sprintf("[%s] [Update Asset with ID %s] [%s]", $request->user()->email, $asset->id, $request->ip()));
         return redirect()->route("assets.edit", $asset->id)->with("status", "Asset Updated");
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param Request $request
      * @param Asset $asset
      * @return RedirectResponse
      */
-    public function destroy(Asset $asset)
+    public function destroy(Request $request, Asset $asset)
     {
+        Log::info(sprintf("[%s] [Delete Asset with ID %s] [%s]", $request->user()->email, $asset->id, $request->ip()));
         $asset->delete();
         return redirect()->route("assets.index")->with("status", "Asset Deleted");
 
