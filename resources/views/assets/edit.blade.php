@@ -13,21 +13,28 @@
                                 <button
                                     class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
                                     id="dashboard-tab" data-tabs-target="#details" type="button" role="tab"
-                                    aria-controls="details" aria-selected="true">Details
+                                    aria-controls="details" aria-selected="true">{{__("Details")}}
                                 </button>
                             </li>
                             <li class="mr-2" role="presentation">
                                 <button
                                     class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
                                     id="settings-tab" data-tabs-target="#threats_controls" type="button" role="tab"
-                                    aria-controls="threats_controls" aria-selected="false">Threats/Controls
+                                    aria-controls="threats_controls" aria-selected="false">{{__("Threats/Controls")}}
                                 </button>
                             </li>
                             <li class="mr-2" role="presentation">
                                 <button
                                     class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
                                     id="settings-tab" data-tabs-target="#risk_summary" type="button" role="tab"
-                                    aria-controls="risk_summary" aria-selected="false">Risk Summary
+                                    aria-controls="risk_summary" aria-selected="false">{{__("Risk Summary")}}
+                                </button>
+                            </li>
+                            <li class="mr-2" role="presentation">
+                                <button
+                                    class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                    id="logs-tab" data-tabs-target="#logs" type="button" role="tab"
+                                    aria-controls="logs" aria-selected="false">{{__("Logs")}}
                                 </button>
                             </li>
                         </ul>
@@ -40,6 +47,11 @@
                         <div class="hidden p-4" id="risk_summary" role="tabpanel"
                              aria-labelledby="risk_summary">
                             @livewire("asset-risk-summary",["asset"=>$asset])
+
+                        </div>
+                        <div class="hidden p-4" id="logs" role="tabpanel"
+                             aria-labelledby="logs">
+                            @livewire("asset-logs",["asset"=>$asset])
 
                         </div>
                         <div class="hidden p-4" id="details" role="tabpanel"

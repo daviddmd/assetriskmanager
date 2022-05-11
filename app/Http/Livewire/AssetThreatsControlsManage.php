@@ -2,10 +2,11 @@
 
 namespace App\Http\Livewire;
 
+use App\Enums\AssetOperationType;
 use App\Enums\ControlType;
+use App\Models\AssetLog;
 use App\Models\AssetThreat;
 use App\Models\AssetThreatControl;
-use App\Models\Control;
 use App\Models\Threat;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -133,46 +134,6 @@ class AssetThreatsControlsManage extends Component
     /**
      * @throws AuthorizationException
      */
-    public function addControl(Request $request)
-    {
-        $this->authorize("update", $this->asset);
-        $validated = $this->validate([
-            "selectedAssetThreat" => [Rule::exists("asset_threats", "id"), "required"],
-            "selectedControl" => [Rule::exists("controls", "id"), "required"],
-            "selectedControlType" => ["required", new Enum(ControlType::class)],
-        ]);
-        AssetThreatControl::create([
-            "asset_threat_id" => $this->selectedAssetThreat,
-            "control_id" => $this->selectedControl,
-            "control_type" => $this->selectedControlType
-        ]);
-        $this->unsetRemainingRiskAcceptance();
-        $this->assetThreatControlAddDialogOpen = false;
-        Log::info(sprintf("[%s] [Added Control with ID %s to Asset with ID %s] [%s]", $request->user()->email, $this->selectedControl, $this->asset->id, $request->ip()));
-
-    }
-
-    /**
-     * @param Request $request
-     * @param $asset_threat_control_id
-     * @return void
-     * Only the Security Officer may Validate a Control, so the permission to delete an asset is used instead.
-     * @throws AuthorizationException
-     */
-    public function toggleValidationControl(Request $request, $asset_threat_control_id)
-    {
-        $this->authorize("delete", $this->asset);
-        $asset_threat_control = AssetThreatControl::findOrFail($asset_threat_control_id);
-        $asset_threat_control->update([
-            "validated" => !$asset_threat_control->validated
-        ]);
-        $this->unsetRemainingRiskAcceptance();
-        Log::info(sprintf("[%s] [Toggled Validation of Control with ID %s on Asset with ID %s] [%s]", $request->user()->email, $asset_threat_control->control_id, $this->asset->id, $request->ip()));
-    }
-
-    /**
-     * @throws AuthorizationException
-     */
     public function addThreat(Request $request)
     {
         $this->authorize("update", $this->asset);
@@ -193,8 +154,13 @@ class AssetThreatsControlsManage extends Component
         ]);
         $this->unsetRemainingRiskAcceptance();
         $this->assetThreatAddDialogOpen = false;
-        Log::info(sprintf("[%s] [Added Threat with ID %s to Asset with ID %s] [%s]", $request->user()->email, $this->selectedThreat, $this->asset->id, $request->ip()));
-
+        AssetLog::create([
+            "user_id" => $request->user()->id,
+            "asset_id" => $this->asset->id,
+            "operation_type" => AssetOperationType::ADD_THREAT,
+            "ip" => $request->ip()
+        ]);
+        Log::info(sprintf("[%s] [Add Threat with ID %s to Asset with ID %s] [%s]", $request->user()->email, $this->selectedThreat, $this->asset->id, $request->ip()));
     }
 
     /**
@@ -206,7 +172,13 @@ class AssetThreatsControlsManage extends Component
         $assetThreat = AssetThreat::findOrFail($id);
         $assetThreat->delete();
         $this->unsetRemainingRiskAcceptance();
-        Log::info(sprintf("[%s] [Removed Threat with ID %s from Asset with ID %s] [%s]", $request->user()->email, $assetThreat->threat_id, $this->asset->id, $request->ip()));
+        AssetLog::create([
+            "user_id" => $request->user()->id,
+            "asset_id" => $this->asset->id,
+            "operation_type" => AssetOperationType::REMOVE_THREAT,
+            "ip" => $request->ip()
+        ]);
+        Log::info(sprintf("[%s] [Remove Threat with ID %s from Asset with ID %s] [%s]", $request->user()->email, $assetThreat->threat_id, $this->asset->id, $request->ip()));
 
     }
 
@@ -236,7 +208,13 @@ class AssetThreatsControlsManage extends Component
         );
         $this->unsetRemainingRiskAcceptance();
         $this->assetThreatEditDialogOpen = false;
-        Log::info(sprintf("[%s] [Updated Threat Details with ID %s on Asset with ID %s] [%s]", $request->user()->email, $assetThreat->threat_id, $this->asset->id, $request->ip()));
+        AssetLog::create([
+            "user_id" => $request->user()->id,
+            "asset_id" => $this->asset->id,
+            "operation_type" => AssetOperationType::UPDATE_THREAT,
+            "ip" => $request->ip()
+        ]);
+        Log::info(sprintf("[%s] [Update Threat Details with ID %s on Asset with ID %s] [%s]", $request->user()->email, $assetThreat->threat_id, $this->asset->id, $request->ip()));
     }
 
     /**
@@ -261,13 +239,70 @@ class AssetThreatsControlsManage extends Component
     /**
      * @throws AuthorizationException
      */
+    public function addControl(Request $request)
+    {
+        $this->authorize("update", $this->asset);
+        $validated = $this->validate([
+            "selectedAssetThreat" => [Rule::exists("asset_threats", "id"), "required"],
+            "selectedControl" => [Rule::exists("controls", "id"), "required"],
+            "selectedControlType" => ["required", new Enum(ControlType::class)],
+        ]);
+        AssetThreatControl::create([
+            "asset_threat_id" => $this->selectedAssetThreat,
+            "control_id" => $this->selectedControl,
+            "control_type" => $this->selectedControlType
+        ]);
+        $this->unsetRemainingRiskAcceptance();
+        $this->assetThreatControlAddDialogOpen = false;
+        AssetLog::create([
+            "user_id" => $request->user()->id,
+            "asset_id" => $this->asset->id,
+            "operation_type" => AssetOperationType::ADD_CONTROL,
+            "ip" => $request->ip()
+        ]);
+        Log::info(sprintf("[%s] [Add Control with ID %s to Asset with ID %s] [%s]", $request->user()->email, $this->selectedControl, $this->asset->id, $request->ip()));
+    }
+
+    /**
+     * @throws AuthorizationException
+     */
     public function removeControl(Request $request, $control_id)
     {
         $this->authorize("update", $this->asset);
         $assetThreatControl = AssetThreatControl::findOrFail($control_id);
         $assetThreatControl->delete();
         $this->unsetRemainingRiskAcceptance();
-        Log::info(sprintf("[%s] [Removed Control with ID %s from Asset with ID %s] [%s]", $request->user()->email, $assetThreatControl->control_id, $this->asset->id, $request->ip()));
+        AssetLog::create([
+            "user_id" => $request->user()->id,
+            "asset_id" => $this->asset->id,
+            "operation_type" => AssetOperationType::REMOVE_CONTROL,
+            "ip" => $request->ip()
+        ]);
+        Log::info(sprintf("[%s] [Remove Control with ID %s from Asset with ID %s] [%s]", $request->user()->email, $assetThreatControl->control_id, $this->asset->id, $request->ip()));
 
+    }
+
+    /**
+     * @param Request $request
+     * @param $asset_threat_control_id
+     * @return void
+     * Only the Security Officer may Validate a Control, so the permission to delete an asset is used instead.
+     * @throws AuthorizationException
+     */
+    public function toggleValidationControl(Request $request, $asset_threat_control_id)
+    {
+        $this->authorize("delete", $this->asset);
+        $asset_threat_control = AssetThreatControl::findOrFail($asset_threat_control_id);
+        $asset_threat_control->update([
+            "validated" => !$asset_threat_control->validated
+        ]);
+        $this->unsetRemainingRiskAcceptance();
+        AssetLog::create([
+            "user_id" => $request->user()->id,
+            "asset_id" => $this->asset->id,
+            "operation_type" => AssetOperationType::TOGGLE_CONTROL_VALIDATION,
+            "ip" => $request->ip()
+        ]);
+        Log::info(sprintf("[%s] [Toggle Validation of Control with ID %s on Asset with ID %s] [%s]", $request->user()->email, $asset_threat_control->control_id, $this->asset->id, $request->ip()));
     }
 }

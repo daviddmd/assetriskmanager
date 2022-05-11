@@ -78,9 +78,9 @@ class ThreatControlsManage extends Component
             "control" => [Rule::exists("controls", "id"), "required"],
         ]);
         $this->threat->controls()->attach($this->control);
-        Log::info(sprintf("[%s] [Add Control with ID %s to Threat with ID %s] [%s]", $request->user()->email, $this->control, $this->threat->id, $request->ip()));
         $this->control = "";
         $this->searchTerm = "";
+        Log::info(sprintf("[%s] [Add Control with ID %s to Threat with ID %s] [%s]", $request->user()->email, $this->control, $this->threat->id, $request->ip()));
     }
 
     /**
@@ -88,8 +88,8 @@ class ThreatControlsManage extends Component
      */
     public function removeControl(Request $request, $id)
     {
-        Log::info(sprintf("[%s] [Remove Control with ID %s From Threat with ID %s] [%s]", $request->user()->email, $id, $this->threat->id, $request->ip()));
         $this->authorize("update", $this->threat);
         $this->threat->controls()->detach($id);
+        Log::info(sprintf("[%s] [Remove Control with ID %s From Threat with ID %s] [%s]", $request->user()->email, $id, $this->threat->id, $request->ip()));
     }
 }

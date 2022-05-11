@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Enums\AssetOperationType;
+use App\Models\AssetLog;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
@@ -36,10 +38,15 @@ class AssetRiskSummary extends Component
     public function toggleRemainingRiskAccepted(Request $request)
     {
         $this->authorize("update", $this->asset);
-        Log::info(sprintf("[%s] [Toggled Remaining Risk Acceptance of Asset with ID %s] [%s]", $request->user()->email, $this->asset->id, $request->ip()));
-
         $this->asset->update(
             ["remainingRiskAccepted" => !$this->asset->remainingRiskAccepted]
         );
+        AssetLog::create([
+            "user_id" => $request->user()->id,
+            "asset_id" => $this->asset->id,
+            "operation_type" => AssetOperationType::TOGGLE_REMAINING_RISK_ACCEPTANCE,
+            "ip" => $request->ip()
+        ]);
+        Log::info(sprintf("[%s] [Toggle Remaining Risk Acceptance of Asset with ID %s] [%s]", $request->user()->email, $this->asset->id, $request->ip()));
     }
 }

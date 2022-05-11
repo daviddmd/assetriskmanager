@@ -6,7 +6,6 @@ use App\Enums\ManufacturerContractType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Asset extends Model
@@ -18,6 +17,7 @@ class Asset extends Model
      * TODO grafo de dependências com NeoEloquent, GraphViz ou JS, nós colorizados pelo seu risco final com IP, FQDN e asset type e nome
      * TODO envio de e-mails em que circumstância?
      * TODO tradução para PT, linguagem preferida no modelo user ou cookie
+     * LOGs de um asset são removidos quando asset é removido
      * Elementos para grafo: Nós: Asset (ID: FQDN; IP; MAC e cor do nó); Relação entre asset ID_A->ID_B
      */
     use HasFactory;
@@ -117,5 +117,10 @@ class Asset extends Model
     {
         $residual_risks = $this->threats()->get()->pluck("residual_risk")->toArray();
         return empty($residual_risks) ? 0 : max($residual_risks);
+    }
+
+    public function logs(): HasMany
+    {
+        return $this->hasMany(AssetLog::class);
     }
 }

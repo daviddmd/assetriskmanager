@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AssetOperationType;
 use App\Enums\ManufacturerContractType;
 use App\Enums\UserRole;
 use App\Models\Asset;
 use App\Http\Requests\StoreAssetRequest;
 use App\Http\Requests\UpdateAssetRequest;
+use App\Models\AssetLog;
 use App\Models\AssetType;
 use App\Models\User;
 use Carbon\Carbon;
@@ -114,6 +116,12 @@ class AssetController extends Controller
             "links_to_id" => $request->input("links_to"),
         ]);
         $asset->save();
+        AssetLog::create([
+            "user_id" => $request->user()->id,
+            "asset_id" => $asset->id,
+            "operation_type" => AssetOperationType::CREATE,
+            "ip" => $request->ip()
+        ]);
         Log::info(sprintf("[%s] [Create Asset with ID %s] [%s]", $request->user()->email, $asset->id, $request->ip()));
         return redirect()->route("assets.index")->with("status", "Asset Created");
     }
@@ -177,6 +185,12 @@ class AssetController extends Controller
             "links_to_id" => $request->input("links_to"),
         ]);
         Log::info(sprintf("[%s] [Update Asset with ID %s] [%s]", $request->user()->email, $asset->id, $request->ip()));
+        AssetLog::create([
+            "user_id" => $user->id,
+            "asset_id" => $asset->id,
+            "operation_type" => AssetOperationType::UPDATE,
+            "ip" => $request->ip()
+        ]);
         return redirect()->route("assets.edit", $asset->id)->with("status", "Asset Updated");
     }
 
