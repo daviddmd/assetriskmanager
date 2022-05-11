@@ -69,7 +69,7 @@ class PermanentContactPointController extends Controller
             "other_alternative_contacts" => $request->input("other_alternative_contacts"),
         ]);
         $permanent_contact_point->save();
-        Log::info(sprintf("[%s] [Create Permanent Contact Point with ID %s] [%s]", $request->user()->email, $permanent_contact_point->id, $request->ip()));
+        Log::channel("application")->info(sprintf("[%s] [Create Permanent Contact Point with ID %s] [%s]", $request->user()->email, $permanent_contact_point->id, $request->ip()));
         return redirect()->route("permanent-contact-point.index")->with("status", "Permanent Contact Point Created");
     }
 
@@ -118,7 +118,7 @@ class PermanentContactPointController extends Controller
                 "other_alternative_contacts" => $request->input("other_alternative_contacts"),
             ]
         );
-        Log::info(sprintf("[%s] [Update Permanent Contact Point with ID %s] [%s]", $request->user()->email, $permanentContactPoint->id, $request->ip()));
+        Log::channel("application")->info(sprintf("[%s] [Update Permanent Contact Point with ID %s] [%s]", $request->user()->email, $permanentContactPoint->id, $request->ip()));
         return redirect()->route("permanent-contact-point.index")->with("status", "Permanent Contact Point Updated");
     }
 
@@ -130,7 +130,7 @@ class PermanentContactPointController extends Controller
      */
     public function destroy(Request $request, PermanentContactPoint $permanentContactPoint)
     {
-        Log::info(sprintf("[%s] [Delete Permanent Contact Point with ID %s] [%s]", $request->user()->email, $permanentContactPoint->id, $request->ip()));
+        Log::channel("application")->info(sprintf("[%s] [Delete Permanent Contact Point with ID %s] [%s]", $request->user()->email, $permanentContactPoint->id, $request->ip()));
         $permanentContactPoint->delete();
         return redirect()->route("permanent-contact-point.index")->with("status", "Permanent Contact Point Deleted");
     }

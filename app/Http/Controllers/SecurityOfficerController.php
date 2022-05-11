@@ -70,7 +70,7 @@ class SecurityOfficerController extends Controller
             "mobile_phone_number" => $request->input("mobile_phone_number"),
         ]);
         $security_officer->save();
-        Log::info(sprintf("[%s] [Create Security Officer with ID %s] [%s]", $request->user()->email, $security_officer->id, $request->ip()));
+        Log::channel("application")->info(sprintf("[%s] [Create Security Officer with ID %s] [%s]", $request->user()->email, $security_officer->id, $request->ip()));
         return redirect()->route("security-officer.index")->with("status", "Security Officer Created");
     }
 
@@ -114,7 +114,7 @@ class SecurityOfficerController extends Controller
             "landline_phone_number" => $request->input("landline_phone_number"),
             "mobile_phone_number" => $request->input("mobile_phone_number"),
         ]);
-        Log::info(sprintf("[%s] [Update Security Officer with ID %s] [%s]", $request->user()->email, $securityOfficer->id, $request->ip()));
+        Log::channel("application")->info(sprintf("[%s] [Update Security Officer with ID %s] [%s]", $request->user()->email, $securityOfficer->id, $request->ip()));
         return redirect()->route("security-officer.index")->with("status", "Security Officer Updated");
     }
 
@@ -126,7 +126,7 @@ class SecurityOfficerController extends Controller
      */
     public function destroy(Request $request, SecurityOfficer $securityOfficer)
     {
-        Log::info(sprintf("[%s] [Delete Security Officer with ID %s] [%s]", $request->user()->email, $securityOfficer->id, $request->ip()));
+        Log::channel("application")->info(sprintf("[%s] [Delete Security Officer with ID %s] [%s]", $request->user()->email, $securityOfficer->id, $request->ip()));
         $securityOfficer->delete();
         return redirect()->route("security-officer.index")->with("status", "Security Officer Deleted");
     }

@@ -160,7 +160,7 @@ class AssetThreatsControlsManage extends Component
             "operation_type" => AssetOperationType::ADD_THREAT,
             "ip" => $request->ip()
         ]);
-        Log::info(sprintf("[%s] [Add Threat with ID %s to Asset with ID %s] [%s]", $request->user()->email, $this->selectedThreat, $this->asset->id, $request->ip()));
+        Log::channel("application")->info(sprintf("[%s] [Add Threat with ID %s to Asset with ID %s] [%s]", $request->user()->email, $this->selectedThreat, $this->asset->id, $request->ip()));
     }
 
     /**
@@ -178,7 +178,7 @@ class AssetThreatsControlsManage extends Component
             "operation_type" => AssetOperationType::REMOVE_THREAT,
             "ip" => $request->ip()
         ]);
-        Log::info(sprintf("[%s] [Remove Threat with ID %s from Asset with ID %s] [%s]", $request->user()->email, $assetThreat->threat_id, $this->asset->id, $request->ip()));
+        Log::channel("application")->info(sprintf("[%s] [Remove Threat with ID %s from Asset with ID %s] [%s]", $request->user()->email, $assetThreat->threat_id, $this->asset->id, $request->ip()));
 
     }
 
@@ -214,7 +214,7 @@ class AssetThreatsControlsManage extends Component
             "operation_type" => AssetOperationType::UPDATE_THREAT,
             "ip" => $request->ip()
         ]);
-        Log::info(sprintf("[%s] [Update Threat Details with ID %s on Asset with ID %s] [%s]", $request->user()->email, $assetThreat->threat_id, $this->asset->id, $request->ip()));
+        Log::channel("application")->info(sprintf("[%s] [Update Threat Details with ID %s on Asset with ID %s] [%s]", $request->user()->email, $assetThreat->threat_id, $this->asset->id, $request->ip()));
     }
 
     /**
@@ -260,7 +260,7 @@ class AssetThreatsControlsManage extends Component
             "operation_type" => AssetOperationType::ADD_CONTROL,
             "ip" => $request->ip()
         ]);
-        Log::info(sprintf("[%s] [Add Control with ID %s to Asset with ID %s] [%s]", $request->user()->email, $this->selectedControl, $this->asset->id, $request->ip()));
+        Log::channel("application")->info(sprintf("[%s] [Add Control with ID %s to Asset with ID %s] [%s]", $request->user()->email, $this->selectedControl, $this->asset->id, $request->ip()));
     }
 
     /**
@@ -278,7 +278,7 @@ class AssetThreatsControlsManage extends Component
             "operation_type" => AssetOperationType::REMOVE_CONTROL,
             "ip" => $request->ip()
         ]);
-        Log::info(sprintf("[%s] [Remove Control with ID %s from Asset with ID %s] [%s]", $request->user()->email, $assetThreatControl->control_id, $this->asset->id, $request->ip()));
+        Log::channel("application")->info(sprintf("[%s] [Remove Control with ID %s from Asset with ID %s] [%s]", $request->user()->email, $assetThreatControl->control_id, $this->asset->id, $request->ip()));
 
     }
 
@@ -303,6 +303,6 @@ class AssetThreatsControlsManage extends Component
             "operation_type" => AssetOperationType::TOGGLE_CONTROL_VALIDATION,
             "ip" => $request->ip()
         ]);
-        Log::info(sprintf("[%s] [Toggle Validation of Control with ID %s on Asset with ID %s] [%s]", $request->user()->email, $asset_threat_control->control_id, $this->asset->id, $request->ip()));
+        Log::channel("application")->info(sprintf("[%s] [Toggle Validation of Control with ID %s on Asset with ID %s] [%s]", $request->user()->email, $asset_threat_control->control_id, $this->asset->id, $request->ip()));
     }
 }

@@ -9,6 +9,9 @@ window._ = require('lodash');
 window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.cytoscape = require("cytoscape");
+window.dagre = require("cytoscape-dagre");
+window.saveAs = require("file-saver");
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

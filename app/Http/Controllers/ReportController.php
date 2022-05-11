@@ -24,6 +24,7 @@ class ReportController extends Controller
 
     public function __invoke(Request $request)
     {
+        $dependency_graph = array();
         $export = $request->input("export");
         if (!empty($export)) {
             return match ($export) {
@@ -33,6 +34,9 @@ class ReportController extends Controller
             };
         }
         else {
+            if ($request->has("diagram")){
+                return $request->user()->can("viewAny", User::class) ? view("reports.dependency_diagram", ["assets" => Asset::all()]) : abort(403);
+            }
             return $request->user()->can("viewAny", User::class) ? view("reports.index", ["assets" => Asset::all()]) : abort(403);
         }
     }

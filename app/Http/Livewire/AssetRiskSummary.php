@@ -47,6 +47,6 @@ class AssetRiskSummary extends Component
             "operation_type" => AssetOperationType::TOGGLE_REMAINING_RISK_ACCEPTANCE,
             "ip" => $request->ip()
         ]);
-        Log::info(sprintf("[%s] [Toggle Remaining Risk Acceptance of Asset with ID %s] [%s]", $request->user()->email, $this->asset->id, $request->ip()));
+        Log::channel("application")->info(sprintf("[%s] [Toggle Remaining Risk Acceptance of Asset with ID %s] [%s]", $request->user()->email, $this->asset->id, $request->ip()));
     }
 }

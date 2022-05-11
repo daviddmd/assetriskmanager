@@ -19,7 +19,7 @@ return [
     AssetOperationType::CREATE->name => "Create Asset",
     AssetOperationType::UPDATE->name => "Update Asset",
     AssetOperationType::ADD_THREAT->name => "Add Threat to Asset",
-    AssetOperationType::UPDATE_THREAT->name => "Update Threat Details from Asset",
+    AssetOperationType::UPDATE_THREAT->name => "Update Asset Threat Details",
     AssetOperationType::REMOVE_THREAT->name => "Remove Threat from Asset",
     AssetOperationType::ADD_CONTROL->name => "Add Control to Asset Threat",
     AssetOperationType::REMOVE_CONTROL->name => "Remove Control from Asset Threat",

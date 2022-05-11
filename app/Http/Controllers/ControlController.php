@@ -66,7 +66,7 @@ class ControlController extends Controller
             "description" => $description
         ]);
         $control->save();
-        Log::info(sprintf("[%s] [Create Control with ID %s (Name: %s, Description: %s)] [%s]", $request->user()->email, $control->id, $control->name, $control->description, $request->ip()));
+        Log::channel("application")->info(sprintf("[%s] [Create Control with ID %s (Name: %s, Description: %s)] [%s]", $request->user()->email, $control->id, $control->name, $control->description, $request->ip()));
 
         return redirect()->route("controls.index")->with("status", "Control Created");
 
@@ -108,7 +108,7 @@ class ControlController extends Controller
             "name" => $request->input("name"),
             "description" => $request->input("description")
         ]);
-        Log::info(sprintf("[%s] [Update Control with ID %s (Name: %s, Description: %s)] [%s]", $request->user()->email, $control->id, $control->name, $control->description, $request->ip()));
+        Log::channel("application")->info(sprintf("[%s] [Update Control with ID %s (Name: %s, Description: %s)] [%s]", $request->user()->email, $control->id, $control->name, $control->description, $request->ip()));
         return redirect()->route("threats.edit", $control->threat_id)->with("status", "Control Updated");
 
     }
@@ -121,7 +121,7 @@ class ControlController extends Controller
      */
     public function destroy(Request $request, Control $control)
     {
-        Log::info(sprintf("[%s] [Delete Control with ID %s (Name: %s, Description: %s)] [%s]", $request->user()->email, $control->id, $control->name, $control->description, $request->ip()));
+        Log::channel("application")->info(sprintf("[%s] [Delete Control with ID %s (Name: %s, Description: %s)] [%s]", $request->user()->email, $control->id, $control->name, $control->description, $request->ip()));
         $control->delete();
         return redirect()->route("controls.index")->with("status", "Control Deleted");
     }
