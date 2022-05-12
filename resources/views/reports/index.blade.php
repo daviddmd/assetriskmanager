@@ -203,15 +203,16 @@
                         <div class="hidden p-4" id="dependency_graph"
                              role="tabpanel"
                              aria-labelledby="dependency_graph-tab">
-                            <div id="cy" class="h-screen w-screen text-base">
-
-                            </div>
                             <div class="flex justify-center">
                                 <button onclick="saveImage()" type="button"
                                         class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                                     Export
                                 </button>
                             </div>
+                            <div id="cy" class="h-screen w-screen text-base">
+
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -254,7 +255,7 @@
                                 "border-style": "dotted",
                                 "color": "black",
                                 "text-background-padding": "data(width)",
-                                "background-color": "skyblue",
+                                "background-color": "data(color)",
                                 "text-wrap": "wrap",
                                 'width': "data(width)",
                                 'height': "data(height)",
@@ -273,68 +274,21 @@
                             }
                         }
                     ],
-                    //width: 12*number characters
-                    //height: 30*number lines
                     elements: {
-                        nodes: [
-                            {
-                                data: {
-                                    id: "n0",
-                                    data: "Asset 1\n192.168.1.1\nasset.1.rjsc.local",
-                                    link: "https://www.google.com",
-                                    width: "216",
-                                    height: "90"
-                                }
-                            },
-                            {
-                                data: {
-                                    id: "n1",
-                                    data: "Asset 2\n192.168.1.2\nasset.2.rjsc.local",
-                                    link: "https://www.google.com",
-                                    width: "216",
-                                    height: "90"
-                                }
-                            },
-                            {
-                                data: {
-                                    id: "n2",
-                                    data: "Asset 4\n192.168.1.4\nasset.4.rjsc.local",
-                                    link: "https://www.google.com",
-                                    width: "216",
-                                    height: "90"
-                                }
-                            },
-                            {
-                                data: {
-                                    id: "n3",
-                                    data: "Asset 3 Lorem Ipsum BlaBla\n192.168.1.3\nasset.3.rjsc.local",
-                                    link: "https://www.google.com",
-                                    width: "312",
-                                    height: "90"
-                                }
-                            },
-
-                        ],
-                        edges: [
-                            {data: {source: "n1", target: "n0"}},
-                            {data: {source: "n3", target: "n0"}},
-                            {data: {source: "n2", target: "n1"}},
-
-
-                        ]
+                        nodes: @json($nodes_array),
+                        edges: @json($edges_array)
                     }
                 }));
                 cy.resize();
-                imageBlob = await cy.png({output: "blob-promise", full: true});
+                imageBlob = await cy.png({output: "blob-promise", full: true, quality: 1});
                 cy.on('tap', 'node', function () {
-                    try { // your browser may block popups
+                    try {
                         window.open(this.data('link'));
-                    } catch (e) { // fall back on url change
+                    } catch (e) {
                         window.location.href = this.data('link');
                     }
                 });
-            })
-
+            });
         </script>
     @endpush
 </x-app-layout>
