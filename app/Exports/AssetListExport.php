@@ -15,7 +15,7 @@ class AssetListExport implements FromView, WithStyles, ShouldAutoSize
 
     public function view(): View
     {
-        return view("export-views.asset_list", ["assets" => Asset::all(), "show_actions" => false]);
+        return view("export-views.asset_list", ["assets" => Asset::where("export",true), "show_actions" => false]);
     }
 
     public function styles(Worksheet $sheet)

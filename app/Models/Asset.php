@@ -115,8 +115,15 @@ class Asset extends Model
 
     public function highestRemainingRisk()
     {
-        $residual_risks = $this->threats()->get()->pluck("residual_risk")->toArray();
-        return empty($residual_risks) ? 0 : max($residual_risks);
+        $threats = $this->threats;
+        $non_controlled_threats = $threats->where("residual_risk_accepted", "=", false);
+        if ($non_controlled_threats->count() != 0) {
+            return max($non_controlled_threats->map(function ($item) {
+                    return $item->absoluteRisk();
+                })->toArray()) * $this->totalAppreciation();
+        }
+        $controlled_threats = $threats->where("residual_risk", "!=", 0);
+        return $controlled_threats->count() == 0 ? 0 : max($controlled_threats->pluck("residual_risk")->toArray());
     }
 
     public function logs(): HasMany
