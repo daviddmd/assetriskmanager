@@ -210,7 +210,7 @@
 
                         <x-slot name="content">
                             @foreach(config("app.locales") as $key => $value)
-                                <x-jet-dropdown-link :href="route(Route::current()->getName(),'set_language='.$key)">
+                                <x-jet-dropdown-link :href="request()->fullUrlWithQuery(['set_language' => $key])">
                                     {{ $value }}
                                 </x-jet-dropdown-link>
                             @endforeach
