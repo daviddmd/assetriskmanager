@@ -247,20 +247,27 @@ class AssetThreatsControlsManage extends Component
             "selectedControl" => [Rule::exists("controls", "id"), "required"],
             "selectedControlType" => ["required", new Enum(ControlType::class)],
         ]);
-        AssetThreatControl::create([
-            "asset_threat_id" => $this->selectedAssetThreat,
-            "control_id" => $this->selectedControl,
-            "control_type" => $this->selectedControlType
-        ]);
+        if (!AssetThreatControl::
+        where("asset_threat_id", "=", $this->selectedAssetThreat)->
+        where("control_id", "=", $this->selectedControl)->
+        exists()
+        ) {
+            AssetThreatControl::create([
+                "asset_threat_id" => $this->selectedAssetThreat,
+                "control_id" => $this->selectedControl,
+                "control_type" => $this->selectedControlType
+            ]);
+            AssetLog::create([
+                "user_id" => $request->user()->id,
+                "asset_id" => $this->asset->id,
+                "operation_type" => AssetOperationType::ADD_CONTROL,
+                "ip" => $request->ip()
+            ]);
+            Log::channel("application")->info(sprintf("Add Control %d to Asset %d", $this->selectedControl, $this->asset->id));
+        }
         $this->unsetRemainingRiskAcceptance();
         $this->assetThreatControlAddDialogOpen = false;
-        AssetLog::create([
-            "user_id" => $request->user()->id,
-            "asset_id" => $this->asset->id,
-            "operation_type" => AssetOperationType::ADD_CONTROL,
-            "ip" => $request->ip()
-        ]);
-        Log::channel("application")->info(sprintf("Add Control %d to Asset %d", $this->selectedControl, $this->asset->id));
+
     }
 
     /**
@@ -278,7 +285,7 @@ class AssetThreatsControlsManage extends Component
             "operation_type" => AssetOperationType::REMOVE_CONTROL,
             "ip" => $request->ip()
         ]);
-        Log::channel("application")->info(sprintf("Remove Control %d from Asset ID %d", $assetThreatControl->control_id, $this->asset->id));
+        Log::channel("application")->info(sprintf("Remove Control %d from Asset %d", $assetThreatControl->control_id, $this->asset->id));
 
     }
 

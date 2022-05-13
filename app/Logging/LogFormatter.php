@@ -25,7 +25,7 @@ class LogFormatter
     public function __invoke($logger)
     {
         $user = $this->request->user();
-        $userEmail = $user->email;
+        $userEmail = empty($user) ? "" : $user->email;
         $ip = $this->request->ip();
         foreach ($logger->getHandlers() as $handler) {
             $handler->pushProcessor(function ($record) use ($userEmail, $ip) {
