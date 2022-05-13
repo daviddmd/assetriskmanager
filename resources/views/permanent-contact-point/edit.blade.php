@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{__("Manage Permanent Contact Point")}}</h2>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{__("Edit Permanent Contact Point")}}</h2>
     </x-slot>
 
     <div class="py-12">
@@ -89,8 +89,7 @@
                           action="{{route('permanent-contact-point.destroy',$permanent_contact_point->id)}}">
                         @csrf
                         @method("DELETE")
-                        <button type="submit" onclick="return confirm('{{__("Are you sure you want to delete?")}}')"
-                                class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">{{__("Delete")}}</button>
+                        @include("common.delete_button",["message"=>__("Are you sure you want to delete this Permanent Contact Point?")])
                     </form>
                 </div>
             </div>

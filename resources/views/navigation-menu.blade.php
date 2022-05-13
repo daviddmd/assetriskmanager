@@ -109,7 +109,7 @@
                             </x-jet-dropdown-link>
                             @can("viewAny",\App\Models\PermanentContactPoint::class)
                                 <x-jet-dropdown-link :href="route('permanent-contact-point.index')">
-                                    {{ __('Permanent Contact Point') }}
+                                    {{ __('Permanent Contact Points') }}
                                 </x-jet-dropdown-link>
                             @endcan
                             @can("viewAny",\App\Models\SecurityOfficer::class)

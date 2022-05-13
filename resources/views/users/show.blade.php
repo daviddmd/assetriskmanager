@@ -30,7 +30,7 @@
                                 class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                 disabled>
                             @if(!empty($user->department))
-                                <option value="">No Department</option>
+                                <option value="">{{__("No Department")}}</option>
                                 @foreach($departments as $department)
                                     <option
                                         value="{{ $department->id }}" {{ $user->department->id == $department->id  ? "selected" : "" }}>
@@ -38,7 +38,7 @@
                                     </option>
                                 @endforeach
                             @else
-                                <option selected value="">No Department</option>
+                                <option value="">{{__("No Department")}}</option>
                                 @foreach($departments as $department)
                                     <option
                                         value="{{ $department->id }}">

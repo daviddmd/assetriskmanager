@@ -43,7 +43,7 @@
                                         @else
                                             <a href="{{route("asset-types.show",$assetType->id)}}"
                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                            {{__("View")}}
+                                                {{__("View")}}
                                             </a>
                                         @endcan
                                     </td>
@@ -54,7 +54,7 @@
                         @can("create",\App\Models\AssetType::class)
                             <div class="flex justify-center">
                                 <a class="inline-flex items-center h-10 px-5 m-2 text-sm text-green-100 transition-colors duration-150 bg-green-700 rounded-lg focus:shadow-outline hover:bg-green-800"
-                                   href="{{route('asset-types.create')}}" target="_blank">Create</a>
+                                   href="{{route('asset-types.create')}}" target="_blank">{{__("Create")}}</a>
                             </div>
                         @endcan
                     </div>

@@ -10,6 +10,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
 class EventServiceProvider extends ServiceProvider
@@ -37,7 +38,10 @@ class EventServiceProvider extends ServiceProvider
         });
         Event::listen(function (Login $event) {
             Log::channel("application")->info("Log in");
-            App::setLocale($event->user->language);
+            $user_language = $event->user->language;
+            if (array_key_exists($user_language, config("app.locales"))) {
+                Session::put("locale", $user_language);
+            }
         });
     }
 

@@ -38,8 +38,7 @@
                     <form method="POST" action="{{route('departments.destroy',$department->id)}}">
                         @csrf
                         @method("DELETE")
-                        <button type="submit" onclick="return confirm('{{__("Are you sure you want to delete?")}}')"
-                                class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">{{__("Delete")}}</button>
+                        @include("common.delete_button",["message"=>__("Are you sure you want to delete this department?")])
                     </form>
                     @if($department->users->count()>0)
                         <div class="flex-grow border-t border-gray-400"></div>

@@ -1,5 +1,5 @@
 <div>
-    <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">Threats</h2>
+    <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">{{__("Threats")}}</h2>
     <div class="flex justify-center">
         <button type="button"
                 wire:click="openCreateThreatDialog"
@@ -82,7 +82,7 @@
                 </tr>
                 </tbody>
             </table>
-            <h2 class="text-center text-xl font-normal leading-normal mt-0 mb-2">Controls</h2>
+            <h2 class="text-center text-xl font-normal leading-normal mt-0 mb-2">{{__("Controls")}}</h2>
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead
                     class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -330,7 +330,7 @@
                         </label>
                         <label for="residual_risk"
                                class="block mb-2 text-xs font-light text-gray-900 dark:text-gray-300">
-                            {{__("1-25 Nonexistent, 25-50 Low, 50-75 Average, 75-100 Medium, 100-125 High")}}
+                            {{__("1-25 Nonexistent, 25-50 Low, 50-75 Average, 75-100 High, 100-125 Very High")}}
                         </label>
                         <input type="number" id="residual_risk" min="0" max="125"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
