@@ -32,10 +32,10 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         Event::listen(function (Logout $event) {
-            Log::channel("application")->info(sprintf("[%s] [Log out] [%s]", $event->user->email, \Request::ip()));
+            Log::channel("application")->info("Log out");
         });
         Event::listen(function (Login $event) {
-            Log::channel("application")->info(sprintf("[%s] [Log in] [%s]",$event->user->email, \Request::ip()));
+            Log::channel("application")->info("Log in");
         });
     }
 

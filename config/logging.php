@@ -1,6 +1,7 @@
 <?php
 
 use App\Logging\ApplicationFormatter;
+use App\Logging\LogFormatter;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
@@ -71,7 +72,8 @@ return [
         "application" => [
             "driver" => "single",
             'path' => storage_path('logs/application.log'),
-            'level' => env('LOG_LEVEL', 'debug')
+            'level' => env('LOG_LEVEL', 'debug'),
+            "tap" => [LogFormatter::class]
         ],
 
         'slack' => [

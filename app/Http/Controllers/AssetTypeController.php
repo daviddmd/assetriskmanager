@@ -55,7 +55,7 @@ class AssetTypeController extends Controller
         $assetType = new AssetType;
         $assetType->fill(["name" => $name]);
         $assetType->save();
-        Log::channel("application")->info(sprintf("[%s] [Create Asset Type with ID %s (%s)] [%s]", $request->user()->email, $assetType->id, $assetType->name, $request->ip()));
+        Log::channel("application")->info(sprintf("Create Asset Type %d (%s)", $assetType->id, $assetType->name));
         return redirect()->route("asset-types.index")->with("status", "Asset Type Created");
     }
 
@@ -92,7 +92,7 @@ class AssetTypeController extends Controller
     {
         $validated = $request->validated();
         $assetType->update(["name" => $request->input("name")]);
-        Log::channel("application")->info(sprintf("[%s] [Update Asset Type with ID %s (%s)] [%s]", $request->user()->email, $assetType->id, $assetType->name, $request->ip()));
+        Log::channel("application")->info(sprintf("Update Asset Type %d (%s)", $assetType->id, $assetType->name));
         return redirect()->route("asset-types.index")->with("status", "Asset Type Updated");
     }
 
@@ -102,9 +102,9 @@ class AssetTypeController extends Controller
      * @param AssetType $assetType
      * @return RedirectResponse
      */
-    public function destroy(Request $request, AssetType $assetType)
+    public function destroy(AssetType $assetType)
     {
-        Log::channel("application")->info(sprintf("[%s] [Delete Asset Type with ID %s (%s)] [%s]", $request->user()->email, $assetType->id, $assetType->name, $request->ip()));
+        Log::channel("application")->info(sprintf("Delete Asset Type ID %d (%s)", $assetType->id, $assetType->name));
         $assetType->delete();
         return redirect()->route("asset-types.index")->with("status", "Asset Type Deleted");
     }

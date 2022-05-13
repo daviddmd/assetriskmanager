@@ -25,22 +25,8 @@ class ReportController extends Controller
 
     public function __invoke(Request $request)
     {
-        $nodes_array = array();
-        $edges_array = array();
-        foreach (Asset::all() as $asset) {
-            $data = trim(sprintf("%s-%s\n%s\n%s", $asset->name, $asset->description, $asset->ip_address, $asset->fqdn));
-            $nodes_array[] = array("data" => array(
-                "id" => $asset->id,
-                "data" => $data,
-                "width" => 12 * max(array_map("strlen", explode("\n", $data))),
-                "height" => 30 * count(explode("\n", $data)),
-                "link" => route("assets.edit", $asset->id),
-                "color" => AssetThreat::totalRiskColor($asset->highestRemainingRisk())
-            )
-            );
-            if (!empty($asset->links_to_id)) {
-                $edges_array[] = array("data" => array("source" => $asset->id, "target" => $asset->links_to_id));
-            }
+        if (!$request->user()->can("viewAny", User::class)) {
+            return abort(403);
         }
         $export = $request->input("export");
         if (!empty($export)) {
@@ -51,11 +37,28 @@ class ReportController extends Controller
             };
         }
         else {
-            return $request->user()->can("viewAny", User::class) ? view("reports.index", [
+            $nodes_array = array();
+            $edges_array = array();
+            foreach (Asset::all() as $asset) {
+                $data = trim(sprintf("%s-%s\n%s\n%s", $asset->name, $asset->description, $asset->ip_address, $asset->fqdn));
+                $nodes_array[] = array("data" => array(
+                    "id" => $asset->id,
+                    "data" => $data,
+                    "width" => 12 * max(array_map("strlen", explode("\n", $data))),
+                    "height" => 30 * count(explode("\n", $data)),
+                    "link" => route("assets.edit", $asset->id),
+                    "color" => AssetThreat::totalRiskColor($asset->highestRemainingRisk())
+                )
+                );
+                if (!empty($asset->links_to_id)) {
+                    $edges_array[] = array("data" => array("source" => $asset->id, "target" => $asset->links_to_id));
+                }
+            }
+            return view("reports.index", [
                 "assets" => Asset::all(),
                 "nodes_array" => $nodes_array,
                 "edges_array" => $edges_array
-            ]) : abort(403);
+            ]);
         }
     }
 }

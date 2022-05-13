@@ -9,6 +9,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class DepartmentController extends Controller
@@ -54,7 +55,7 @@ class DepartmentController extends Controller
         $department = new Department;
         $department->fill(["name" => $name, "description" => $description]);
         $department->save();
-        Log::channel("application")->info(sprintf("[%s] [Create Department with ID %s (Name: %s, Description: %s)] [%s]", $request->user()->email, $department->id, $department->name, $department->description, $request->ip()));
+        Log::channel("application")->info(sprintf("Create Department %d (Name: %s, Description: %s)", $department->id, $department->name, $department->description));
         return redirect()->route("departments.index")->with("status", "Department Created");
     }
 
@@ -91,7 +92,7 @@ class DepartmentController extends Controller
     {
         $validated = $request->validated();
         $department->update(["name" => $request->input("name"), "description" => $request->input("description")]);
-        Log::channel("application")->info(sprintf("[%s] [Update Department with ID %s (Name: %s, Description: %s)] [%s]", $request->user()->email, $department->id, $department->name, $department->description, $request->ip()));
+        Log::channel("application")->info(sprintf("Update Department %d (Name: %s, Description: %s)", $department->id, $department->name, $department->description));
         return redirect()->route("departments.index")->with("status", "Department Updated");
     }
 
@@ -103,7 +104,7 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        Log::channel("application")->info(sprintf("[%s] [Delete Department with ID %s (Name: %s, Description: %s)] [%s]", $request->user()->email, $department->id, $department->name, $department->description, $request->ip()));
+        Log::channel("application")->info(sprintf("Delete Department %d (Name: %s, Description: %s)", $department->id, $department->name, $department->description));
         $department->delete();
         return redirect()->route("departments.index")->with("status", "Department Deleted");
     }

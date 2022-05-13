@@ -122,7 +122,7 @@ class AssetController extends Controller
             "operation_type" => AssetOperationType::CREATE,
             "ip" => $request->ip()
         ]);
-        Log::channel("application")->info(sprintf("[%s] [Create Asset with ID %s] [%s]", $request->user()->email, $asset->id, $request->ip()));
+        Log::channel("application")->info(sprintf("Create Asset %d", $asset->id));
         return redirect()->route("assets.index")->with("status", "Asset Created");
     }
 
@@ -184,7 +184,7 @@ class AssetController extends Controller
             "active" => $request->has("active"),
             "links_to_id" => $request->input("links_to"),
         ]);
-        Log::channel("application")->info(sprintf("[%s] [Update Asset with ID %s] [%s]", $request->user()->email, $asset->id, $request->ip()));
+        Log::channel("application")->info(sprintf("Update Asset %d", $asset->id));
         AssetLog::create([
             "user_id" => $user->id,
             "asset_id" => $asset->id,
@@ -201,9 +201,9 @@ class AssetController extends Controller
      * @param Asset $asset
      * @return RedirectResponse
      */
-    public function destroy(Request $request, Asset $asset)
+    public function destroy(Asset $asset)
     {
-        Log::channel("application")->info(sprintf("[%s] [Delete Asset with ID %s] [%s]", $request->user()->email, $asset->id, $request->ip()));
+        Log::channel("application")->info(sprintf("Delete Asset %d", $asset->id));
         $asset->delete();
         return redirect()->route("assets.index")->with("status", "Asset Deleted");
 

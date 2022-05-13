@@ -113,7 +113,7 @@ class UserController extends Controller
             "active" => $request->has("active"),
             "role" => Auth::user()->role == UserRole::ADMINISTRATOR ? $request->input("role") : $user->role,
         ]);
-        Log::channel("application")->info(sprintf("[%s] [Update User with ID %s (Name: %s, E-Mail: %s, Department: %s)] [%s]", $request->user()->email, $user->id, $user->name, $user->email, $user->department->name, $request->ip()));
+        Log::channel("application")->info(sprintf("Update User %d (Name: %s, E-Mail: %s, Department: %s)", $user->id, $user->name, $user->email, $user->department->name));
         return redirect()->route("users.index")->with("status", "User Updated");
     }
 

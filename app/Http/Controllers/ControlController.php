@@ -66,7 +66,7 @@ class ControlController extends Controller
             "description" => $description
         ]);
         $control->save();
-        Log::channel("application")->info(sprintf("[%s] [Create Control with ID %s (Name: %s, Description: %s)] [%s]", $request->user()->email, $control->id, $control->name, $control->description, $request->ip()));
+        Log::channel("application")->info(sprintf("Create Control %d (Name: %s, Description: %s)", $control->id, $control->name, $control->description));
 
         return redirect()->route("controls.index")->with("status", "Control Created");
 
@@ -108,8 +108,8 @@ class ControlController extends Controller
             "name" => $request->input("name"),
             "description" => $request->input("description")
         ]);
-        Log::channel("application")->info(sprintf("[%s] [Update Control with ID %s (Name: %s, Description: %s)] [%s]", $request->user()->email, $control->id, $control->name, $control->description, $request->ip()));
-        return redirect()->route("threats.edit", $control->threat_id)->with("status", "Control Updated");
+        Log::channel("application")->info(sprintf("Update Control %d (Name: %s, Description: %s)", $control->id, $control->name, $control->description));
+        return redirect()->route("controls.index")->with("status", "Control Updated");
 
     }
 
@@ -119,9 +119,9 @@ class ControlController extends Controller
      * @param Control $control
      * @return RedirectResponse
      */
-    public function destroy(Request $request, Control $control)
+    public function destroy(Control $control)
     {
-        Log::channel("application")->info(sprintf("[%s] [Delete Control with ID %s (Name: %s, Description: %s)] [%s]", $request->user()->email, $control->id, $control->name, $control->description, $request->ip()));
+        Log::channel("application")->info(sprintf("Delete Control %d (Name: %s, Description: %s)", $control->id, $control->name, $control->description));
         $control->delete();
         return redirect()->route("controls.index")->with("status", "Control Deleted");
     }

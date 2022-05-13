@@ -60,8 +60,8 @@ class SecurityOfficerController extends Controller
     public function store(StoreSecurityOfficerRequest $request)
     {
         $validated = $request->validated();
-        $security_officer = new SecurityOfficer;
-        $security_officer->fill([
+        $securityOfficer = new SecurityOfficer;
+        $securityOfficer->fill([
             "entity_name" => $request->input("entity_name"),
             "name" => $request->input("name"),
             "role" => $request->input("role"),
@@ -69,8 +69,8 @@ class SecurityOfficerController extends Controller
             "landline_phone_number" => $request->input("landline_phone_number"),
             "mobile_phone_number" => $request->input("mobile_phone_number"),
         ]);
-        $security_officer->save();
-        Log::channel("application")->info(sprintf("[%s] [Create Security Officer with ID %s] [%s]", $request->user()->email, $security_officer->id, $request->ip()));
+        $securityOfficer->save();
+        Log::channel("application")->info(sprintf("Create Security Officer %d", $securityOfficer->id));
         return redirect()->route("security-officer.index")->with("status", "Security Officer Created");
     }
 
@@ -114,7 +114,7 @@ class SecurityOfficerController extends Controller
             "landline_phone_number" => $request->input("landline_phone_number"),
             "mobile_phone_number" => $request->input("mobile_phone_number"),
         ]);
-        Log::channel("application")->info(sprintf("[%s] [Update Security Officer with ID %s] [%s]", $request->user()->email, $securityOfficer->id, $request->ip()));
+        Log::channel("application")->info(sprintf("Update Security Officer %d", $securityOfficer->id));
         return redirect()->route("security-officer.index")->with("status", "Security Officer Updated");
     }
 
@@ -124,9 +124,9 @@ class SecurityOfficerController extends Controller
      * @param SecurityOfficer $securityOfficer
      * @return RedirectResponse
      */
-    public function destroy(Request $request, SecurityOfficer $securityOfficer)
+    public function destroy(SecurityOfficer $securityOfficer)
     {
-        Log::channel("application")->info(sprintf("[%s] [Delete Security Officer with ID %s] [%s]", $request->user()->email, $securityOfficer->id, $request->ip()));
+        Log::channel("application")->info(sprintf("Delete Security Officer %d", $securityOfficer->id));
         $securityOfficer->delete();
         return redirect()->route("security-officer.index")->with("status", "Security Officer Deleted");
     }
