@@ -1,8 +1,10 @@
 <?php
 
+use App\Enums\UserRole;
 use App\Http\Controllers\AssetController;
 use App\Http\Controllers\AssetTypeController;
 use App\Http\Controllers\ControlController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\PermanentContactPointController;
 use App\Http\Controllers\ReportController;
@@ -33,12 +35,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        $assetsWithControlsToValidate = Asset::all()->filter(function ($asset) {
-            return $asset->hasUnvalidatedControls() && !$asset->remainingRiskAccepted && $asset->active;
-        });
-        return view('dashboard', ["assetsWithControlsToValidate" => $assetsWithControlsToValidate]);
-    })->name('dashboard');
+    Route::get("dashboard", DashboardController::class)->name("dashboard");
     Route::resource("permanent-contact-point", PermanentContactPointController::class);
     Route::resource("security-officer", SecurityOfficerController::class);
     Route::resource("asset-types", AssetTypeController::class);
