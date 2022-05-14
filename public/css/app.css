@@ -1165,6 +1165,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   list-style-position: inside;
 }.list-disc {
   list-style-type: disc;
+}.list-decimal {
+  list-style-type: decimal;
 }.appearance-none {
   -webkit-appearance: none;
      -moz-appearance: none;
@@ -1381,6 +1383,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }.bg-green-300 {
   --tw-bg-opacity: 1;
   background-color: rgb(132 225 188 / var(--tw-bg-opacity));
+}.bg-gray-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(75 85 99 / var(--tw-bg-opacity));
 }.bg-opacity-25 {
   --tw-bg-opacity: 0.25;
 }.bg-opacity-50 {

@@ -9,6 +9,8 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SecurityOfficerController;
 use App\Http\Controllers\ThreatController;
 use App\Http\Controllers\UserController;
+use App\Models\Asset;
+use App\Models\AssetThreatControl;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route("dashboard");
 });
 
 Route::middleware([
@@ -32,7 +34,10 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        $assetsWithControlsToValidate = Asset::all()->filter(function ($asset) {
+            return $asset->hasUnvalidatedControls() && !$asset->remainingRiskAccepted && $asset->active;
+        });
+        return view('dashboard', ["assetsWithControlsToValidate" => $assetsWithControlsToValidate]);
     })->name('dashboard');
     Route::resource("permanent-contact-point", PermanentContactPointController::class);
     Route::resource("security-officer", SecurityOfficerController::class);

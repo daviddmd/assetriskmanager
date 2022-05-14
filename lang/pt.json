@@ -80,7 +80,7 @@
     "Select Threat to Add": "Selecione Ameaça a Adicionar",
     "Cancel": "Cancelar",
     "Add": "Adicionar",
-    "1-Nonexistent, 2-Low, 3-Average, 4-Frequent, 5-High": "1-Não Existente, 2-Baixo, 3-Médio, 4-Frequente, 5-Alto",
+    "1-Nonexistent, 2-Low, 3-Average, 4-Medium, 5-High": "1-Não Existente, 2-Baixo, 3-Médio, 4-Frequente, 5-Alto",
     "Highest Impact*Probability*Total Asset Valuation": "Maior Impacto*Probabilidade*Avaliação Total Ativo",
     "Remaining Risk Accepted?": "Risco Remanescente Aceite?",
     "1-25 Nonexistent, 25-50 Low, 50-75 Average, 75-100 High, 100-125 Very High": "1-25 Não Existente, 25-50 Baixo, 50-75 Médio, 75-100 Alto, 100-125 Muito Alto",
@@ -151,5 +151,6 @@
     "Save": "Guardar",
     "Log Out Other Browser Sessions": "Terminar sessão nos outros browsers",
     "Whoops! Something went wrong.": "Erro",
-    "Language": "Linguagem"
+    "Language": "Linguagem",
+    "Assets with Controls to Be Validated": "Ativos com Controlos a aguardar validação"
 }

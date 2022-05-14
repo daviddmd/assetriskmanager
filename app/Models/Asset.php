@@ -121,6 +121,18 @@ class Asset extends Model
         return $controlled_threats->count() == 0 ? 0 : max($controlled_threats->pluck("residual_risk")->toArray());
     }
 
+    public function hasUnvalidatedControls(): bool
+    {
+        foreach ($this->threats as $threat) {
+            foreach ($threat->controls as $control) {
+                if (!$control->validated) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public function logs(): HasMany
     {
         return $this->hasMany(AssetLog::class);
