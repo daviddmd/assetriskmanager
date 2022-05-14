@@ -13,7 +13,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->tinyText("language")->default("en");
+            $table->string("language",10)->default("en");
         });
     }
 
