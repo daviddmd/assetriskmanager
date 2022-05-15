@@ -18,7 +18,6 @@ return new class extends Migration
             $table->timestamps();
             $table->string("name");
             $table->string("description");
-            //$table->foreignId("threat_id")->constrained()->restrictOnDelete();
         });
     }
 

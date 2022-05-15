@@ -45,5 +45,11 @@ class AssetTypeSeeder extends Seeder
         DB::table('asset_types')->insert([
             'name' => "Desktop"
         ]);
+        DB::table('asset_types')->insert([
+            'name' => "Workstation"
+        ]);
+        DB::table('asset_types')->insert([
+            'name' => "Other"
+        ]);
     }
 }
