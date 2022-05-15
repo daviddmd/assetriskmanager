@@ -14,11 +14,15 @@ installation or support Docker.
 - PHP >= 8.1 with the pdo and ldap extensions enabled
 - NodeJS >= 15 with npm
 - MySQL >= 8.0, MariaDB >= 10.6 or PostgreSQL
-- Composer
+- [Composer](https://getcomposer.org/)
 
 OR
 
 - Installation of Docker
+- [Composer](https://getcomposer.org/)
+- PHP
+
+On Docker, Windows Systems must use WSL2. A significant performance penalty is expected.
 
 An Active Directory or Equivelent LDAP Server is required for authentication.
 
@@ -182,4 +186,20 @@ bash ./vendor/laravel/sail/bin/sail artisan artisan make:admin "user.email@domai
 
 ```
 php artisan make:admin "user.email@domain.com"
+```
+
+#### To clean the docker environment:
+
+```
+docker rm -f $(docker ps -a -f "name=assetriskmanager" -q)
+```
+
+```
+docker system prune
+```
+
+If you want to delete all associated data with the application (mysql-server docker volume):
+
+```
+docker system prune --volumes
 ```
