@@ -26,24 +26,16 @@ On Docker, Windows Systems must use WSL2. A significant performance penalty is e
 
 An Active Directory or Equivelent LDAP Server is required for authentication.
 
-### Installation
+### Installation for Development Environment
 
 For either option, clone the repository
 
 ```
 git clone https://github.com/daviddmd/assetriskmanager
-```
-
-```
 cd assetriskmanager
-```
-
-```
 cp .env.example .env
-```
-
-```
 composer install
+php artisan key:generate
 ```
 
 Take note of your LDAP server configuration. If it is an Active Directory LDAP server, no more action is required.
@@ -119,17 +111,8 @@ Next, run:
 
 ```
 php artisan sail:install
-```
-
-```
 bash ./vendor/laravel/sail/bin/sail up
-```
-
-```
 bash ./vendor/laravel/sail/bin/sail artisan migrate
-```
-
-```
 bash ./vendor/laravel/sail/bin/sail artisan db:seed
 ```
 
@@ -151,28 +134,16 @@ DB_PASSWORD=
 ```
 
 ```
-npm run dev
-```
-
-```
+npm install
+npm run watch
 php artisan migrate
-```
-
-```
 php artisan db:seed
-```
-
-```
 php artisan serve
 ```
 
 -------
 
 #### After Either
-
-```
-php artisan key:generate
-```
 
 Then log-in with a user you want to make administrator and:
 
@@ -361,7 +332,7 @@ sudo chown -R $USER:$USER .
 git pull
 npm run production
 php artisan migrate
-composer --optimize-autoloader --no-dev
+composer --optimize-autoloader --no-dev install
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
