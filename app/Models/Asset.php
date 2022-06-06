@@ -11,9 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Asset extends Model
 {
     /*
-     * TODO README/INSTALLATION com passos para instalação/configuração em ambiente dev e produção (docker/sail)
      * TODO envio de e-mails em que circumstância?
-     * TODO tradução para PT, linguagem preferida no modelo user ou cookie
      */
     use HasFactory;
 

@@ -57,6 +57,7 @@
     "Total Appreciation": "Apreciação Total",
     "Links To Asset": "Liga-se a Ativo",
     "Filter(Name/Description/MAC/IP/SKU/Location/Manufacturer/FQDN)": "Filtro(Nome/Descrição/MAC/IP/SKU/Localização/Fabricante/FQDN)",
+    "Name/E-Mail": "Nome/Email",
     "Operation Type": "Tipo de Operação",
     "User": "Utilizador",
     "Date": "Data",
@@ -81,7 +82,7 @@
     "Select Threat to Add": "Selecione Ameaça a Adicionar",
     "Cancel": "Cancelar",
     "Add": "Adicionar",
-    "1-Nonexistent, 2-Low, 3-Average, 4-Medium, 5-High": "1-Não Existente, 2-Baixo, 3-Médio, 4-Frequente, 5-Alto",
+    "1-Nonexistent, 2-Low, 3-Medium, 4-High, 5-Very High": "1-Não Existente, 2-Baixo, 3-Médio, 4-Alto, 5-Muito Alto",
     "Highest Impact*Probability*Total Asset Valuation": "Maior Impacto*Probabilidade*Avaliação Total Ativo",
     "Remaining Risk Accepted?": "Risco Remanescente Aceite?",
     "1-25 Nonexistent, 25-50 Low, 50-75 Average, 75-100 High, 100-125 Very High": "1-25 Não Existente, 25-50 Baixo, 50-75 Médio, 75-100 Alto, 100-125 Muito Alto",
@@ -89,6 +90,7 @@
     "Select a Control to Add": "Selecione um Controlo a Adicionar",
     "Select a Control Type": "Selecione um Tipo de Controlo",
     "Control Name/Description": "Nome/Descrição Controlo",
+    "Name/Description": "Nome/Descrição",
     "User Name or Email": "Nome ou E-Mail Utilizador",
     "Select an User": "Selecione um Utilizador",
     "Risk Summary": "Resumo de Risco",
@@ -156,5 +158,7 @@
     "Assets with Controls to Be Validated": "Ativos com Controlos a aguardar validação",
     "The asset :name (:id) has no threats. Please add some.": "O ativo :name (:id) não tem ameaças. Por favor, adicione algumas.",
     "The threat :threat_name associated with asset :name (:id) has no controls. Please add some": "A ameaça :threat_name associada com o ativo :name (:id) não tem controlos. Por favor, adicione alguns.",
-    "The remaining remaining risk associated with threat :threat_name associated with asset :name (:id) isn't accepted. Please accept it.": "O risco restante associado com a ameaça :threat_name associado com o ativo :name (:id) não está aceite. Por favor, aceite."
+    "The remaining remaining risk associated with threat :threat_name associated with asset :name (:id) isn't accepted. Please accept it.": "O risco restante associado com a ameaça :threat_name associado com o ativo :name (:id) não está aceite. Por favor, aceite.",
+    "Risk Score": "Nível de Risco",
+    "Children": "Dependentes"
 }

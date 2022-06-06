@@ -251,7 +251,7 @@
                         </label>
                         <label for="probability"
                                class="block mb-2 text-xs font-light text-gray-900 dark:text-gray-300">
-                            {{__("1-Nonexistent, 2-Low, 3-Average, 4-Frequent, 5-High")}}
+                            {{__("1-Nonexistent, 2-Low, 3-Medium, 4-High, 5-Very High")}}
                         </label>
                         <input type="number" id="probability" min="1" max="5"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -265,7 +265,7 @@
                         </label>
                         <label for="availability_impact"
                                class="block mb-2 text-xs font-light text-gray-900 dark:text-gray-300">
-                            {{__("1-Nonexistent, 2-Low, 3-Average, 4-Medium, 5-High")}}
+                            {{__("1-Nonexistent, 2-Low, 3-Medium, 4-High, 5-Very High")}}
                         </label>
                         <input type="number" id="availability_impact" min="1" max="5"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -279,7 +279,7 @@
                         </label>
                         <label for="confidentiality_impact"
                                class="block mb-2 text-xs font-light text-gray-900 dark:text-gray-300">
-                            {{__("1-Nonexistent, 2-Low, 3-Average, 4-Medium, 5-High")}}
+                            {{__("1-Nonexistent, 2-Low, 3-Medium, 4-High, 5-Very High")}}
                         </label>
                         <input type="number" id="confidentiality_impact" min="1" max="5"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -293,7 +293,7 @@
                         </label>
                         <label for="integrity_impact"
                                class="block mb-2 text-xs font-light text-gray-900 dark:text-gray-300">
-                            {{__("1-Nonexistent, 2-Low, 3-Average, 4-Medium, 5-High")}}
+                            {{__("1-Nonexistent, 2-Low, 3-Medium, 4-High, 5-Very High")}}
                         </label>
                         <input type="number" id="integrity_impact" min="1" max="5"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
