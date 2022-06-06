@@ -235,29 +235,33 @@ mysql_secure_installation
 mysql
 ```
 
-```mariadb
-CREATE DATABASE arm;
-CREATE USER 'armuser'@'localhost' IDENTIFIED BY 'armpassword';
-GRANT ALL PRIVILEGES ON arm.* TO 'armuser'@'localhost';
-FLUSH PRIVILEGES;
+```sql
+CREATE
+DATABASE arm;
+CREATE
+USER 'armuser'@'localhost' IDENTIFIED BY 'armpassword';
+GRANT ALL PRIVILEGES ON arm.* TO
+'armuser'@'localhost';
+FLUSH
+PRIVILEGES;
 ```
 
 ```shell
 exit #leave mariadb shell
 apt install php8.1 nginx php8.1-mysql php8.1-fpm php8.1-mbstring php8.1-xml php8.1-bcmath php8.1-curl php8.1-gd php8.1-ldap php8.1-zip composer git build-essential
-systemctl enable nginx
+systemctl enable nginx php8.1-fpm.service
 ufw enable
 ufw allow "OpenSSH"
 ufw allow 'Nginx Full'
-phpendmod ldap
+phpenmod ldap
 phpenmod gd
-curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
 apt-get install -y nodejs
 mkdir -p /var/www/assetriskmanager
 exit #leave root
 sudo chown -R $USER:$USER /var/www/assetriskmanager
 cd /var/www/assetriskmanager
-git clone https://github.com/daviddmd/assetriskmanager.git #Configure beforehand a personal access token if needed
+git clone https://github.com/daviddmd/assetriskmanager.git . #Configure beforehand a personal access token if needed
 cp .env.example .env
 vim .env
 ```
@@ -286,18 +290,18 @@ LDAP_TLS=false
 ```
 
 ```shell
-composer install --optimize-autoloader --no-dev
+composer install --optimize-autoloader --no-dev #or composer install --optimize-autoloader if faker is needed for seeding the database
 php artisan key:generate
 npm install
 npm run production
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
-php artisan migrate
+php artisan migrate #or php artisan migrate:fresh --seed for generating a test environment. Run php artisan migrate:fresh again to reset the database back to the initial (empty) state
 sudo vim /etc/nginx/sites-available/assetriskmanager
 ```
 
-```nginx configuration
+```nginx
 server {
     listen 80;
     server_name localhost;
@@ -335,6 +339,7 @@ server {
 
 ```shell
 sudo ln -s /etc/nginx/sites-available/assetriskmanager /etc/nginx/sites-enabled/
+sudo rm /etc/nginx/sites-enabled/default
 sudo systemctl restart php8.1-fpm.service nginx
 sudo chown -R www-data.www-data /var/www/assetriskmanager/storage
 sudo chown -R www-data.www-data /var/www/assetriskmanager/bootstrap/cache/
@@ -351,6 +356,7 @@ on the Users menu.
 To apply updates:
 
 ```shell
+cd /var/www/assetriskmanager
 sudo chown -R $USER:$USER .
 git pull
 npm run production
