@@ -13,22 +13,23 @@
             <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
                 <!-- Profile Photo File Input -->
                 <input type="file" class="hidden"
-                            wire:model="photo"
-                            x-ref="photo"
-                            x-on:change="
+                       wire:model="photo"
+                       x-ref="photo"
+                       x-on:change="
                                     photoName = $refs.photo.files[0].name;
                                     const reader = new FileReader();
                                     reader.onload = (e) => {
                                         photoPreview = e.target.result;
                                     };
                                     reader.readAsDataURL($refs.photo.files[0]);
-                            " />
+                            "/>
 
-                <x-jet-label for="photo" value="{{ __('Photo') }}" />
+                <x-jet-label for="photo" value="{{ __('Photo') }}"/>
 
                 <!-- Current Profile Photo -->
                 <div class="mt-2" x-show="! photoPreview">
-                    <img src="{{ $this->user->profile_photo_url }}" alt="{{ $this->user->name }}" class="rounded-full h-20 w-20 object-cover">
+                    <img src="{{ $this->user->profile_photo_url }}" alt="{{ $this->user->name }}"
+                         class="rounded-full h-20 w-20 object-cover">
                 </div>
 
                 <!-- New Profile Photo Preview -->
@@ -48,22 +49,32 @@
                     </x-jet-secondary-button>
                 @endif
 
-                <x-jet-input-error for="photo" class="mt-2" />
+                <x-jet-input-error for="photo" class="mt-2"/>
             </div>
         @endif
 
         <!-- Name -->
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="name" value="{{ __('Name') }}" />
-            <x-jet-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="state.name" autocomplete="name" />
-            <x-jet-input-error for="name" class="mt-2" />
+            <x-jet-label for="name" value="{{ __('Name') }}"/>
+            <x-jet-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="state.name"
+                         autocomplete="name"/>
+            <x-jet-input-error for="name" class="mt-2"/>
         </div>
-
-        <!-- Email -->
+        <!-- Department -->
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="email" value="{{ __('Email') }}" />
-            <x-jet-input id="email" type="email" class="mt-1 block w-full" wire:model.defer="state.email" />
-            <x-jet-input-error for="email" class="mt-2" />
+            <x-jet-label for="department" value="{{ __('Department') }}"/>
+            <select id="department"
+                    wire:model.defer="state.department_id" autocomplete="department_id"
+                    class="form-select appearance-none mt-1 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+                <option value="">{{__("No Department")}}</option>
+                @foreach(\App\Models\Department::all() as $department)
+                    <option
+                        value="{{ $department->id }}">
+                        {{ $department->name  }}
+                    </option>
+                @endforeach
+            </select>
+            <x-jet-input-error for="department" class="mt-2"/>
         </div>
     </x-slot>
 
