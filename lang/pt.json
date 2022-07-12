@@ -160,5 +160,7 @@
     "The threat :threat_name associated with asset :name (:id) has no controls. Please add some.": "A ameaça :threat_name associada com o ativo :name (:id) não tem controlos. Por favor, adicione alguns.",
     "The remaining remaining risk associated with threat :threat_name associated with asset :name (:id) isn't accepted. Please accept it.": "O risco restante associado com a ameaça :threat_name associado com o ativo :name (:id) não está aceite. Por favor, aceite.",
     "Risk Score": "Nível de Risco",
-    "Children": "Dependentes"
+    "Children": "Dependentes",
+    "Saved.": "Guardado.",
+    "Asset Appreciation": "Apreciação do Ativo"
 }
