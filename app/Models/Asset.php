@@ -10,9 +10,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Asset extends Model
 {
-    /*
-     * TODO envio de e-mails em que circumstância?
-     */
     use HasFactory;
 
     protected $fillable = [

@@ -133,8 +133,6 @@ class AssetController extends Controller
      */
     public function show(Asset $asset)
     {
-        //todo importar ativo -> relacao user por email
-        //fixme ícone svg/geral customizável ou simplesmente app name como laravel stock
         return view("assets.show", ["asset" => $asset]);
     }
 
