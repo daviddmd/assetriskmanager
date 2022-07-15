@@ -122,7 +122,7 @@ class AssetController extends Controller
             "ip" => $request->ip()
         ]);
         Log::channel("application")->info(sprintf("Create Asset %d", $asset->id));
-        return redirect()->route("assets.index")->with("status", "Asset Created");
+        return redirect()->route("assets.index")->with("status", __("Asset Created"));
     }
 
     /**
@@ -189,7 +189,7 @@ class AssetController extends Controller
             "operation_type" => AssetOperationType::UPDATE,
             "ip" => $request->ip()
         ]);
-        return redirect()->route("assets.edit", $asset->id)->with("status", "Asset Updated");
+        return redirect()->route("assets.edit", $asset->id)->with("status", __("Asset Updated"));
     }
 
     /**
@@ -203,7 +203,7 @@ class AssetController extends Controller
     {
         Log::channel("application")->info(sprintf("Delete Asset %d", $asset->id));
         $asset->delete();
-        return redirect()->route("assets.index")->with("status", "Asset Deleted");
+        return redirect()->route("assets.index")->with("status", __("Asset Deleted"));
 
     }
 }

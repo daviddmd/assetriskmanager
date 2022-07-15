@@ -71,7 +71,7 @@ class SecurityOfficerController extends Controller
         ]);
         $securityOfficer->save();
         Log::channel("application")->info(sprintf("Create Security Officer %d", $securityOfficer->id));
-        return redirect()->route("security-officer.index")->with("status", "Security Officer Created");
+        return redirect()->route("security-officer.index")->with("status", __("Security Officer Created"));
     }
 
     /**
@@ -115,7 +115,7 @@ class SecurityOfficerController extends Controller
             "mobile_phone_number" => $request->input("mobile_phone_number"),
         ]);
         Log::channel("application")->info(sprintf("Update Security Officer %d", $securityOfficer->id));
-        return redirect()->route("security-officer.index")->with("status", "Security Officer Updated");
+        return redirect()->route("security-officer.index")->with("status", __("Security Officer Updated"));
     }
 
     /**
@@ -128,6 +128,6 @@ class SecurityOfficerController extends Controller
     {
         Log::channel("application")->info(sprintf("Delete Security Officer %d", $securityOfficer->id));
         $securityOfficer->delete();
-        return redirect()->route("security-officer.index")->with("status", "Security Officer Deleted");
+        return redirect()->route("security-officer.index")->with("status", __("Security Officer Deleted"));
     }
 }
