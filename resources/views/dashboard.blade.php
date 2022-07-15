@@ -58,7 +58,13 @@
                 @endif
                 <ul class="list-decimal">
                     @foreach(Auth::user()->assets as $asset)
-                        @if(!$asset->remainingRiskAccepted && $asset->active)
+                        @if($asset->totalAppreciation()==0)
+                            <li>
+                                <a href="{{route("assets.edit",$asset->id)}}"
+                                   target="_blank">{{__("The asset :name (:id) isn't valued yet. Please set its valuation.",["name"=>$asset->name,"id"=>$asset->id])}}</a>
+                            </li>
+
+                        @elseif(!$asset->remainingRiskAccepted && $asset->active)
                             @if($asset->threats()->count()==0)
                                 <li>
                                     <a href="{{route("assets.edit",$asset->id)}}"

@@ -40,7 +40,7 @@ class ReportController extends Controller
             $nodes_array = array();
             $edges_array = array();
             foreach (Asset::all() as $asset) {
-                $data = trim(sprintf("%s-%s\n%s\n%s", $asset->name, $asset->description, $asset->ip_address, $asset->fqdn));
+                $data = trim(sprintf("%s\n%s\n%s\n%s", $asset->name, $asset->description, $asset->ip_address, $asset->fqdn));
                 $nodes_array[] = array("data" => array(
                     "id" => $asset->id,
                     "data" => $data,
