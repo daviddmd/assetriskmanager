@@ -72,7 +72,7 @@
                         @can("create",\App\Models\Threat::class)
                             <div class="flex justify-center">
                                 <a class="inline-flex items-center h-10 px-5 m-2 text-sm text-green-100 transition-colors duration-150 bg-green-700 rounded-lg focus:shadow-outline hover:bg-green-800"
-                                   href="{{route('controls.create')}}" target="_blank">Create</a>
+                                   href="{{route('controls.create')}}" target="_blank">{{__("Create")}}</a>
                             </div>
 
                         @endcan

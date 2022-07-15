@@ -186,5 +186,8 @@
     "Threat Deleted": "Ameaça Removida",
     "Threat Created": "Ameaça Criada",
     "User Updated": "Utilizador Atualizado",
-    "The asset :name (:id) isn't valued yet. Please set its valuation.": "O ativo :name (:id) não se encontra apreciado. Por favor, defina a sua apreciação."
+    "The asset :name (:id) isn't valued yet. Please set its valuation.": "O ativo :name (:id) não se encontra apreciado. Por favor, defina a sua apreciação.",
+    "Showing": "A mostrar",
+    "of": "de",
+    "results": "resultados"
 }

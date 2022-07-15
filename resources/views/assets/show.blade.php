@@ -438,7 +438,7 @@
                                     </table>
                                     @if($threat->controls()->count()>0)
                                         <h2 class="text-center text-xl font-normal leading-normal mt-0 mb-2">
-                                            Controls</h2>
+                                            {{__("Controls")}}</h2>
                                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                             <thead
                                                 class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

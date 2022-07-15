@@ -73,7 +73,7 @@
 
                     </div>
                     <div class="flex-grow border-t border-gray-400"></div>
-                    <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">Assets</h2>
+                    <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">{{__("Assets")}}</h2>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-5">
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead
