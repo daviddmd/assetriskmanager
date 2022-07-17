@@ -12,7 +12,7 @@ installation or support Docker.
 ### Dependencies
 
 - PHP >= 8.1 with the pdo, ldap, gd and zip extensions installed and loaded
-- NodeJS >= 15 with npm
+- NodeJS >= 15 with npm (Optional for Generating Production/Development CSS and JS files)
 - MySQL >= 8.0, MariaDB >= 10.6 or PostgreSQL
 - [Composer](https://getcomposer.org/)
 
@@ -79,8 +79,6 @@ ufw allow "OpenSSH"
 ufw allow 'Nginx Full'
 phpenmod ldap
 phpenmod gd
-curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
-apt-get install -y nodejs
 mkdir -p /var/www/assetriskmanager
 exit #leave root
 sudo chown -R $USER:$USER /var/www/assetriskmanager
@@ -113,11 +111,20 @@ LDAP_SSL=false
 LDAP_TLS=false
 ```
 
+If you want to generate the production JS and CSS bundle (it's already generated on each release):
+
+```shell
+sudo -i
+curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+apt-get install -y nodejs
+exit
+npm install
+npm run production
+```
+
 ```shell
 composer install --optimize-autoloader --no-dev #or composer install --optimize-autoloader if faker is needed for seeding the database
 php artisan key:generate
-npm install
-npm run production
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
