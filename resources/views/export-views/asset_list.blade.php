@@ -33,7 +33,7 @@
             {{__("Total Appreciation")}}
         </th>
         <th scope="col" class="px-6 py-3">
-            {{__("Risk After Controls")}}
+            {{__("Remaining Risk After Controls")}}
         </th>
     </tr>
     </thead>
