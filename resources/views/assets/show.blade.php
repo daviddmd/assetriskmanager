@@ -487,9 +487,12 @@
                                             @endforeach
                                             </tbody>
                                         </table>
-                                        <div class="py-16">
-                                            <div class="w-full border-t-8 border-gray-300"></div>
-                                        </div>
+
+                                        @if(!$loop->last)
+                                            <div class="py-16">
+                                                <div class="w-full border-t-8 border-gray-300"></div>
+                                            </div>
+                                        @endif
                                     @endif
                                 @endforeach
                             </div>

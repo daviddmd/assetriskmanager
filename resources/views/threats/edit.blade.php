@@ -39,7 +39,7 @@
                         @method("DELETE")
                         @include("common.delete_button",["message"=>__("Are you sure you want to delete this threat?")])
                     </form>
-                    <div class="flex-grow border-t border-gray-400"></div>
+                    <div class="w-full border-t-8 border-gray-300"></div>
                     @livewire("threat-controls-manage",["threat"=>$threat])
                 </div>
             </div>

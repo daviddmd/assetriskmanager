@@ -158,9 +158,11 @@
                     {{__("Add Control")}}
                 </button>
             </div>
-            <div class="py-16">
-                <div class="w-full border-t-8 border-gray-300"></div>
-            </div>
+            @if(!$loop->last)
+                <div class="py-16">
+                    <div class="w-full border-t-8 border-gray-300"></div>
+                </div>
+            @endif
         @endforeach
 
         <x-jet-dialog-modal wire:model="assetThreatAddDialogOpen">

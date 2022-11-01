@@ -79,71 +79,76 @@
                         <button type="submit"
                                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{__("Update")}}</button>
                     </form>
-                    <div class="flex-grow border-t border-gray-400"></div>
-                    <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">{{__("Assets")}}</h2>
-                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-5">
-                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                            <thead
-                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                            <tr>
-                                <th scope="col" class="px-6 py-3">
-                                    {{__("ID")}}
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    {{__("Name")}}
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    {{__("Type")}}
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    {{__("SKU")}}
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    {{__("IP")}}
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    {{__("MAC")}}
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    {{__("Manufacturer")}}
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    {{__("Location")}}
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    {{__("Action")}}
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($user->assets as $asset)
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <td class="px-6 py-4">{{$asset->id}}</td>
-                                    <td class="px-6 py-4">{{$asset->name}}</td>
-                                    <td class="px-6 py-4">{{$asset->type->name}}</td>
-                                    <td class="px-6 py-4">{{$asset->sku}}</td>
-                                    <td class="px-6 py-4">{{$asset->ip_address}}</td>
-                                    <td class="px-6 py-4">{{$asset->mac_address}}</td>
-                                    <td class="px-6 py-4">{{$asset->manufacturer}}</td>
-                                    <td class="px-6 py-4">{{$asset->location}}</td>
-                                    <td class="px-6 py-4">
-                                        @can("update",$asset)
-                                            <a href="{{route("assets.edit",$asset->id)}}"
-                                               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                                {{__("Manage")}}
-                                            </a>
-                                        @else
-                                            <a href="{{route("assets.show",$asset->id)}}"
-                                               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                                {{__("View")}}
-                                            </a>
-                                        @endcan
-                                    </td>
+                    @if($user->assets->count()>0)
+                        <div class="py-2">
+                            <div class="w-full border-t-8 border-gray-300"></div>
+                        </div>
+                        <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">{{__("Assets")}}</h2>
+                        <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-5">
+                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                <thead
+                                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">
+                                        {{__("ID")}}
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        {{__("Name")}}
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        {{__("Type")}}
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        {{__("SKU")}}
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        {{__("IP")}}
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        {{__("MAC")}}
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        {{__("Manufacturer")}}
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        {{__("Location")}}
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        {{__("Action")}}
+                                    </th>
                                 </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                                </thead>
+                                <tbody>
+                                @foreach($user->assets as $asset)
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <td class="px-6 py-4">{{$asset->id}}</td>
+                                        <td class="px-6 py-4">{{$asset->name}}</td>
+                                        <td class="px-6 py-4">{{$asset->type->name}}</td>
+                                        <td class="px-6 py-4">{{$asset->sku}}</td>
+                                        <td class="px-6 py-4">{{$asset->ip_address}}</td>
+                                        <td class="px-6 py-4">{{$asset->mac_address}}</td>
+                                        <td class="px-6 py-4">{{$asset->manufacturer}}</td>
+                                        <td class="px-6 py-4">{{$asset->location}}</td>
+                                        <td class="px-6 py-4">
+                                            @can("update",$asset)
+                                                <a href="{{route("assets.edit",$asset->id)}}"
+                                                   class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                                    {{__("Manage")}}
+                                                </a>
+                                            @else
+                                                <a href="{{route("assets.show",$asset->id)}}"
+                                                   class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                                    {{__("View")}}
+                                                </a>
+                                            @endcan
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @endif
+
                 </div>
             </div>
         </div>

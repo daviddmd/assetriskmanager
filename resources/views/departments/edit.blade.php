@@ -41,7 +41,9 @@
                         @include("common.delete_button",["message"=>__("Are you sure you want to delete this department?")])
                     </form>
                     @if($department->users->count()>0)
-                        <div class="flex-grow border-t border-gray-400"></div>
+                        <div class="py-2">
+                            <div class="w-full border-t-8 border-gray-300"></div>
+                        </div>
                         <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">{{__("Members of Department")}}</h2>
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead
