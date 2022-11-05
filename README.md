@@ -32,7 +32,7 @@ the respective menus, commonly accessed through the top navigation menu.
 This project is licensed under the [AGPL 3 license](https://www.gnu.org/licenses/agpl-3.0.en.html), a copy of which may
 be found on [LICENSE](LICENSE).
 
-![](documentation/asset_risk_management_process.png)
+![Asset Risk Management submenu](documentation/asset_risk_management_process.png?raw=true "Asset Risk Management submenu")
 *The Asset Risk Management submenu*
 
 
