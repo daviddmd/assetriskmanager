@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Enums\AssetOperationType;
+use App\Models\Asset;
 use App\Models\AssetLog;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -14,8 +15,10 @@ class AssetRiskSummary extends Component
 {
     use AuthorizesRequests;
 
-    public $asset;
+    public Asset $asset;
     protected $listeners = ["threatModified" => "render"];
+
+    public $canAcceptRemainingRisk;
 
     public function mount($asset)
     {
@@ -27,8 +30,9 @@ class AssetRiskSummary extends Component
      */
     public function render()
     {
+        $this->canAcceptRemainingRisk = !$this->asset->threats()->where("residual_risk_accepted", "=", false)->exists();
         $this->authorize('update', $this->asset);
-        return view('livewire.asset-risk-summary');
+        return view('livewire.asset-risk-summary', ["canAcceptRemainingRisk" => $this->canAcceptRemainingRisk]);
     }
 
     /**
@@ -36,16 +40,20 @@ class AssetRiskSummary extends Component
      */
     public function toggleRemainingRiskAccepted(Request $request)
     {
+
         $this->authorize("update", $this->asset);
-        $this->asset->update(
-            ["remainingRiskAccepted" => !$this->asset->remainingRiskAccepted]
-        );
-        AssetLog::create([
-            "user_id" => $request->user()->id,
-            "asset_id" => $this->asset->id,
-            "operation_type" => AssetOperationType::TOGGLE_REMAINING_RISK_ACCEPTANCE,
-            "ip" => $request->ip()
-        ]);
-        Log::channel("application")->info(sprintf("Toggle Remaining Risk Acceptance of Asset %d", $this->asset->id));
+        if ($this->canAcceptRemainingRisk) {
+            $this->asset->update(
+                ["remainingRiskAccepted" => !$this->asset->remainingRiskAccepted]
+            );
+            AssetLog::create([
+                "user_id" => $request->user()->id,
+                "asset_id" => $this->asset->id,
+                "operation_type" => AssetOperationType::TOGGLE_REMAINING_RISK_ACCEPTANCE,
+                "ip" => $request->ip()
+            ]);
+            Log::channel("application")->info(sprintf("Toggle Remaining Risk Acceptance of Asset %d", $this->asset->id));
+        }
+
     }
 }
