@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Exports\SecurityOfficerExport;
-use App\Models\SecurityOfficer;
 use App\Http\Requests\StoreSecurityOfficerRequest;
 use App\Http\Requests\UpdateSecurityOfficerRequest;
+use App\Models\SecurityOfficer;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -35,8 +35,7 @@ class SecurityOfficerController extends Controller
         $securityOfficer = SecurityOfficer::first();
         if (empty($securityOfficer)) {
             return view("security-officer.create");
-        }
-        else {
+        } else {
             return view("security-officer.edit", ["security_officer" => $securityOfficer]);
         }
     }

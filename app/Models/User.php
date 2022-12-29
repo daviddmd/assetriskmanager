@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Models;
+
 use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,7 +15,7 @@ use LdapRecord\Laravel\Auth\AuthenticatesWithLdap;
 use LdapRecord\Laravel\Auth\HasLdapUser;
 use LdapRecord\Laravel\Auth\LdapAuthenticatable;
 
-class User extends Authenticatable implements  LdapAuthenticatable
+class User extends Authenticatable implements LdapAuthenticatable
 {
     use HasApiTokens;
     use HasFactory;
@@ -53,7 +55,7 @@ class User extends Authenticatable implements  LdapAuthenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'role'=>UserRole::class,
+        'role' => UserRole::class,
     ];
 
     /**
@@ -72,6 +74,6 @@ class User extends Authenticatable implements  LdapAuthenticatable
 
     public function assets(): HasMany
     {
-        return $this->hasMany(Asset::class,"manager_id");
+        return $this->hasMany(Asset::class, "manager_id");
     }
 }

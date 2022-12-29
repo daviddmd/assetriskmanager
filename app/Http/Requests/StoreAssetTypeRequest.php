@@ -25,7 +25,7 @@ class StoreAssetTypeRequest extends FormRequest
     public function rules()
     {
         return [
-            "name"=>["required",Rule::unique("asset_types"),"max:30"]
+            "name" => ["required", Rule::unique("asset_types"), "max:30"]
         ];
     }
 }

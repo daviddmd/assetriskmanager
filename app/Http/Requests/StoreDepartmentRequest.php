@@ -25,7 +25,7 @@ class StoreDepartmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ["required",Rule::unique("departments"),"max:30"],
+            'name' => ["required", Rule::unique("departments"), "max:30"],
             'description' => ["max:255"],
         ];
     }

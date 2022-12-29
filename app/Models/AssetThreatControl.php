@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Enums\ControlType;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class AssetThreatControl extends Model
 {

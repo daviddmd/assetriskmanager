@@ -4,6 +4,7 @@ use App\Enums\AssetOperationType;
 use App\Enums\ControlType;
 use App\Enums\ManufacturerContractType;
 use App\Enums\UserRole;
+
 return [
     UserRole::ADMINISTRATOR->name => 'Administrator',
     UserRole::SECURITY_OFFICER->name => 'Security Officer',

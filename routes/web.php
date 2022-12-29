@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\UserRole;
 use App\Http\Controllers\AssetController;
 use App\Http\Controllers\AssetTypeController;
 use App\Http\Controllers\ControlController;
@@ -11,8 +10,6 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SecurityOfficerController;
 use App\Http\Controllers\ThreatController;
 use App\Http\Controllers\UserController;
-use App\Models\Asset;
-use App\Models\AssetThreatControl;
 use Illuminate\Support\Facades\Route;
 
 /*

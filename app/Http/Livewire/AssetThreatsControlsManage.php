@@ -54,6 +54,43 @@ class AssetThreatsControlsManage extends Component
         $this->asset = $asset;
     }
 
+    /**
+     * @throws AuthorizationException
+     */
+    public function render()
+    {
+        $this->authorize('update', $this->asset);
+        $threats = $this->asset->threats();
+        if (!empty($this->threatSearchTerm)) {
+            $filter = $this->threatSearchTerm;
+            $search = Threat::whereNotIn("id", $this->asset->threats()->pluck("threat_id")->toArray())->
+            where(function ($query) use ($filter) {
+                $query->where("name", "like", "%" . $filter . "%")->orWhere("description", "like", "%" . $filter . "%");
+            })->get();
+            if ($search->count() > 0) {
+                $this->threatsSearch = $search;
+                $this->selectedThreat = $search->get(0)->id;
+            } else {
+                $this->selectedThreat = "";
+                $this->threatsSearch = array();
+            }
+        } else {
+            $this->threatsSearch = array();
+            $this->selectedThreat = "";
+        }
+        return view('livewire.asset-threats-controls-manage', [
+            "asset" => $this->asset,
+            "threats" => $threats->get(),
+            "threats_search" => $this->threatsSearch
+        ]);
+    }
+
+    public function openCreateThreatDialog()
+    {
+        $this->resetForm();
+        $this->assetThreatAddDialogOpen = true;
+    }
+
     public function resetForm()
     {
         $this->threatSearchTerm = "";
@@ -76,59 +113,12 @@ class AssetThreatsControlsManage extends Component
 
     }
 
-    /**
-     * @throws AuthorizationException
-     */
-    public function render()
-    {
-        $this->authorize('update', $this->asset);
-        $threats = $this->asset->threats();
-        if (!empty($this->threatSearchTerm)) {
-            $filter = $this->threatSearchTerm;
-            $search = Threat::whereNotIn("id", $this->asset->threats()->pluck("threat_id")->toArray())->
-            where(function ($query) use ($filter) {
-                $query->where("name", "like", "%" . $filter . "%")->orWhere("description", "like", "%" . $filter . "%");
-            })->get();
-            if ($search->count() > 0) {
-                $this->threatsSearch = $search;
-                $this->selectedThreat = $search->get(0)->id;
-            }
-            else {
-                $this->selectedThreat = "";
-                $this->threatsSearch = array();
-            }
-        }
-        else {
-            $this->threatsSearch = array();
-            $this->selectedThreat = "";
-        }
-        return view('livewire.asset-threats-controls-manage', [
-            "asset" => $this->asset,
-            "threats" => $threats->get(),
-            "threats_search" => $this->threatsSearch
-        ]);
-    }
-
-    public function openCreateThreatDialog()
-    {
-        $this->resetForm();
-        $this->assetThreatAddDialogOpen = true;
-    }
-
     public function openCreateThreatControlDialog($asset_threat_id)
     {
         $this->resetForm();
         $this->availableControls = AssetThreat::findOrFail($asset_threat_id)->availableControls();
         $this->selectedAssetThreat = $asset_threat_id;
         $this->assetThreatControlAddDialogOpen = true;
-    }
-
-    public function unsetRemainingRiskAcceptance()
-    {
-        $this->asset->update(
-            ["remainingRiskAccepted" => false]
-        );
-        $this->emit("threatModified");
     }
 
     /**
@@ -161,6 +151,14 @@ class AssetThreatsControlsManage extends Component
             "ip" => $request->ip()
         ]);
         Log::channel("application")->info(sprintf("Add Threat %d to Asset %d", $this->selectedThreat, $this->asset->id));
+    }
+
+    public function unsetRemainingRiskAcceptance()
+    {
+        $this->asset->update(
+            ["remainingRiskAccepted" => false]
+        );
+        $this->emit("threatModified");
     }
 
     /**

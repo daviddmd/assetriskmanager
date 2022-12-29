@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Exports\PermanentContactPointExport;
-use App\Models\PermanentContactPoint;
 use App\Http\Requests\StorePermanentContactPointRequest;
 use App\Http\Requests\UpdatePermanentContactPointRequest;
+use App\Models\PermanentContactPoint;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;

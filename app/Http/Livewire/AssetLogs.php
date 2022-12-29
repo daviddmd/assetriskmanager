@@ -11,13 +11,12 @@ class AssetLogs extends Component
     use AuthorizesRequests;
 
     public Asset $asset;
+    protected $listeners = ["threatModified" => "render"];
 
     public function mount($asset)
     {
         $this->asset = $asset;
     }
-
-    protected $listeners = ["threatModified" => "render"];
 
     public function render()
     {

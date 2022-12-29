@@ -53,8 +53,11 @@
                             </tbody>
                         </table>
                         <div class="flex justify-center">
-                            <a class="inline-flex items-center h-10 px-5 m-2 text-sm text-green-100 transition-colors duration-150 bg-green-700 rounded-lg focus:shadow-outline hover:bg-green-800" href="{{route('permanent-contact-point.create')}}" target="_blank">{{__("Create")}}</a>
-                            <a class="inline-flex items-center h-10 px-5 m-2 text-sm text-blue-100 transition-colors duration-150 bg-blue-700 rounded-lg focus:shadow-outline hover:bg-blue-800" href="{{route('permanent-contact-point.index',"export")}}" target="_blank">{{__("Export")}}</a>
+                            <a class="inline-flex items-center h-10 px-5 m-2 text-sm text-green-100 transition-colors duration-150 bg-green-700 rounded-lg focus:shadow-outline hover:bg-green-800"
+                               href="{{route('permanent-contact-point.create')}}" target="_blank">{{__("Create")}}</a>
+                            <a class="inline-flex items-center h-10 px-5 m-2 text-sm text-blue-100 transition-colors duration-150 bg-blue-700 rounded-lg focus:shadow-outline hover:bg-blue-800"
+                               href="{{route('permanent-contact-point.index',"export")}}"
+                               target="_blank">{{__("Export")}}</a>
                         </div>
                     </div>
                 </div>

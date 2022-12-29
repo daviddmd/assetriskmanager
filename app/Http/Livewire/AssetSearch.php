@@ -2,12 +2,10 @@
 
 namespace App\Http\Livewire;
 
-use App\Enums\UserRole;
 use App\Http\Controllers\AssetController;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 /**
@@ -19,6 +17,7 @@ use Livewire\Component;
 class AssetSearch extends Component
 {
     use AuthorizesRequests;
+
     public $assets = [];
     public $searchTerm;
 
@@ -37,10 +36,9 @@ class AssetSearch extends Component
         if (!empty($this->searchTerm)) {
             $search = AssetController::filterAsset($this->searchTerm)->get();
             $this->assets = $search;
-        }
-        else {
+        } else {
             $this->assets = array();
         }
-        return view('livewire.asset-search',["assets"=>$this->assets]);
+        return view('livewire.asset-search', ["assets" => $this->assets]);
     }
 }

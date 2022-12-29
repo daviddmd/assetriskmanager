@@ -35,8 +35,7 @@ class ReportController extends Controller
                 "asset_list" => Excel::download(new AssetListExport, config("constants.exports.asset_list_file_name")),
                 default => abort(500),
             };
-        }
-        else {
+        } else {
             $nodes_array = array();
             $edges_array = array();
             foreach (Asset::all() as $asset) {

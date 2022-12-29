@@ -6,7 +6,6 @@ use App\Enums\UserRole;
 use App\Models\Department;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Auth\Access\Response;
 
 class DepartmentPolicy
 {
@@ -43,7 +42,7 @@ class DepartmentPolicy
      */
     public function create(User $user): bool
     {
-        return in_array($user->role,[UserRole::SECURITY_OFFICER,UserRole::ADMINISTRATOR]);
+        return in_array($user->role, [UserRole::SECURITY_OFFICER, UserRole::ADMINISTRATOR]);
     }
 
     /**
@@ -55,7 +54,7 @@ class DepartmentPolicy
      */
     public function update(User $user, Department $department): bool
     {
-        return in_array($user->role,[UserRole::SECURITY_OFFICER,UserRole::ADMINISTRATOR]);
+        return in_array($user->role, [UserRole::SECURITY_OFFICER, UserRole::ADMINISTRATOR]);
     }
 
     /**
@@ -67,7 +66,7 @@ class DepartmentPolicy
      */
     public function delete(User $user, Department $department): bool
     {
-        return in_array($user->role,[UserRole::SECURITY_OFFICER,UserRole::ADMINISTRATOR]);
+        return in_array($user->role, [UserRole::SECURITY_OFFICER, UserRole::ADMINISTRATOR]);
     }
 
     /**
@@ -79,7 +78,7 @@ class DepartmentPolicy
      */
     public function restore(User $user, Department $department): bool
     {
-        return in_array($user->role,[UserRole::SECURITY_OFFICER,UserRole::ADMINISTRATOR]);
+        return in_array($user->role, [UserRole::SECURITY_OFFICER, UserRole::ADMINISTRATOR]);
     }
 
     /**
@@ -91,6 +90,6 @@ class DepartmentPolicy
      */
     public function forceDelete(User $user, Department $department): bool
     {
-        return in_array($user->role,[UserRole::SECURITY_OFFICER,UserRole::ADMINISTRATOR]);
+        return in_array($user->role, [UserRole::SECURITY_OFFICER, UserRole::ADMINISTRATOR]);
     }
 }

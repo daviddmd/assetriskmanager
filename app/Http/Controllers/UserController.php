@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Enums\UserRole;
-use App\Models\Department;
-use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Department;
+use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -20,13 +20,6 @@ class UserController extends Controller
     public function __construct()
     {
         $this->authorizeResource(User::class, 'user');
-    }
-
-    public static function filterUser($filter)
-    {
-        return User::where(function ($query) use ($filter) {
-            $query->where("name", "like", "%" . $filter . "%")->orWhere("email", "like", "%" . $filter . "%")->orWhere("id", "=", $filter);
-        });
     }
 
     /**
@@ -44,12 +37,18 @@ class UserController extends Controller
                 $users = $users->where("department_id", "=", $department_id);
             }
             $users = $users->paginate(5)->withQueryString();
-        }
-        else {
+        } else {
             $users = User::paginate(5)->withQueryString();
         }
         $departments = Department::all();
         return view("users.index", ["users" => $users, "departments" => $departments, "filter" => $filter, "department_id" => $department_id]);
+    }
+
+    public static function filterUser($filter)
+    {
+        return User::where(function ($query) use ($filter) {
+            $query->where("name", "like", "%" . $filter . "%")->orWhere("email", "like", "%" . $filter . "%")->orWhere("id", "=", $filter);
+        });
     }
 
     /**

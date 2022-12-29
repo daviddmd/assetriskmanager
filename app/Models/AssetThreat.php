@@ -35,29 +35,25 @@ class AssetThreat extends Model
         };
     }
 
+    public static function totalRiskColor($score): string
+    {
+        return self::absoluteRiskColor($score / 5);
+    }
+
     public static function absoluteRiskColor($score): string
     {
         if ($score > 0 && $score <= 5) {
             return config("constants.colors.green");
-        }
-        elseif ($score > 5 && $score <= 10) {
+        } elseif ($score > 5 && $score <= 10) {
             return config("constants.colors.blue");
-        }
-        elseif ($score > 10 && $score <= 15) {
+        } elseif ($score > 10 && $score <= 15) {
             return config("constants.colors.yellow");
-        }
-        elseif ($score > 15 && $score <= 20) {
+        } elseif ($score > 15 && $score <= 20) {
             return config("constants.colors.orange");
-        }
-        elseif ($score > 20 && $score <= 25) {
+        } elseif ($score > 20 && $score <= 25) {
             return config("constants.colors.red");
         }
         return config("constants.colors.white");
-    }
-
-    public static function totalRiskColor($score): string
-    {
-        return self::absoluteRiskColor($score / 5);
     }
 
     public function totalRisk($assetAppreciation): float|int
@@ -68,11 +64,6 @@ class AssetThreat extends Model
     public function absoluteRisk(): float|int
     {
         return max([$this->confidentiality_impact, $this->availability_impact, $this->integrity_impact]) * $this->probability;
-    }
-
-    public function controls()
-    {
-        return $this->hasMany(AssetThreatControl::class);
     }
 
     public function threat(): BelongsTo
@@ -90,5 +81,10 @@ class AssetThreat extends Model
         return Control::whereNotIn("id", $this->controls()->pluck("control_id")->toArray())->
         whereIn("id", ControlThreat::where("threat_id", "=", $this->threat_id)->pluck("control_id")->toArray())->
         get();
+    }
+
+    public function controls()
+    {
+        return $this->hasMany(AssetThreatControl::class);
     }
 }

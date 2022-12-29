@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Threat;
 use App\Http\Requests\StoreThreatRequest;
 use App\Http\Requests\UpdateThreatRequest;
+use App\Models\Threat;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -31,8 +31,7 @@ class ThreatController extends Controller
             $threats = Threat::where("name", "like", "%" . $filter . "%")->
             orWhere("description", "like", "%" . $filter . "%")->
             paginate(5)->withQueryString();
-        }
-        else {
+        } else {
             $threats = Threat::paginate(5)->withQueryString();
         }
         return view("threats.index", ["threats" => $threats, "filter" => $filter]);

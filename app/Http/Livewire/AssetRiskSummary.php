@@ -15,13 +15,12 @@ class AssetRiskSummary extends Component
     use AuthorizesRequests;
 
     public $asset;
+    protected $listeners = ["threatModified" => "render"];
 
     public function mount($asset)
     {
         $this->asset = $asset;
     }
-
-    protected $listeners = ["threatModified" => "render"];
 
     /**
      * @throws AuthorizationException

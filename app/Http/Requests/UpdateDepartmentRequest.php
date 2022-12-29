@@ -26,7 +26,7 @@ class UpdateDepartmentRequest extends FormRequest
     {
         $department = $this->route()->parameter('department');
         return [
-            "name"=>["required",Rule::unique("departments")->ignore($department),"max:30"],
+            "name" => ["required", Rule::unique("departments")->ignore($department), "max:30"],
             'description' => 'max:255',
         ];
     }

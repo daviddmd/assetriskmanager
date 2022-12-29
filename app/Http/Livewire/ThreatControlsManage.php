@@ -3,14 +3,11 @@
 namespace App\Http\Livewire;
 
 use App\Models\Control;
-use App\Models\ControlThreat;
-use App\Models\Threat;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -32,12 +29,6 @@ class ThreatControlsManage extends Component
         $this->threat = $threat;
     }
 
-    public function clearForm()
-    {
-        $this->controls_search = array();
-        $this->control = "";
-    }
-
     /**
      * @throws AuthorizationException
      */
@@ -54,12 +45,10 @@ class ThreatControlsManage extends Component
             if ($search->count() > 0) {
                 $this->controls_search = $search;
                 $this->control = $search->get(0)->id;
-            }
-            else {
+            } else {
                 $this->clearForm();
             }
-        }
-        else {
+        } else {
             $this->clearForm();
         }
         return view('livewire.threat-controls-manage', [
@@ -67,6 +56,12 @@ class ThreatControlsManage extends Component
                 "controls_search" => $this->controls_search
             ]
         );
+    }
+
+    public function clearForm()
+    {
+        $this->controls_search = array();
+        $this->control = "";
     }
 
     /**

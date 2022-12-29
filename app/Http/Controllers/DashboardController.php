@@ -24,8 +24,7 @@ class DashboardController extends Controller
             $assetsWithControlsToValidate = Asset::all()->filter(function ($asset) {
                 return $asset->hasUnvalidatedControls() && !$asset->remainingRiskAccepted && $asset->active;
             });
-        }
-        else {
+        } else {
             $assetsWithControlsToValidate = array();
         }
         return view('dashboard', ["assetsWithControlsToValidate" => $assetsWithControlsToValidate]);

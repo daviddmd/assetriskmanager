@@ -12,18 +12,11 @@ use Illuminate\Support\Facades\Session;
 
 class SetUserLanguage
 {
-    private function setLanguage()
-    {
-        if (Session::has("locale")) {
-            App::setLocale(Session::get("locale"));
-        }
-    }
-
     /**
      * Handle an incoming request.
      *
      * @param Request $request
-     * @param Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @param Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse) $next
      * @return Response|RedirectResponse
      */
     public function handle(Request $request, Closure $next)
@@ -46,5 +39,12 @@ class SetUserLanguage
         }
         $this->setLanguage();
         return $next($request);
+    }
+
+    private function setLanguage()
+    {
+        if (Session::has("locale")) {
+            App::setLocale(Session::get("locale"));
+        }
     }
 }

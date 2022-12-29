@@ -26,8 +26,8 @@ class UpdatePermanentContactPointRequest extends FormRequest
         return [
             "entity_name" => ["required"],
             "permanent_contact_point_name" => ["required"],
-            "main_email_address" => ["required","email:rfc"],
-            "secondary_email_address" => ["required","email:rfc"],
+            "main_email_address" => ["required", "email:rfc"],
+            "secondary_email_address" => ["required", "email:rfc"],
             "main_landline_phone_number" => ["required"],
             "secondary_landline_phone_number" => ["required"],
             "main_mobile_phone_number" => ["required"],

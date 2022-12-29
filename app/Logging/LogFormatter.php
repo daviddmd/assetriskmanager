@@ -4,7 +4,6 @@ namespace App\Logging;
 
 use Illuminate\Http\Request;
 use Illuminate\Log\Logger;
-use Illuminate\Support\Facades\Auth;
 use Monolog\Formatter\LineFormatter;
 
 class LogFormatter

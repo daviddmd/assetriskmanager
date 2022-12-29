@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Control;
 use App\Http\Requests\StoreControlRequest;
 use App\Http\Requests\UpdateControlRequest;
-use App\Models\Threat;
+use App\Models\Control;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -32,8 +31,7 @@ class ControlController extends Controller
             $controls = Control::where("name", "like", "%" . $filter . "%")->
             orWhere("description", "like", "%" . $filter . "%")->
             paginate(5)->withQueryString();
-        }
-        else {
+        } else {
             $controls = Control::paginate(5)->withQueryString();
         }
         return view("controls.index", ["controls" => $controls, "filter" => $filter]);

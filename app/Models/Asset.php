@@ -46,21 +46,6 @@ class Asset extends Model
         'manufacturer_contract_type' => ManufacturerContractType::class,
     ];
 
-    public function type()
-    {
-        return $this->belongsTo(AssetType::class, "asset_type_id");
-    }
-
-    public function manager()
-    {
-        return $this->belongsTo(User::class, "manager_id", "id");
-    }
-
-    public function totalAppreciation()
-    {
-        return max([$this->availability_appreciation, $this->integrity_appreciation, $this->confidentiality_appreciation]);
-    }
-
     /**
      * @param $score
      * @return string
@@ -79,6 +64,16 @@ class Asset extends Model
 
     }
 
+    public function type()
+    {
+        return $this->belongsTo(AssetType::class, "asset_type_id");
+    }
+
+    public function manager()
+    {
+        return $this->belongsTo(User::class, "manager_id", "id");
+    }
+
     /**
      * @return BelongsTo Asset that this asset connects to
      */
@@ -95,17 +90,17 @@ class Asset extends Model
         return $this->hasMany(Asset::class, "links_to_id");
     }
 
+    public function availableThreats()
+    {
+        return Threat::whereNotIn("id", $this->asset->threats()->pluck("threat_id")->toArray())->get();
+    }
+
     /**
      * @return HasMany Threats of this Asset
      */
     public function threats(): HasMany
     {
         return $this->hasMany(AssetThreat::class, "asset_id");
-    }
-
-    public function availableThreats()
-    {
-        return Threat::whereNotIn("id", $this->asset->threats()->pluck("threat_id")->toArray())->get();
     }
 
     public function availableChildren(): array
@@ -126,6 +121,11 @@ class Asset extends Model
         }
         $controlled_threats = $threats->where("residual_risk", "!=", 0);
         return $controlled_threats->count() == 0 ? 0 : max($controlled_threats->pluck("residual_risk")->toArray());
+    }
+
+    public function totalAppreciation()
+    {
+        return max([$this->availability_appreciation, $this->integrity_appreciation, $this->confidentiality_appreciation]);
     }
 
     public function hasUnvalidatedControls(): bool

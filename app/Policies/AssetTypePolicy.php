@@ -18,7 +18,7 @@ class AssetTypePolicy
      * @param User $user
      * @return bool
      */
-    public function viewAny(User $user) : bool
+    public function viewAny(User $user): bool
     {
         return true;
     }
@@ -30,7 +30,7 @@ class AssetTypePolicy
      * @param AssetType $assetType
      * @return bool
      */
-    public function view(User $user, AssetType $assetType) : bool
+    public function view(User $user, AssetType $assetType): bool
     {
         return true;
     }
@@ -38,10 +38,10 @@ class AssetTypePolicy
     /**
      * Determine whether the user can create models.
      *
-     * @param  \LdapRecord\Models\ActiveDirectory\User  $user
+     * @param \LdapRecord\Models\ActiveDirectory\User $user
      * @return Response|bool
      */
-    public function create(User $user) : bool
+    public function create(User $user): bool
     {
         return $user->role == UserRole::SECURITY_OFFICER;
 
@@ -54,7 +54,7 @@ class AssetTypePolicy
      * @param AssetType $assetType
      * @return bool
      */
-    public function update(User $user, AssetType $assetType) : bool
+    public function update(User $user, AssetType $assetType): bool
     {
         return $user->role == UserRole::SECURITY_OFFICER;
     }
@@ -66,7 +66,7 @@ class AssetTypePolicy
      * @param AssetType $assetType
      * @return bool
      */
-    public function delete(User $user, AssetType $assetType) : bool
+    public function delete(User $user, AssetType $assetType): bool
     {
         return $user->role == UserRole::SECURITY_OFFICER;
     }
@@ -78,7 +78,7 @@ class AssetTypePolicy
      * @param AssetType $assetType
      * @return bool
      */
-    public function restore(User $user, AssetType $assetType) : bool
+    public function restore(User $user, AssetType $assetType): bool
     {
         return $user->role == UserRole::SECURITY_OFFICER;
     }
@@ -90,7 +90,7 @@ class AssetTypePolicy
      * @param AssetType $assetType
      * @return bool
      */
-    public function forceDelete(User $user, AssetType $assetType) : bool
+    public function forceDelete(User $user, AssetType $assetType): bool
     {
         return $user->role == UserRole::SECURITY_OFFICER;
     }

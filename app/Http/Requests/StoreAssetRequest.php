@@ -27,21 +27,21 @@ class StoreAssetRequest extends FormRequest
     public function rules()
     {
         return [
-            "name"=>["required"],
-            "type"=>[Rule::exists("asset_types","id"),"required"],
-            "manager"=>[Rule::exists("users","id"),"required"],
-            "description"=>["required"],
-            "sku"=>["required"],
-            "manufacturer"=>["required"],
-            "location"=>["required"],
-            "manufacturer_contract_type"=>["required",new Enum(ManufacturerContractType::class)],
-            "manufacturer_beginning_date"=>["date","nullable"],
-            "manufacturer_ending_date"=>["date","nullable"],
-            "manufacturer_contract_provider"=>["nullable"],
-            "mac_address"=>["nullable"],
-            "ip_address"=>["nullable"],
-            "export"=>[],
-            "links_to"=>[Rule::exists("assets","id"),"nullable"]
+            "name" => ["required"],
+            "type" => [Rule::exists("asset_types", "id"), "required"],
+            "manager" => [Rule::exists("users", "id"), "required"],
+            "description" => ["required"],
+            "sku" => ["required"],
+            "manufacturer" => ["required"],
+            "location" => ["required"],
+            "manufacturer_contract_type" => ["required", new Enum(ManufacturerContractType::class)],
+            "manufacturer_beginning_date" => ["date", "nullable"],
+            "manufacturer_ending_date" => ["date", "nullable"],
+            "manufacturer_contract_provider" => ["nullable"],
+            "mac_address" => ["nullable"],
+            "ip_address" => ["nullable"],
+            "export" => [],
+            "links_to" => [Rule::exists("assets", "id"), "nullable"]
         ];
     }
 }

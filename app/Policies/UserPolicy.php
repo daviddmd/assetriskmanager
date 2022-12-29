@@ -17,9 +17,9 @@ class UserPolicy
      * @param User $user
      * @return Response|bool
      */
-    public function viewAny(User $user) : bool
+    public function viewAny(User $user): bool
     {
-        return in_array($user->role,[UserRole::ADMINISTRATOR,UserRole::SECURITY_OFFICER]);
+        return in_array($user->role, [UserRole::ADMINISTRATOR, UserRole::SECURITY_OFFICER]);
     }
 
     /**
@@ -29,9 +29,9 @@ class UserPolicy
      * @param User $model
      * @return bool
      */
-    public function view(User $user, User $model) : bool
+    public function view(User $user, User $model): bool
     {
-        return in_array($user->role,[UserRole::ADMINISTRATOR,UserRole::SECURITY_OFFICER]);
+        return in_array($user->role, [UserRole::ADMINISTRATOR, UserRole::SECURITY_OFFICER]);
     }
 
     /**
@@ -40,7 +40,7 @@ class UserPolicy
      * @param User $user
      * @return bool
      */
-    public function create(User $user) : bool
+    public function create(User $user): bool
     {
         return false;
     }
@@ -52,9 +52,9 @@ class UserPolicy
      * @param User $model
      * @return bool
      */
-    public function update(User $user, User $model) : bool
+    public function update(User $user, User $model): bool
     {
-        return in_array($user->role,[UserRole::ADMINISTRATOR,UserRole::SECURITY_OFFICER]);
+        return in_array($user->role, [UserRole::ADMINISTRATOR, UserRole::SECURITY_OFFICER]);
     }
 
     /**
@@ -64,7 +64,7 @@ class UserPolicy
      * @param User $model
      * @return bool
      */
-    public function delete(User $user, User $model) : bool
+    public function delete(User $user, User $model): bool
     {
         return false;
     }
@@ -76,7 +76,7 @@ class UserPolicy
      * @param User $model
      * @return bool
      */
-    public function restore(User $user, User $model) : bool
+    public function restore(User $user, User $model): bool
     {
         return false;
     }
@@ -88,7 +88,7 @@ class UserPolicy
      * @param User $model
      * @return bool
      */
-    public function forceDelete(User $user, User $model) : bool
+    public function forceDelete(User $user, User $model): bool
     {
         return false;
     }

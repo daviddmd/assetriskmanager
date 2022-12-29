@@ -26,7 +26,7 @@ class UpdateAssetTypeRequest extends FormRequest
     {
         $assetType = $this->route()->parameter('asset_type');
         return [
-            "name"=>["required",Rule::unique("asset_types")->ignore($assetType),"max:30"]
+            "name" => ["required", Rule::unique("asset_types")->ignore($assetType), "max:30"]
         ];
     }
 }

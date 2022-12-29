@@ -17,7 +17,7 @@ class PermanentContactPointPolicy
      * @param User $user
      * @return bool
      */
-    public function viewAny(User $user) : bool
+    public function viewAny(User $user): bool
     {
         return $user->role == UserRole::SECURITY_OFFICER;
 
@@ -30,7 +30,7 @@ class PermanentContactPointPolicy
      * @param PermanentContactPoint $permanentContactPoint
      * @return bool
      */
-    public function view(User $user, PermanentContactPoint $permanentContactPoint) : bool
+    public function view(User $user, PermanentContactPoint $permanentContactPoint): bool
     {
         return $user->role == UserRole::SECURITY_OFFICER;
     }
@@ -41,7 +41,7 @@ class PermanentContactPointPolicy
      * @param User $user
      * @return bool
      */
-    public function create(User $user) : bool
+    public function create(User $user): bool
     {
         return $user->role == UserRole::SECURITY_OFFICER;
     }
@@ -53,7 +53,7 @@ class PermanentContactPointPolicy
      * @param PermanentContactPoint $permanentContactPoint
      * @return bool
      */
-    public function update(User $user, PermanentContactPoint $permanentContactPoint) : bool
+    public function update(User $user, PermanentContactPoint $permanentContactPoint): bool
     {
         return $user->role == UserRole::SECURITY_OFFICER;
     }
@@ -65,7 +65,7 @@ class PermanentContactPointPolicy
      * @param PermanentContactPoint $permanentContactPoint
      * @return bool
      */
-    public function delete(User $user, PermanentContactPoint $permanentContactPoint) : bool
+    public function delete(User $user, PermanentContactPoint $permanentContactPoint): bool
     {
         return $user->role == UserRole::SECURITY_OFFICER;
     }
@@ -77,7 +77,7 @@ class PermanentContactPointPolicy
      * @param PermanentContactPoint $permanentContactPoint
      * @return bool
      */
-    public function restore(User $user, PermanentContactPoint $permanentContactPoint) : bool
+    public function restore(User $user, PermanentContactPoint $permanentContactPoint): bool
     {
         return $user->role == UserRole::SECURITY_OFFICER;
     }
@@ -89,7 +89,7 @@ class PermanentContactPointPolicy
      * @param PermanentContactPoint $permanentContactPoint
      * @return bool
      */
-    public function forceDelete(User $user, PermanentContactPoint $permanentContactPoint) : bool
+    public function forceDelete(User $user, PermanentContactPoint $permanentContactPoint): bool
     {
         return $user->role == UserRole::SECURITY_OFFICER;
     }

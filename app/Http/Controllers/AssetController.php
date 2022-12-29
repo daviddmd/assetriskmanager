@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Enums\AssetOperationType;
 use App\Enums\ManufacturerContractType;
 use App\Enums\UserRole;
-use App\Models\Asset;
 use App\Http\Requests\StoreAssetRequest;
 use App\Http\Requests\UpdateAssetRequest;
+use App\Models\Asset;
 use App\Models\AssetLog;
 use App\Models\AssetType;
 use Carbon\Carbon;
@@ -24,22 +24,6 @@ class AssetController extends Controller
     public function __construct()
     {
         $this->authorizeResource(Asset::class, 'asset');
-    }
-
-    public static function filterAsset($filter)
-    {
-        return Asset::where(function ($query) use ($filter) {
-            $query
-                ->where("name", "like", "%" . $filter . "%")
-                ->orWhere("description", "like", "%" . $filter . "%")
-                ->orWhere("mac_address", "=", $filter)
-                ->orWhere("ip_address", "=", $filter)
-                ->orWhere("manufacturer", "like", "%" . $filter . "%")
-                ->orWhere("sku", "like", "%" . $filter . "%")
-                ->orWhere("location", "like", "%" . $filter . "%")
-                ->orWhere("id", "=", $filter)
-                ->orWhere("fqdn", "like", "%" . $filter . "%");
-        });
     }
 
     /**
@@ -72,15 +56,20 @@ class AssetController extends Controller
         return view("assets.index", ["assets" => $assets, "assetTypes" => $assetTypes, "asset_type_id" => $asset_type_id, "filter" => $filter]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Application|Factory|View
-     */
-    public function create()
+    public static function filterAsset($filter)
     {
-        $assetTypes = AssetType::all();
-        return view("assets.create", ["assetTypes" => $assetTypes]);
+        return Asset::where(function ($query) use ($filter) {
+            $query
+                ->where("name", "like", "%" . $filter . "%")
+                ->orWhere("description", "like", "%" . $filter . "%")
+                ->orWhere("mac_address", "=", $filter)
+                ->orWhere("ip_address", "=", $filter)
+                ->orWhere("manufacturer", "like", "%" . $filter . "%")
+                ->orWhere("sku", "like", "%" . $filter . "%")
+                ->orWhere("location", "like", "%" . $filter . "%")
+                ->orWhere("id", "=", $filter)
+                ->orWhere("fqdn", "like", "%" . $filter . "%");
+        });
     }
 
     /**
@@ -121,6 +110,17 @@ class AssetController extends Controller
         ]);
         Log::channel("application")->info(sprintf("Create Asset %d", $asset->id));
         return redirect()->route("assets.index")->with("status", __("Asset Created"));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Application|Factory|View
+     */
+    public function create()
+    {
+        $assetTypes = AssetType::all();
+        return view("assets.create", ["assetTypes" => $assetTypes]);
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
+
 namespace App\Enums;
-enum ManufacturerContractType : string
+enum ManufacturerContractType: string
 {
     case WARRANTY = "WARRANTY";
     case MAINTENANCE = "MAINTENANCE";

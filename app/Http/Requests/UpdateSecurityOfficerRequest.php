@@ -27,7 +27,7 @@ class UpdateSecurityOfficerRequest extends FormRequest
             "entity_name" => ["required"],
             "name" => ["required"],
             "role" => ["required"],
-            "email_address" => ["required","email:rfc"],
+            "email_address" => ["required", "email:rfc"],
             "landline_phone_number" => ["required"],
             "mobile_phone_number" => ["required"]
         ];
