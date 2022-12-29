@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use App\Enums\ManufacturerContractType;
+use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 
 class Asset extends Model
 {
@@ -93,6 +95,9 @@ class Asset extends Model
         return $this->hasMany(Asset::class, "links_to_id");
     }
 
+    /**
+     * @return HasMany Threats of this Asset
+     */
     public function threats(): HasMany
     {
         return $this->hasMany(AssetThreat::class, "asset_id");
@@ -101,6 +106,13 @@ class Asset extends Model
     public function availableThreats()
     {
         return Threat::whereNotIn("id", $this->asset->threats()->pluck("threat_id")->toArray())->get();
+    }
+
+    public function availableChildren(): array
+    {
+        return array_filter($this->children->all(), function ($child) {
+            return $child->manager_id == Auth::user()->id || in_array(Auth::user()->role, [UserRole::SECURITY_OFFICER, UserRole::DATA_PROTECTION_OFFICER]);
+        });
     }
 
     public function highestRemainingRisk()

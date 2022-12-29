@@ -159,8 +159,8 @@
                 </button>
             </div>
             @if(!$loop->last)
-                <div class="py-16">
-                    <div class="w-full border-t-8 border-gray-300"></div>
+                <div class="py-8">
+                    <div class="flex-grow border-t border-dashed border-gray-400"></div>
                 </div>
             @endif
         @endforeach

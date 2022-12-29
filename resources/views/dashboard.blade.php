@@ -8,6 +8,7 @@
     <div class="py-12">
         <div class="mx-auto sm:px-6 lg:px-8">
             <div class="bg-white shadow-xl sm:rounded-lg">
+                <!--FIXME-->
                 @if(Auth::user()->role==\App\Enums\UserRole::SECURITY_OFFICER && $assetsWithControlsToValidate->count()!=0)
                     <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">{{__("Assets with Controls to Be Validated")}}</h2>
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -65,28 +66,26 @@
                             </li>
 
                         @elseif(!$asset->remainingRiskAccepted && $asset->active)
-                            @if($asset->threats()->count()==0)
+                            @forelse($asset->threats as $threat)
+                                @if($threat->controls()->count()==0)
+                                    <li>
+                                        <a href="{{route("assets.edit",$asset->id)}}"
+                                           target="_blank">{{__("The threat :threat_name associated with asset :name (:id) has no controls. Please add some.",["name"=>$asset->name,"id"=>$asset->id,"threat_name"=>$threat->threat->name])}}</a>
+                                    </li>
+                                @else
+                                    @if(!$threat->residual_risk_accepted)
+                                        <li>
+                                            <a href="{{route("assets.edit",$asset->id)}}"
+                                               target="_blank">{{__("The remaining remaining risk associated with threat :threat_name associated with asset :name (:id) isn't accepted. Please accept it.",["name"=>$asset->name,"id"=>$asset->id,"threat_name"=>$threat->threat->name])}}</a>
+                                        </li>
+                                    @endif
+                                @endif
+                            @empty
                                 <li>
                                     <a href="{{route("assets.edit",$asset->id)}}"
                                        target="_blank">{{__("The asset :name (:id) has no threats. Please add some.",["name"=>$asset->name,"id"=>$asset->id])}}</a>
                                 </li>
-                            @else
-                                @foreach($asset->threats as $threat)
-                                    @if($threat->controls()->count()==0)
-                                        <li>
-                                            <a href="{{route("assets.edit",$asset->id)}}"
-                                               target="_blank">{{__("The threat :threat_name associated with asset :name (:id) has no controls. Please add some.",["name"=>$asset->name,"id"=>$asset->id,"threat_name"=>$threat->threat->name])}}</a>
-                                        </li>
-                                    @else
-                                        @if(!$threat->residual_risk_accepted)
-                                            <li>
-                                                <a href="{{route("assets.edit",$asset->id)}}"
-                                                   target="_blank">{{__("The remaining remaining risk associated with threat :threat_name associated with asset :name (:id) isn't accepted. Please accept it.",["name"=>$asset->name,"id"=>$asset->id,"threat_name"=>$threat->threat->name])}}</a>
-                                            </li>
-                                        @endif
-                                    @endif
-                                @endforeach
-                            @endif
+                            @endforelse
                         @endif
                     @endforeach
                 </ul>

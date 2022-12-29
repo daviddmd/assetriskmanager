@@ -79,9 +79,9 @@
                         <button type="submit"
                                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{__("Update")}}</button>
                     </form>
-                    @if($user->assets->count()>0)
+                    @if($user->assets()->exists())
                         <div class="py-2">
-                            <div class="w-full border-t-8 border-gray-300"></div>
+                            <div class="flex-grow border-t border-gray-400"></div>
                         </div>
                         <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">{{__("Assets")}}</h2>
                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-5">

@@ -66,17 +66,15 @@
                     </div>
                     <div class="mb-6">
                         <label for="active"
-                               class="form-check-label inline-block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Active")}}</label>
+                               class="form-check-label inline-block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Active?")}}</label>
                         <input
                             class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                             type="checkbox" value="" name="active" id="active"
                             {{$user->active ? "checked" : ""}} disabled>
 
                     </div>
-                    @if($user->assets->count()>0)
-                        <div class="py-2">
-                            <div class="w-full border-t-8 border-gray-300"></div>
-                        </div>
+                    @if($user->assets()->exists())
+                        <div class="flex-grow border-t border-gray-400"></div>
                         <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">{{__("Assets")}}</h2>
                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-5">
                             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">

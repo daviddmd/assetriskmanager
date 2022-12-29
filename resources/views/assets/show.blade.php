@@ -296,10 +296,9 @@
                                     </div>
                                 </div>
                             @endif
-
-                            @if($asset->children->count()>0)
+                            @if(!empty($asset->availableChildren()))
                                 <div class="flex-grow border-t border-gray-400"></div>
-                                <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">Children</h2>
+                                <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">{{__("Children")}}</h2>
                                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-5">
                                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                         <thead
@@ -335,31 +334,22 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($asset->children as $child)
-                                            @if(Auth::user()->id == $child->manager_id || in_array(Auth::user()->role,[\App\Enums\UserRole::SECURITY_OFFICER,\App\Enums\UserRole::DATA_PROTECTION_OFFICER]))
-                                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                                    <td class="px-6 py-4">{{$child->id}}</td>
-                                                    <td class="px-6 py-4">{{$child->name}}</td>
-                                                    <td class="px-6 py-4">{{$child->type->name}}</td>
-                                                    <td class="px-6 py-4">{{$child->sku}}</td>
-                                                    <td class="px-6 py-4">{{$child->ip_address}}</td>
-                                                    <td class="px-6 py-4">{{$child->mac_address}}</td>
-                                                    <td class="px-6 py-4">{{$child->manufacturer}}</td>
-                                                    <td class="px-6 py-4">{{$child->location}}</td>
-                                                    <td class="px-6 py-4">
-                                                        @can("update",$child)
-                                                            <a href="{{route("assets.edit",$child->id)}}"
-                                                               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                                                {{__("Manage")}}
-                                                            </a>
-                                                        @else
-                                                            <a href="{{route("assets.show",$child->id)}}"
-                                                               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                                                {{__("View")}}</a>
-                                                        @endcan
-                                                    </td>
-                                                </tr>
-                                            @endif
+                                        @foreach($asset->availableChildren() as $child)
+                                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                <td class="px-6 py-4">{{$child->id}}</td>
+                                                <td class="px-6 py-4">{{$child->name}}</td>
+                                                <td class="px-6 py-4">{{$child->type->name}}</td>
+                                                <td class="px-6 py-4">{{$child->sku}}</td>
+                                                <td class="px-6 py-4">{{$child->ip_address}}</td>
+                                                <td class="px-6 py-4">{{$child->mac_address}}</td>
+                                                <td class="px-6 py-4">{{$child->manufacturer}}</td>
+                                                <td class="px-6 py-4">{{$child->location}}</td>
+                                                <td class="px-6 py-4">
+                                                    <a href="{{route("assets.show",$child->id)}}"
+                                                       class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                                        {{__("View")}}</a>
+                                                </td>
+                                            </tr>
                                         @endforeach
                                         </tbody>
                                     </table>
@@ -436,7 +426,7 @@
                                         </tr>
                                         </tbody>
                                     </table>
-                                    @if($threat->controls()->count()>0)
+                                    @if($threat->controls()->exists())
                                         <h2 class="text-center text-xl font-normal leading-normal mt-0 mb-2">
                                             {{__("Controls")}}</h2>
                                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -489,8 +479,8 @@
                                         </table>
 
                                         @if(!$loop->last)
-                                            <div class="py-16">
-                                                <div class="w-full border-t-8 border-gray-300"></div>
+                                            <div class="py-8">
+                                                <div class="flex-grow border-t border-dashed border-gray-400"></div>
                                             </div>
                                         @endif
                                     @endif
