@@ -79,6 +79,16 @@ return [
     ],
 
     /*
+     * Laravel Eloquent Default Driver
+    'providers' => [
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
+    ],
+     */
+
+    /*
     |--------------------------------------------------------------------------
     | Resetting Passwords
     |--------------------------------------------------------------------------

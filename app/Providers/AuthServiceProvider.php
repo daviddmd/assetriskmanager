@@ -28,7 +28,12 @@ class AuthServiceProvider extends ServiceProvider
         Fortify::authenticateUsing(function ($request) {
             $validated = Auth::validate([
                 'userPrincipalName' => $request->email,
-                'password' => $request->password
+                'password' => $request->password,
+                // In case LDAP server is down, uses user cached password
+                'fallback' => [
+                    'email' => $request->email,
+                    'password' => $request->password
+                ],
             ]);
             return $validated ? Auth::getLastAttempted() : null;
         });
