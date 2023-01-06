@@ -30,7 +30,8 @@ class AssetRiskSummary extends Component
      */
     public function render()
     {
-        $this->canAcceptRemainingRisk = !$this->asset->threats()->where("residual_risk_accepted", "=", false)->exists();
+        $this->canAcceptRemainingRisk = $this->asset->threats()->exists() &&
+            !$this->asset->threats()->where("residual_risk_accepted", "=", false)->exists();
         $this->authorize('update', $this->asset);
         return view('livewire.asset-risk-summary', ["canAcceptRemainingRisk" => $this->canAcceptRemainingRisk]);
     }

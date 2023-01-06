@@ -1,5 +1,4 @@
 <div>
-    <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">{{__("Threats")}}</h2>
     @if($asset->totalAppreciation()==0)
         <h3 class="text-center text-2xl font-normal leading-normal mt-0 mb-2 text-red-600 font-bold">{{__("Define the Asset Appreciation Before Adding Threats")}}</h3>
         <div class="flex justify-center">
@@ -9,6 +8,7 @@
             </button>
         </div>
     @else
+        <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">{{__("Threats")}}</h2>
         <div class="flex justify-center">
             <button type="button"
                     wire:click="openCreateThreatDialog"
