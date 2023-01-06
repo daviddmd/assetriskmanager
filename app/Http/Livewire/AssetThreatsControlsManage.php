@@ -70,11 +70,13 @@ class AssetThreatsControlsManage extends Component
             if ($search->count() > 0) {
                 $this->threatsSearch = $search;
                 $this->selectedThreat = $search->get(0)->id;
-            } else {
+            }
+            else {
                 $this->selectedThreat = "";
                 $this->threatsSearch = array();
             }
-        } else {
+        }
+        else {
             $this->threatsSearch = array();
             $this->selectedThreat = "";
         }

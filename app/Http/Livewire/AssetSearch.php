@@ -36,7 +36,8 @@ class AssetSearch extends Component
         if (!empty($this->searchTerm)) {
             $search = AssetController::filterAsset($this->searchTerm)->get();
             $this->assets = $search;
-        } else {
+        }
+        else {
             $this->assets = array();
         }
         return view('livewire.asset-search', ["assets" => $this->assets]);

@@ -97,7 +97,7 @@ class PermanentContactPointController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \App\Http\Requests\UpdatePermanentContactPointRequest $request
+     * @param UpdatePermanentContactPointRequest $request
      * @param PermanentContactPoint $permanentContactPoint
      * @return RedirectResponse
      */

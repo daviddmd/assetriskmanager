@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\SecurityOfficer;
+use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -13,7 +14,7 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 class SecurityOfficerExport implements FromCollection, WithMapping, WithHeadings, WithStyles, ShouldAutoSize
 {
     /**
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function collection()
     {

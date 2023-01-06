@@ -118,7 +118,7 @@ curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
 apt-get install -y nodejs
 exit
 npm install
-npm run production
+npm run build
 ```
 
 ```shell
@@ -189,7 +189,8 @@ To apply updates:
 cd /var/www/assetriskmanager
 sudo chown -R $USER:$USER .
 git pull
-npm run production
+npm install
+npm run build
 php artisan migrate
 composer --optimize-autoloader --no-dev install
 php artisan config:cache
@@ -309,7 +310,7 @@ DB_PASSWORD=
 
 ```
 npm install
-npm run watch
+npm run dev
 php artisan migrate
 php artisan db:seed
 php artisan serve

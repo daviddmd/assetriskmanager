@@ -27,7 +27,8 @@ class UserSearch extends Component
         if (!empty($this->searchTerm)) {
             $filter = $this->searchTerm;
             $this->users = UserController::filterUser($filter)->get();
-        } else {
+        }
+        else {
             $this->users = array();
         }
         return view('livewire.user-search', ["users" => $this->users]);

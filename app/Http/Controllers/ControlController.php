@@ -31,7 +31,8 @@ class ControlController extends Controller
             $controls = Control::where("name", "like", "%" . $filter . "%")->
             orWhere("description", "like", "%" . $filter . "%")->
             paginate(5)->withQueryString();
-        } else {
+        }
+        else {
             $controls = Control::paginate(5)->withQueryString();
         }
         return view("controls.index", ["controls" => $controls, "filter" => $filter]);
@@ -95,7 +96,7 @@ class ControlController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \App\Http\Requests\UpdateControlRequest $request
+     * @param UpdateControlRequest $request
      * @param Control $control
      * @return RedirectResponse
      */

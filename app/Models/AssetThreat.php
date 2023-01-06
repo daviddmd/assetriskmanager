@@ -44,13 +44,17 @@ class AssetThreat extends Model
     {
         if ($score > 0 && $score <= 5) {
             return config("constants.colors.green");
-        } elseif ($score > 5 && $score <= 10) {
+        }
+        elseif ($score > 5 && $score <= 10) {
             return config("constants.colors.blue");
-        } elseif ($score > 10 && $score <= 15) {
+        }
+        elseif ($score > 10 && $score <= 15) {
             return config("constants.colors.yellow");
-        } elseif ($score > 15 && $score <= 20) {
+        }
+        elseif ($score > 15 && $score <= 20) {
             return config("constants.colors.orange");
-        } elseif ($score > 20 && $score <= 25) {
+        }
+        elseif ($score > 20 && $score <= 25) {
             return config("constants.colors.red");
         }
         return config("constants.colors.white");

@@ -31,7 +31,8 @@ class ThreatController extends Controller
             $threats = Threat::where("name", "like", "%" . $filter . "%")->
             orWhere("description", "like", "%" . $filter . "%")->
             paginate(5)->withQueryString();
-        } else {
+        }
+        else {
             $threats = Threat::paginate(5)->withQueryString();
         }
         return view("threats.index", ["threats" => $threats, "filter" => $filter]);

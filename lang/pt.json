@@ -156,7 +156,7 @@
     "Whoops! Something went wrong.": "Erro",
     "Language": "Linguagem",
     "Assets with Controls to Be Validated": "Ativos com Controlos a aguardar validação",
-    "The asset :name (:id) has no threats. Please add some.": "O ativo :name (:id) não tem ameaças. Por favor, adicione algumas.",
+    "The asset :name (:id) has no threats. Please add some.": "O ativo :name (:id) não tem ameaças. Por favor, adicione ameaças.",
     "The threat :threat_name associated with asset :name (:id) has no controls. Please add some.": "A ameaça :threat_name associada com o ativo :name (:id) não tem controlos. Por favor, adicione alguns.",
     "The remaining remaining risk associated with threat :threat_name associated with asset :name (:id) isn't accepted. Please accept it.": "O risco restante associado com a ameaça :threat_name associado com o ativo :name (:id) não está aceite. Por favor, aceite.",
     "Risk Score": "Nível de Risco",
@@ -190,5 +190,7 @@
     "Showing": "A mostrar",
     "of": "de",
     "results": "resultados",
-    "Accept the Remaining Risks of All Threats Before Accepting the Remaining Risk of this Asset": "Aceite o Risco Residual de Todas as Ameaças antes de Aceitar o Risco Remanescente deste Ativo"
+    "Accept the Remaining Risks of All Threats Before Accepting the Remaining Risk of this Asset": "Aceite o Risco Residual de Todas as Ameaças antes de Aceitar o Risco Remanescente deste Ativo",
+    "Pending Tasks": "Tarefas Pendentes",
+    "Task Description": "Descrição da Tarefa"
 }

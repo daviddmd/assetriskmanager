@@ -285,7 +285,15 @@
                                 <button type="submit"
                                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{__("Update")}}</button>
                             </form>
-
+                            @can("delete",$asset)
+                                <div class="py-2">
+                                    <form method="POST" action="{{route("assets.destroy",$asset->id)}}">
+                                        @csrf
+                                        @method("DELETE")
+                                        @include("common.delete_button",["message"=>__("Are you sure you want to delete this asset? This will delete all associated information with it.")])
+                                    </form>
+                                </div>
+                            @endcan
                             @if(!empty($asset->availableChildren()))
                                 <div class="py-2">
                                     <div class="flex-grow border-t border-gray-400"></div>
@@ -355,16 +363,6 @@
                                     </table>
                                 </div>
                             @endif
-                            @can("delete",$asset)
-                                <div class="text-right py-2">
-                                    <form method="POST" action="{{route("assets.destroy",$asset->id)}}">
-                                        @csrf
-                                        @method("DELETE")
-                                        @include("common.delete_button",["message"=>__("Are you sure you want to delete this asset? This will delete all associated information with it.")])
-                                    </form>
-                                </div>
-
-                            @endcan
                         </div>
                     </div>
 

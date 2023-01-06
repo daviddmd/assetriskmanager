@@ -16,9 +16,8 @@ class AssetRiskSummary extends Component
     use AuthorizesRequests;
 
     public Asset $asset;
-    protected $listeners = ["threatModified" => "render"];
-
     public $canAcceptRemainingRisk;
+    protected $listeners = ["threatModified" => "render"];
 
     public function mount($asset)
     {

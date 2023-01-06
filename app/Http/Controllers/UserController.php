@@ -37,7 +37,8 @@ class UserController extends Controller
                 $users = $users->where("department_id", "=", $department_id);
             }
             $users = $users->paginate(5)->withQueryString();
-        } else {
+        }
+        else {
             $users = User::paginate(5)->withQueryString();
         }
         $departments = Department::all();
@@ -64,7 +65,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \App\Http\Requests\StoreUserRequest $request
+     * @param StoreUserRequest $request
      * @return RedirectResponse
      */
     public function store(StoreUserRequest $request)

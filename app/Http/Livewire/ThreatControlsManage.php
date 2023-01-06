@@ -45,10 +45,12 @@ class ThreatControlsManage extends Component
             if ($search->count() > 0) {
                 $this->controls_search = $search;
                 $this->control = $search->get(0)->id;
-            } else {
+            }
+            else {
                 $this->clearForm();
             }
-        } else {
+        }
+        else {
             $this->clearForm();
         }
         return view('livewire.threat-controls-manage', [

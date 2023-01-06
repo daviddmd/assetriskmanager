@@ -44,13 +44,15 @@ class AssetLinksToManage extends Component
             if (Auth::user()->role == UserRole::SECURITY_OFFICER) {
                 $search = $search->whereNot("id", "=", $this->asset->id)->
                 whereNotIn("id", $this->asset->children()->get("id"));
-            } else {
+            }
+            else {
                 $search = $search->whereNot("id", "=", $this->asset->id)->
                 whereNotIn("id", $this->asset->children()->get("id"))->
                 where("manager_id", "=", Auth::user()->id);
             }
             $this->assets = $search->get();
-        } else {
+        }
+        else {
             $this->assets = array();
         }
         return view('livewire.asset-links-to-manage', ["asset" => $this->asset, "assets" => $this->assets]);

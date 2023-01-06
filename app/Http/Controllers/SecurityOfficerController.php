@@ -35,7 +35,8 @@ class SecurityOfficerController extends Controller
         $securityOfficer = SecurityOfficer::first();
         if (empty($securityOfficer)) {
             return view("security-officer.create");
-        } else {
+        }
+        else {
             return view("security-officer.edit", ["security_officer" => $securityOfficer]);
         }
     }
