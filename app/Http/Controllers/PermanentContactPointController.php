@@ -54,7 +54,6 @@ class PermanentContactPointController extends Controller
      */
     public function store(StorePermanentContactPointRequest $request)
     {
-        $validated = $request->validated();
         $permanentContactPoint = new PermanentContactPoint;
         $permanentContactPoint->fill([
             "entity_name" => $request->input("entity_name"),
@@ -103,7 +102,6 @@ class PermanentContactPointController extends Controller
      */
     public function update(UpdatePermanentContactPointRequest $request, PermanentContactPoint $permanentContactPoint)
     {
-        $validated = $request->validated();
         $permanentContactPoint->update(
             [
                 "entity_name" => $request->input("entity_name"),

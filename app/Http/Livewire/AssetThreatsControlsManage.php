@@ -129,7 +129,7 @@ class AssetThreatsControlsManage extends Component
     public function addThreat(Request $request)
     {
         $this->authorize("update", $this->asset);
-        $validated = $this->validate([
+        $this->validate([
             "selectedThreat" => [Rule::exists("threats", "id"), "required"],
             "probability" => ["required", "min:1", "max:5"],
             "availability_impact" => ["required", "min:1", "max:5"],
@@ -188,21 +188,23 @@ class AssetThreatsControlsManage extends Component
     public function updateThreat(Request $request)
     {
         $this->authorize("update", $this->asset);
-        $validated = $this->validate([
-            "probability" => ["required", "min:1", "max:5"],
-            "availability_impact" => ["required", "min:1", "max:5"],
-            "confidentiality_impact" => ["required", "min:1", "max:5"],
-            "integrity_impact" => ["required", "min:1", "max:5"],
-            "residual_risk" => ["required", "min:0", "max:125"]
+        $this->validate([
+            "probability" => ["required", "numeric", "min:1", "max:5"],
+            "availability_impact" => ["required", "numeric", "min:1", "max:5"],
+            "confidentiality_impact" => ["required", "numeric", "min:1", "max:5"],
+            "integrity_impact" => ["required", "numeric", "min:1", "max:5"],
+            "residual_risk" => ["required", "numeric", "min:0", "max:125"]
         ]);
         $assetThreat = AssetThreat::findOrFail($this->selectedAssetThreat);
+        $this->residual_risk = $this->residual_risk_accepted ? $this->residual_risk : 0;
+        $this->residual_risk_accepted = $this->residual_risk != 0 ? $this->residual_risk_accepted : false;
         $assetThreat->update(
             [
                 "probability" => $this->probability,
                 "availability_impact" => $this->availability_impact,
                 "confidentiality_impact" => $this->confidentiality_impact,
                 "integrity_impact" => $this->integrity_impact,
-                "residual_risk" => $this->residual_risk_accepted ? $this->residual_risk : 0,
+                "residual_risk" => $this->residual_risk,
                 "residual_risk_accepted" => $this->residual_risk_accepted
             ]
         );
@@ -242,7 +244,7 @@ class AssetThreatsControlsManage extends Component
     public function addControl(Request $request)
     {
         $this->authorize("update", $this->asset);
-        $validated = $this->validate([
+        $this->validate([
             "selectedAssetThreat" => [Rule::exists("asset_threats", "id"), "required"],
             "selectedControl" => [Rule::exists("controls", "id"), "required"],
             "selectedControlType" => ["required", new Enum(ControlType::class)],

@@ -56,7 +56,6 @@ class ThreatController extends Controller
      */
     public function store(StoreThreatRequest $request)
     {
-        $validated = $request->validated();
         $name = $request->input("name");
         $description = $request->input("description");
         $threat = new Threat;
@@ -97,7 +96,6 @@ class ThreatController extends Controller
      */
     public function update(UpdateThreatRequest $request, Threat $threat)
     {
-        $validated = $request->validated();
         $threat->update(
             [
                 "name" => $request->input("name"),

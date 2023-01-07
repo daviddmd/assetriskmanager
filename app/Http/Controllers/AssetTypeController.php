@@ -48,7 +48,6 @@ class AssetTypeController extends Controller
      */
     public function store(StoreAssetTypeRequest $request)
     {
-        $validated = $request->validated();
         $name = $request->input("name");
         $assetType = new AssetType;
         $assetType->fill(["name" => $name]);
@@ -88,7 +87,6 @@ class AssetTypeController extends Controller
      */
     public function update(UpdateAssetTypeRequest $request, AssetType $assetType)
     {
-        $validated = $request->validated();
         $assetType->update(["name" => $request->input("name")]);
         Log::channel("application")->info(sprintf("Update Asset Type %d (%s)", $assetType->id, $assetType->name));
         return redirect()->route("asset-types.index")->with("status", __("Asset Type Updated"));

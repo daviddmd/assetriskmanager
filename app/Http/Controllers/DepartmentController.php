@@ -48,7 +48,6 @@ class DepartmentController extends Controller
      */
     public function store(StoreDepartmentRequest $request)
     {
-        $validated = $request->validated();
         $name = $request->input("name");
         $description = $request->input("description");
         $department = new Department;
@@ -89,7 +88,6 @@ class DepartmentController extends Controller
      */
     public function update(UpdateDepartmentRequest $request, Department $department)
     {
-        $validated = $request->validated();
         $department->update(["name" => $request->input("name"), "description" => $request->input("description")]);
         Log::channel("application")->info(sprintf("Update Department %d (Name: %s, Description: %s)", $department->id, $department->name, $department->description));
         return redirect()->route("departments.index")->with("status", __("Department Updated"));

@@ -59,7 +59,6 @@ class SecurityOfficerController extends Controller
      */
     public function store(StoreSecurityOfficerRequest $request)
     {
-        $validated = $request->validated();
         $securityOfficer = new SecurityOfficer;
         $securityOfficer->fill([
             "entity_name" => $request->input("entity_name"),
@@ -105,7 +104,6 @@ class SecurityOfficerController extends Controller
      */
     public function update(UpdateSecurityOfficerRequest $request, SecurityOfficer $securityOfficer)
     {
-        $validated = $request->validated();
         $securityOfficer->update([
             "entity_name" => $request->input("entity_name"),
             "name" => $request->input("name"),

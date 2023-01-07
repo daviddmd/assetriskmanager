@@ -56,7 +56,6 @@ class ControlController extends Controller
      */
     public function store(StoreControlRequest $request)
     {
-        $validated = $request->validated();
         $name = $request->input("name");
         $description = $request->input("description");
         $control = new Control;
@@ -102,7 +101,6 @@ class ControlController extends Controller
      */
     public function update(UpdateControlRequest $request, Control $control)
     {
-        $validated = $request->validated();
         $control->update([
             "name" => $request->input("name"),
             "description" => $request->input("description")
