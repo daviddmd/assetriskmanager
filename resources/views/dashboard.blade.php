@@ -12,7 +12,7 @@
                     <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">{{__("Assets with Controls to Be Validated")}}</h2>
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead
-                            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-3">
                                 {{__("ID")}}
@@ -39,7 +39,8 @@
                                 <td class="px-6 py-4">{{$asset->type->name}}</td>
                                 <td class="px-6 py-4">{{$asset->threats()->count()}}</td>
                                 <td class="px-6 py-4">
-                                    <a href="{{route("assets.edit",$asset->id)}}"
+                                    <a href="{{route("assets.edit",$asset->id).'#threats-controls-tab'}}"
+                                       target="_blank"
                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                                         {{__("Manage")}}
                                     </a>
@@ -54,7 +55,7 @@
                     <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">{{__("Pending Tasks")}}</h2>
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead
-                            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-3">
                                 {{__("ID")}}
@@ -81,7 +82,8 @@
                                 <td class="px-6 py-4">{{$task["asset"]->type->name}}</td>
                                 <td class="px-6 py-4">{{$task["message"]}}</td>
                                 <td class="px-6 py-4">
-                                    <a href="{{route("assets.edit",$task["asset"]->id)}}"
+                                    <a href="{{route("assets.edit",$task["asset"]->id).'#'.$task["tab"]}}"
+                                       target="_blank"
                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                                         {{__("Manage")}}
                                     </a>

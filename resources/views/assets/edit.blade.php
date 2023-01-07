@@ -11,30 +11,32 @@
                             data-tabs-toggle="#tabsContent" role="tabList">
                             <li class="mr-2" role="presentation">
                                 <button
-                                    class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                                    id="dashboard-tab" data-tabs-target="#details" type="button" role="tab"
-                                    aria-controls="details" aria-selected="true">{{__("Details")}}
+                                        class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                        id="details-tab" data-tabs-target="#details" type="button" role="tab"
+                                        aria-controls="details" aria-selected="true">{{__("Details")}}
                                 </button>
                             </li>
                             <li class="mr-2" role="presentation">
                                 <button
-                                    class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                                    id="settings-tab" data-tabs-target="#threats_controls" type="button" role="tab"
-                                    aria-controls="threats_controls" aria-selected="false">{{__("Threats/Controls")}}
+                                        class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                        id="threats-controls-tab" data-tabs-target="#threats_controls" type="button"
+                                        role="tab"
+                                        aria-controls="threats_controls"
+                                        aria-selected="false">{{__("Threats/Controls")}}
                                 </button>
                             </li>
                             <li class="mr-2" role="presentation">
                                 <button
-                                    class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                                    id="settings-tab" data-tabs-target="#risk_summary" type="button" role="tab"
-                                    aria-controls="risk_summary" aria-selected="false">{{__("Risk Summary")}}
+                                        class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                        id="risk-summary-tab" data-tabs-target="#risk_summary" type="button" role="tab"
+                                        aria-controls="risk_summary" aria-selected="false">{{__("Risk Summary")}}
                                 </button>
                             </li>
                             <li class="mr-2" role="presentation">
                                 <button
-                                    class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                                    id="logs-tab" data-tabs-target="#logs" type="button" role="tab"
-                                    aria-controls="logs" aria-selected="false">{{__("Logs")}}
+                                        class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                        id="logs-tab" data-tabs-target="#logs" type="button" role="tab"
+                                        aria-controls="logs" aria-selected="false">{{__("Logs")}}
                                 </button>
                             </li>
                         </ul>
@@ -45,12 +47,12 @@
                             @livewire("asset-threats-controls-manage",["asset"=>$asset])
                         </div>
                         <div class="hidden p-4" id="risk_summary" role="tabpanel"
-                             aria-labelledby="risk_summary">
+                             aria-labelledby="risk-summary-tab">
                             @livewire("asset-risk-summary",["asset"=>$asset])
 
                         </div>
                         <div class="hidden p-4" id="logs" role="tabpanel"
-                             aria-labelledby="logs">
+                             aria-labelledby="logs-tab">
                             @livewire("asset-logs",["asset"=>$asset])
 
                         </div>
@@ -81,8 +83,8 @@
                                             required>
                                         @foreach($assetTypes as $assetType)
                                             <option
-                                                {{$asset->type->id == $assetType->id ? "selected" : ""}}
-                                                value="{{ $assetType->id }}">
+                                                    {{$asset->type->id == $assetType->id ? "selected" : ""}}
+                                                    value="{{ $assetType->id }}">
                                                 {{ $assetType->name  }}
                                             </option>
                                         @endforeach
@@ -123,15 +125,15 @@
                                             required>
                                         @foreach(\App\Enums\ManufacturerContractType::cases() as $role)
                                             <option
-                                                {{$asset->manufacturer_contract_type == $role ? "selected" : ""}}
-                                                value="{{ $role->value }}">
+                                                    {{$asset->manufacturer_contract_type == $role ? "selected" : ""}}
+                                                    value="{{ $role->value }}">
                                                 {{ __("enums.".$role->name)  }}
                                             </option>
                                         @endforeach
                                     </select>
                                     <div
-                                        x-show="visible"
-                                        id="contract_details">
+                                            x-show="visible"
+                                            id="contract_details">
                                         <div class="mb-6">
                                             <label for="manufacturer_contract_provider"
                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Manufacturer Contract Provider")}}</label>
@@ -148,7 +150,7 @@
                                                  id="contract_date_range_picker">
                                                 <div class="relative">
                                                     <div
-                                                        class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                                            class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                                         <svg class="w-5 h-5 text-gray-500 dark:text-gray-400"
                                                              fill="currentColor"
                                                              viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -166,7 +168,7 @@
                                                 <span class="mx-4 text-gray-500">{{__("to")}}</span>
                                                 <div class="relative">
                                                     <div
-                                                        class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                                            class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                                         <svg class="w-5 h-5 text-gray-500 dark:text-gray-400"
                                                              fill="currentColor"
                                                              viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -209,7 +211,7 @@
                                 <div class="mb-6">
                                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                         <thead
-                                            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                         <tr>
                                             <th scope="col" class="px-6 py-3">
                                                 {{__("Availability Appreciation")}}
@@ -269,17 +271,17 @@
                                     <label for="export"
                                            class="form-check-label inline-block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Export to CNCS?")}}</label>
                                     <input
-                                        class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                                        type="checkbox" name="export"
-                                        id="export" {{$asset->export ? "checked" : ""}}>
+                                            class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                            type="checkbox" name="export"
+                                            id="export" {{$asset->export ? "checked" : ""}}>
                                 </div>
                                 <div class="mb-6">
                                     <label for="active"
                                            class="form-check-label inline-block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Active?")}}</label>
                                     <input
-                                        class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                                        type="checkbox" name="active"
-                                        id="active" {{$asset->active ? "checked" : ""}}>
+                                            class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                            type="checkbox" name="active"
+                                            id="active" {{$asset->active ? "checked" : ""}}>
                                 </div>
                                 @livewire("asset-links-to-manage",["asset"=>$asset])
                                 <button type="submit"
@@ -302,7 +304,7 @@
                                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-5">
                                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                         <thead
-                                            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                         <tr>
                                             <th scope="col" class="px-6 py-3">
                                                 {{__("ID")}}
@@ -370,4 +372,51 @@
             </div>
         </div>
     </div>
+    @push("js")
+        <script>
+            window.addEventListener('load', async function () {
+                /*
+                This script opens the tab according to the URI fragment, that may come from the dashboard.
+                If no fragment is present, the normal behaviour will ensue, meaning the default tab to be opened will
+                be the asset details tab.
+                 */
+                let current_hash = window.location.hash.substring(1);
+                const tabElements = [
+                    {
+                        id: 'details-tab',
+                        triggerEl: document.querySelector('#details-tab'),
+                        targetEl: document.querySelector('#details')
+                    },
+                    {
+                        id: 'threats-controls-tab',
+                        triggerEl: document.querySelector('#threats-controls-tab'),
+                        targetEl: document.querySelector('#threats_controls')
+                    },
+                    {
+                        id: 'risk-summary-tab',
+                        triggerEl: document.querySelector('#risk-summary-tab'),
+                        targetEl: document.querySelector('#risk_summary')
+                    },
+                    {
+                        id: 'logs-tab',
+                        triggerEl: document.querySelector('#logs-tab'),
+                        targetEl: document.querySelector('#logs')
+                    }
+                ];
+                let elements = tabElements.map(element => (element.id));
+                current_hash = elements.includes(current_hash) ? current_hash : elements[0];
+                const options = {
+                    activeClasses: 'text-blue-600 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-400 border-blue-600 dark:border-blue-500',
+                    inactiveClasses: 'text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300'
+                };
+                const tabs = new Tabs(tabElements, options);
+                if (current_hash) {
+                    history.pushState("", document.title, window.location.pathname + window.location.search);
+                    tabs.show(current_hash);
+                }
+            });
+
+
+        </script>
+    @endpush
 </x-app-layout>

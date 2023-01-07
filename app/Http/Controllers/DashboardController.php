@@ -31,7 +31,8 @@ class DashboardController extends Controller
                 $tasks[] = array(
                     "asset" => $asset,
                     "message" => __("The asset :name (:id) isn't valued yet. Please set its valuation.",
-                        ["name" => $asset->name, "id" => $asset->id])
+                        ["name" => $asset->name, "id" => $asset->id]),
+                    "tab" => "details-tab"
                 );
             }
             //Check for active asset in which the remaining risk isn't accepted
@@ -41,7 +42,8 @@ class DashboardController extends Controller
                     $tasks[] = array(
                         "asset" => $asset,
                         "message" => __("The asset :name (:id) has no threats. Please add some.",
-                            ["name" => $asset->name, "id" => $asset->id])
+                            ["name" => $asset->name, "id" => $asset->id]),
+                        "tab" => "threats-controls-tab"
                     );
                 }
                 else {
@@ -51,7 +53,8 @@ class DashboardController extends Controller
                             $tasks[] = array(
                                 "asset" => $asset,
                                 "message" => __("The threat :threat_name associated with asset :name (:id) has no controls. Please add some.",
-                                    ["name" => $asset->name, "id" => $asset->id, "threat_name" => $threat->threat->name])
+                                    ["name" => $asset->name, "id" => $asset->id, "threat_name" => $threat->threat->name]),
+                                "tab" => "threats-controls-tab"
                             );
                         }
                         else {
@@ -60,7 +63,8 @@ class DashboardController extends Controller
                                 $tasks[] = array(
                                     "asset" => $asset,
                                     "message" => __("The remaining remaining risk associated with threat :threat_name associated with asset :name (:id) isn't accepted. Please accept it.",
-                                        ["name" => $asset->name, "id" => $asset->id, "threat_name" => $threat->threat->name])
+                                        ["name" => $asset->name, "id" => $asset->id, "threat_name" => $threat->threat->name]),
+                                    "tab" => "risk-summary-tab"
                                 );
                             }
                         }
