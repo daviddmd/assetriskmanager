@@ -132,11 +132,11 @@ return [
     */
 
     'features' => [
-        //Features::registration(),
-        //Features::resetPasswords(),
-        // Features::emailVerification(),
+        env("LDAP_ENABLED") ? "" : Features::registration(),
+        env("LDAP_ENABLED") ? "" : Features::resetPasswords(),
+        //env("LDAP_ENABLED") ? "" : Features::emailVerification(),
         Features::updateProfileInformation(),
-        //Features::updatePasswords(),
+        env("LDAP_ENABLED") ? "" : Features::updatePasswords(),
         Features::twoFactorAuthentication([
             'confirm' => true,
             'confirmPassword' => true,

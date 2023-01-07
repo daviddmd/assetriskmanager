@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\UserRole;
+use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -22,6 +23,7 @@ class User extends Authenticatable implements LdapAuthenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use CanResetPassword;
     use AuthenticatesWithLdap;
     use HasLdapUser;
 
@@ -32,6 +34,8 @@ class User extends Authenticatable implements LdapAuthenticatable
      */
     protected $fillable = [
         'name',
+        "email",
+        "password",
         'department_id',
         "active",
         "role"

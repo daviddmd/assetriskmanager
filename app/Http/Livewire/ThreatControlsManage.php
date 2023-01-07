@@ -72,7 +72,7 @@ class ThreatControlsManage extends Component
     public function addControl()
     {
         $this->authorize("update", $this->threat);
-        $validated = $this->validate([
+        $this->validate([
             "control" => [Rule::exists("controls", "id"), "required"],
         ]);
         if (!$this->threat->controls->contains($this->control)) {
