@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use Hash;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\Fortify;
@@ -41,11 +43,9 @@ class AuthServiceProvider extends ServiceProvider
         }
         else {
             Fortify::authenticateUsing(function ($request) {
-                $validated = Auth::validate([
-                    'email' => $request->email,
-                    'password' => $request->password
-                ]);
-                return $validated ? Auth::getLastAttempted() : null;
+                $user = User::where('email', $request->email)->first();
+                $validated = $user && Hash::check($request->password, $user->password);
+                return $validated ? $user : null;
             });
         }
 
