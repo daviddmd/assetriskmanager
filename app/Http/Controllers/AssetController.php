@@ -134,7 +134,7 @@ class AssetController extends Controller
      */
     public function show(Asset $asset)
     {
-        return view("assets.show", ["asset" => $asset]);
+        return view("assets.show", ["asset" => $asset, "children" => $asset->availableChildren()]);
     }
 
     /**
@@ -145,8 +145,11 @@ class AssetController extends Controller
      */
     public function edit(Asset $asset)
     {
-        $assetTypes = AssetType::all();
-        return view("assets.edit", ["asset" => $asset, "assetTypes" => $assetTypes]);
+        return view("assets.edit", [
+            "asset" => $asset,
+            "assetTypes" => AssetType::all(),
+            "children" => $asset->availableChildren()
+        ]);
     }
 
     /**

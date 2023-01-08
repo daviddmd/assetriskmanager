@@ -11,30 +11,31 @@
                             data-tabs-toggle="#tabsContent" role="tabList">
                             <li class="mr-2" role="presentation">
                                 <button
-                                    class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                                    id="dashboard-tab" data-tabs-target="#details" type="button" role="tab"
-                                    aria-controls="details" aria-selected="true">{{__("Details")}}
+                                        class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                        id="dashboard-tab" data-tabs-target="#details" type="button" role="tab"
+                                        aria-controls="details" aria-selected="true">{{__("Details")}}
                                 </button>
                             </li>
                             <li class="mr-2" role="presentation">
                                 <button
-                                    class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                                    id="settings-tab" data-tabs-target="#threats_controls" type="button" role="tab"
-                                    aria-controls="threats_controls" aria-selected="false">{{__("Threats/Controls")}}
+                                        class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                        id="settings-tab" data-tabs-target="#threats_controls" type="button" role="tab"
+                                        aria-controls="threats_controls"
+                                        aria-selected="false">{{__("Threats/Controls")}}
                                 </button>
                             </li>
                             <li class="mr-2" role="presentation">
                                 <button
-                                    class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                                    id="settings-tab" data-tabs-target="#risk_summary" type="button" role="tab"
-                                    aria-controls="risk_summary" aria-selected="false">{{__("Risk Summary")}}
+                                        class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                        id="settings-tab" data-tabs-target="#risk_summary" type="button" role="tab"
+                                        aria-controls="risk_summary" aria-selected="false">{{__("Risk Summary")}}
                                 </button>
                             </li>
                             <li class="mr-2" role="presentation">
                                 <button
-                                    class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                                    id="logs-tab" data-tabs-target="#logs" type="button" role="tab"
-                                    aria-controls="logs" aria-selected="false">{{__("Logs")}}
+                                        class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                        id="logs-tab" data-tabs-target="#logs" type="button" role="tab"
+                                        aria-controls="logs" aria-selected="false">{{__("Logs")}}
                                 </button>
                             </li>
                         </ul>
@@ -116,15 +117,15 @@
                                         required disabled>
                                     @foreach(\App\Enums\ManufacturerContractType::cases() as $role)
                                         <option
-                                            {{$asset->manufacturer_contract_type == $role ? "selected" : ""}}
-                                            value="{{ $role->value }}">
+                                                {{$asset->manufacturer_contract_type == $role ? "selected" : ""}}
+                                                value="{{ $role->value }}">
                                             {{ __("enums.".$role->name)  }}
                                         </option>
                                     @endforeach
                                 </select>
                                 <div
-                                    x-show="visible"
-                                    id="contract_details">
+                                        x-show="visible"
+                                        id="contract_details">
                                     <div class="mb-6">
                                         <label for="manufacturer_contract_provider"
                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Manufacturer Contract Provider")}}</label>
@@ -142,7 +143,7 @@
                                              id="contract_date_range_picker">
                                             <div class="relative">
                                                 <div
-                                                    class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                                        class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                                     <svg class="w-5 h-5 text-gray-500 dark:text-gray-400"
                                                          fill="currentColor"
                                                          viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -160,7 +161,7 @@
                                             <span class="mx-4 text-gray-500">{{__("to")}}</span>
                                             <div class="relative">
                                                 <div
-                                                    class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                                        class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                                     <svg class="w-5 h-5 text-gray-500 dark:text-gray-400"
                                                          fill="currentColor"
                                                          viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -207,7 +208,7 @@
                             <div class="mb-6">
                                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                     <thead
-                                        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                     <tr>
                                         <th scope="col" class="px-6 py-3">
                                             {{__("Availability Appreciation")}}
@@ -267,17 +268,17 @@
                                 <label for="export"
                                        class="form-check-label inline-block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Export to CNCS?")}}</label>
                                 <input
-                                    class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                                    type="checkbox" name="export"
-                                    id="export" {{$asset->export ? "checked" : ""}} disabled>
+                                        class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                        type="checkbox" name="export"
+                                        id="export" {{$asset->export ? "checked" : ""}} disabled>
                             </div>
                             <div class="mb-6">
                                 <label for="active"
                                        class="form-check-label inline-block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__("Active?")}}</label>
                                 <input
-                                    class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                                    type="checkbox" name="active"
-                                    id="active" {{$asset->active ? "checked" : ""}} disabled>
+                                        class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                        type="checkbox" name="active"
+                                        id="active" {{$asset->active ? "checked" : ""}} disabled>
                             </div>
                             @if(!empty($asset->links_to_id))
                                 <div class="mb-6">
@@ -296,13 +297,13 @@
                                     </div>
                                 </div>
                             @endif
-                            @if(!empty($asset->availableChildren()))
+                            @if(!empty($children))
                                 <div class="flex-grow border-t border-gray-400"></div>
                                 <h2 class="text-center text-2xl font-normal leading-normal mt-0 mb-2">{{__("Children")}}</h2>
                                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-5">
                                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                         <thead
-                                            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                         <tr>
                                             <th scope="col" class="px-6 py-3">
                                                 {{__("ID")}}
@@ -334,7 +335,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($asset->availableChildren() as $child)
+                                        @foreach($children as $child)
                                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                                 <td class="px-6 py-4">{{$child->id}}</td>
                                                 <td class="px-6 py-4">{{$child->name}}</td>
@@ -363,9 +364,9 @@
                             <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-5">
                                 @foreach($asset->threats as $threat)
                                     <table
-                                        class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-separate">
+                                            class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-separate">
                                         <thead
-                                            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                         <tr>
                                             <th scope="col" class="px-3 py-3">
                                                 {{__("ID")}}
@@ -431,7 +432,7 @@
                                             {{__("Controls")}}</h2>
                                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                             <thead
-                                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                             <tr>
                                                 <th scope="col" class="px-6 py-3">
                                                     {{__("ID")}}
@@ -463,9 +464,9 @@
 
                                                     <td class="px-6 py-4">
                                                         <input
-                                                            class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                                                            type="checkbox" disabled
-                                                            {{$control->validated ? "checked" : ""}}>
+                                                                class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                                                type="checkbox" disabled
+                                                                {{$control->validated ? "checked" : ""}}>
                                                     </td>
                                                     <td class="px-6 py-4">
                                                         <a href="{{route("controls.show",$control->control->id)}}"
@@ -492,9 +493,9 @@
                              aria-labelledby="risk_summary-tab">
                             <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-5">
                                 <table
-                                    class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-separate">
+                                        class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-separate">
                                     <thead
-                                        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                     <tr>
                                         <th scope="col" class="px-3 py-3">
                                             {{__("ID")}}

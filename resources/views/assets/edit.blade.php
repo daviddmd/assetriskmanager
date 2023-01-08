@@ -296,7 +296,7 @@
                                     </form>
                                 </div>
                             @endcan
-                            @if(!empty($asset->availableChildren()))
+                            @if(!empty($children))
                                 <div class="py-2">
                                     <div class="flex-grow border-t border-gray-400"></div>
                                 </div>
@@ -336,7 +336,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($asset->availableChildren() as $child)
+                                        @foreach($children as $child)
                                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                                 <td class="px-6 py-4">{{$child->id}}</td>
                                                 <td class="px-6 py-4">{{$child->name}}</td>

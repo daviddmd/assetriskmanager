@@ -225,8 +225,9 @@
         <script>
             let imageBlob = null;
 
-            function saveImage() {
+            async function saveImage() {
                 if (imageBlob != null) {
+                    imageBlob = await cy.png({output: "blob-promise", full: true});
                     saveAs(imageBlob, "graph.png");
                 }
             }
