@@ -57,7 +57,7 @@
                 </thead>
                 <tbody>
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-gray-900">
-                    <td class="px-3 py-4">{{$threat->id}}</td>
+                    <td class="px-3 py-4">{{$threat->threat->id}}</td>
                     <td class="px-3 py-4">{{$threat->threat->name}}</td>
                     <td class="px-3 py-4">{{$threat->threat->description}}</td>
                     <td style="background-color: {{$threat->color($threat->probability)}}"
@@ -120,7 +120,7 @@
                 <tbody>
                 @foreach($threat->controls as $control)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-gray-900">
-                        <td class="px-6 py-4">{{$control->id}}</td>
+                        <td class="px-6 py-4">{{$control->control->id}}</td>
                         <td class="px-6 py-4">{{$control->control->name}}</td>
                         <td class="px-6 py-4">{{$control->control->description}}</td>
                         <td class="px-6 py-4">{{  __("enums.".$control->control_type->name) }}</td>

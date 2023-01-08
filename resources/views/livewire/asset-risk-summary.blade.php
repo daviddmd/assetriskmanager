@@ -22,7 +22,6 @@
                 <h3 class="text-center text-2xl font-normal leading-normal mt-0 mb-2 text-red-600 font-bold">{{__("Accept the Remaining Risks of All Threats Before Accepting the Remaining Risk of this Asset")}}</h3>
                 <div class="flex justify-center">
                     <button type="button"
-                            wire:click="toggleRemainingRiskAccepted"
                             class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                         {{__("Accept Remaining Risk")}}
                     </button>
@@ -50,9 +49,9 @@
     @endif
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-5">
         <table
-            class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-separate">
+                class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-separate">
             <thead
-                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-3 py-3">
                     {{__("ID")}}
@@ -80,7 +79,7 @@
             <tbody>
             @foreach($asset->threats as $threat)
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-gray-900">
-                    <td class="px-3 py-4">{{$threat->id}}</td>
+                    <td class="px-3 py-4">{{$threat->threat->id}}</td>
                     <td class="px-3 py-4">{{$threat->threat->name}}</td>
                     <td class="px-3 py-4">{{$threat->threat->description}}</td>
                     <td style="background-color: {{$threat->totalRiskColor($threat->totalRisk($asset->totalAppreciation()))}}"
@@ -90,7 +89,7 @@
 
                     <td style="background-color: {{$threat->totalRiskColor($threat->residual_risk)}}"
                         class="px-3 py-4">
-                        {{$threat->residual_risk}}
+                        {{$threat->residual_risk == 0 ? "":$threat->residual_risk}}
                     </td>
                     <td class="px-3 py-4">
                         <a href="{{route("threats.show",$threat->threat->id)}}"

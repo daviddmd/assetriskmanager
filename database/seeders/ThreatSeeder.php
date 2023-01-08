@@ -94,5 +94,10 @@ class ThreatSeeder extends Seeder
             'name' => "Software and Data Integrity Failures",
             'description' => "Failure in verifying integrity in critical data ingestion, software or dependencies updates and CI/CD pipelines",
         ]);
+        //17
+        DB::table('threats')->insert([
+            'name' => "DoS",
+            'description' => "Denial of Service Attack",
+        ]);
     }
 }

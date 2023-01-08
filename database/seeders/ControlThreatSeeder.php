@@ -190,5 +190,16 @@ class ControlThreatSeeder extends Seeder
                 'control_id' => $value,
             ]);
         }
+
+        /**
+         * Denial of Service: 8, 14, 15, 16, 19, 27
+         * DPI, Update Software, Logs, Upload Logs, Layer-7, Layer3+4
+         */
+        foreach ([8, 14, 15, 16, 19, 27] as $value) {
+            DB::table('control_threat')->insert([
+                'threat_id' => 17,
+                'control_id' => $value,
+            ]);
+        }
     }
 }

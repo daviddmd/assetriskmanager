@@ -144,5 +144,10 @@ class ControlSeeder extends Seeder
             'name' => "Audit Configuration",
             'description' => "Audit Software Configuration of the Asset",
         ]);
+        //27
+        DB::table('controls')->insert([
+            'name' => "Install and Configure Layer-3 and Layer-4 Firewall",
+            'description' => "Install and Configure On-Premises or Third-party Layer-3 and Layer-4 Firewall",
+        ]);
     }
 }

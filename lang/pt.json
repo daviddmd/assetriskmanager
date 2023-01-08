@@ -95,6 +95,7 @@
     "Select an User": "Selecione um Utilizador",
     "Risk Summary": "Resumo de Risco",
     "Logs": "Registos",
+    "Threat": "Ameaça",
     "Threat Name": "Nome Ameaça",
     "Threat Description": "Descrição Ameaça",
     "Total Risk": "Risco Total",
@@ -192,5 +193,6 @@
     "results": "resultados",
     "Accept the Remaining Risks of All Threats Before Accepting the Remaining Risk of this Asset": "Aceite o Risco Residual de Todas as Ameaças antes de Aceitar o Risco Remanescente deste Ativo",
     "Pending Tasks": "Tarefas Pendentes",
-    "Task Description": "Descrição da Tarefa"
+    "Task Description": "Descrição da Tarefa",
+    "No Controls": "Sem Controlos"
 }

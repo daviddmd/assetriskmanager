@@ -22,7 +22,9 @@ class DatabaseSeeder extends Seeder
             ControlSeeder::class,
             ControlThreatSeeder::class,
             UserSeeder::class,
-            AssetSeeder::class
+            AssetSeeder::class,
+            AssetThreatSeeder::class,
+            AssetThreatControlSeeder::class
         ]);
     }
 }

@@ -189,7 +189,7 @@
                                                 class="px-3 py-4">{{$threat->totalRisk($asset->totalAppreciation())}}</td>
                                             <td class="px-3 py-4">{{$threat->controls()->count()}}</td>
                                             <td style="background-color: {{$threat->totalRiskColor($threat->residual_risk)}}"
-                                                class="px-3 py-4">{{$threat->residual_risk}}</td>
+                                                class="px-3 py-4">{{$threat->residual_risk == 0 ? "" : $threat->residual_risk}}</td>
                                         </tr>
 
                                     @endforeach
