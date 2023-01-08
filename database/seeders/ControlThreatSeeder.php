@@ -170,12 +170,12 @@ class ControlThreatSeeder extends Seeder
         }
 
         /**
-         * Other Software Vunlerability: 9, 11, 13, 14, 15, 16, 17, 19, 26
+         * Other Software Vulnerability: 9, 11, 13, 14, 15, 16, 17, 19, 26
          * Access Control Policy, Network Segmentation, Access Control Policy, Patches, Updates, Enable and Upload Logs, Fuzzing, Layer-7, Audit Configuration
          */
         foreach ([9, 11, 13, 14, 15, 16, 17, 19, 26] as $value) {
             DB::table('control_threat')->insert([
-                'threat_id' => 16,
+                'threat_id' => 15,
                 'control_id' => $value,
             ]);
         }
