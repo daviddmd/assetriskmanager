@@ -36,8 +36,10 @@ class MakeAdmin extends Command
             $user->update([
                 "role" => UserRole::ADMINISTRATOR
             ]);
+            $this->info($this->argument("email") . " is now an Administrator.");
             return CommandAlias::SUCCESS;
         }
+        $this->error("No user with such email found.");
         return CommandAlias::FAILURE;
     }
 }

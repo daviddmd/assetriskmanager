@@ -26,15 +26,17 @@ class ReportController extends Controller
     public function __invoke(Request $request)
     {
         if (!$request->user()->can("viewAny", User::class)) {
-            return abort(403);
+            abort(403);
         }
         $export = $request->input("export");
         if (!empty($export)) {
-            return match ($export) {
-                "risk_map" => Excel::download(new RiskMapExport, config("constants.exports.risk_map_file_name")),
-                "asset_list" => Excel::download(new AssetListExport, config("constants.exports.asset_list_file_name")),
-                default => abort(500),
-            };
+            if ($export == "risk_map") {
+                return Excel::download(new RiskMapExport, config("constants.exports.risk_map_file_name"));
+            }
+            elseif ($export == "asset_list") {
+                return Excel::download(new AssetListExport, config("constants.exports.asset_list_file_name"));
+            }
+            abort(500);
         }
         else {
             $nodes_array = array();

@@ -61,7 +61,8 @@ class ThreatController extends Controller
         $threat = new Threat;
         $threat->fill(["name" => $name, "description" => $description]);
         $threat->save();
-        Log::channel("application")->info(sprintf("Create Threat %d (Name: %s, Description: %s)", $threat->id, $threat->name, $threat->description));
+        Log::channel("application")->info(sprintf("Create Threat %d (Name: %s, Description: %s)",
+            $threat->id, $threat->name, $threat->description));
         return redirect()->route("threats.index")->with("status", __("Threat Created"));
     }
 
@@ -102,7 +103,8 @@ class ThreatController extends Controller
                 "description" => $request->input("description")
             ]
         );
-        Log::channel("application")->info(sprintf("Update Threat %d (Name: %s, Description: %s)", $threat->id, $threat->name, $threat->description));
+        Log::channel("application")->info(sprintf("Update Threat %d (Name: %s, Description: %s)",
+            $threat->id, $threat->name, $threat->description));
         return redirect()->route("threats.index")->with("status", __("Threat Updated"));
 
     }
@@ -115,7 +117,8 @@ class ThreatController extends Controller
      */
     public function destroy(Threat $threat)
     {
-        Log::channel("application")->info(sprintf("Delete Threat %d (Name: %s, Description: %s)", $threat->id, $threat->name, $threat->description));
+        Log::channel("application")->info(sprintf("Delete Threat %d (Name: %s, Description: %s)",
+            $threat->id, $threat->name, $threat->description));
         $threat->delete();
         return redirect()->route("threats.index")->with("status", __("Threat Deleted"));
     }

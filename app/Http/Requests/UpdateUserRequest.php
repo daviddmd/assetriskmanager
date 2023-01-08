@@ -26,9 +26,11 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules()
     {
+        $user = $this->route()->parameter("user");
         return [
             'department' => [Rule::exists("departments", "id"), "nullable"],
-            "name" => ["required"],
+            "name" => ['required', 'string', 'max:255'],
+            "email" => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             "active" => [],
             "role" => ["required", new Enum(UserRole::class)],
         ];

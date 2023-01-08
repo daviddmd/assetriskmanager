@@ -31,13 +31,20 @@ class Reset2FA extends Command
     {
         $user = User::where("email", "=", $this->argument("email"))->first();
         if ($user) {
-            $user->update([
-                "two_factor_confirmed_at" => null,
-                "two_factor_recovery_codes" => null,
-                "two_factor_secret" => null
-            ]);
-            return CommandAlias::SUCCESS;
+            if ($user->hasEnabledTwoFactorAuthentication()) {
+                $user->update([
+                    "two_factor_confirmed_at" => null,
+                    "two_factor_recovery_codes" => null,
+                    "two_factor_secret" => null
+                ]);
+                $this->info("2FA Reset Successfully.");
+                return CommandAlias::SUCCESS;
+            }
+            $this->error("The user doesn't have 2FA enabled.");
+            return CommandAlias::FAILURE;
+
         }
+        $this->error("No user with such email found.");
         return CommandAlias::FAILURE;
     }
 }

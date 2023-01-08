@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateAssetRequest;
 use App\Models\Asset;
 use App\Models\AssetLog;
 use App\Models\AssetType;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -36,6 +37,7 @@ class AssetController extends Controller
         $asset_type_id = $request->input("asset_type", "");
         $filter = $request->input("filter", "");
         $assetTypes = AssetType::all();
+        /* @var $user User */
         $user = Auth::user();
         if (!empty($asset_type_id) || !empty($filter)) {
             $assets = $this->filterAsset($filter);
@@ -193,7 +195,6 @@ class AssetController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Request $request
      * @param Asset $asset
      * @return RedirectResponse
      */

@@ -25,7 +25,7 @@ class DashboardController extends Controller
         /* @var $user User */
         $user = Auth::user();
         /* @var $asset Asset */
-        foreach ($user->assets as $asset) {
+        foreach ($user->assets()->get() as $asset) {
             //Check for non-existent asset valuation
             if ($asset->totalAppreciation() == 0) {
                 $tasks[] = array(

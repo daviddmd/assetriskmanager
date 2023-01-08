@@ -64,7 +64,8 @@ class ControlController extends Controller
             "description" => $description
         ]);
         $control->save();
-        Log::channel("application")->info(sprintf("Create Control %d (Name: %s, Description: %s)", $control->id, $control->name, $control->description));
+        Log::channel("application")->info(sprintf("Create Control %d (Name: %s, Description: %s)",
+            $control->id, $control->name, $control->description));
 
         return redirect()->route("controls.index")->with("status", __("Control Created"));
 
@@ -105,7 +106,8 @@ class ControlController extends Controller
             "name" => $request->input("name"),
             "description" => $request->input("description")
         ]);
-        Log::channel("application")->info(sprintf("Update Control %d (Name: %s, Description: %s)", $control->id, $control->name, $control->description));
+        Log::channel("application")->info(sprintf("Update Control %d (Name: %s, Description: %s)",
+            $control->id, $control->name, $control->description));
         return redirect()->route("controls.index")->with("status", __("Control Updated"));
 
     }
@@ -118,7 +120,8 @@ class ControlController extends Controller
      */
     public function destroy(Control $control)
     {
-        Log::channel("application")->info(sprintf("Delete Control %d (Name: %s, Description: %s)", $control->id, $control->name, $control->description));
+        Log::channel("application")->info(sprintf("Delete Control %d (Name: %s, Description: %s)",
+            $control->id, $control->name, $control->description));
         $control->delete();
         return redirect()->route("controls.index")->with("status", __("Control Deleted"));
     }

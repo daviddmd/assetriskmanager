@@ -53,7 +53,8 @@ class DepartmentController extends Controller
         $department = new Department;
         $department->fill(["name" => $name, "description" => $description]);
         $department->save();
-        Log::channel("application")->info(sprintf("Create Department %d (Name: %s, Description: %s)", $department->id, $department->name, $department->description));
+        Log::channel("application")->info(sprintf("Create Department %d (Name: %s, Description: %s)",
+            $department->id, $department->name, $department->description));
         return redirect()->route("departments.index")->with("status", __("Department Created"));
     }
 
@@ -89,7 +90,8 @@ class DepartmentController extends Controller
     public function update(UpdateDepartmentRequest $request, Department $department)
     {
         $department->update(["name" => $request->input("name"), "description" => $request->input("description")]);
-        Log::channel("application")->info(sprintf("Update Department %d (Name: %s, Description: %s)", $department->id, $department->name, $department->description));
+        Log::channel("application")->info(sprintf("Update Department %d (Name: %s, Description: %s)",
+            $department->id, $department->name, $department->description));
         return redirect()->route("departments.index")->with("status", __("Department Updated"));
     }
 
@@ -101,7 +103,8 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        Log::channel("application")->info(sprintf("Delete Department %d (Name: %s, Description: %s)", $department->id, $department->name, $department->description));
+        Log::channel("application")->info(sprintf("Delete Department %d (Name: %s, Description: %s)",
+            $department->id, $department->name, $department->description));
         $department->delete();
         return redirect()->route("departments.index")->with("status", __("Department Deleted"));
     }

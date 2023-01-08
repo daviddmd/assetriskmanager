@@ -42,7 +42,8 @@ class UserController extends Controller
             $users = User::paginate(5)->withQueryString();
         }
         $departments = Department::all();
-        return view("users.index", ["users" => $users, "departments" => $departments, "filter" => $filter, "department_id" => $department_id]);
+        return view("users.index",
+            ["users" => $users, "departments" => $departments, "filter" => $filter, "department_id" => $department_id]);
     }
 
     public static function filterUser($filter)
@@ -106,13 +107,28 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        $user->update([
-            "name" => $request->input("name"),
-            "department_id" => $request->input("department"),
-            "active" => $request->has("active"),
-            "role" => Auth::user()->role == UserRole::ADMINISTRATOR ? $request->input("role") : $user->role,
-        ]);
-        Log::channel("application")->info(sprintf("Update User %d (Name: %s, E-Mail: %s, Department: %s)", $user->id, $user->name, $user->email, empty($user->department) ? "" : $user->department->name));
+        /* @var $current_user User */
+        $current_user = Auth::user();
+        if (config("ldap.enabled")) {
+            $user->update([
+                "name" => $request->input("name"),
+                "department_id" => $request->input("department"),
+                "active" => $request->has("active"),
+                "role" => $current_user->role == UserRole::ADMINISTRATOR ? $request->input("role") : $user->role,
+            ]);
+        }
+        else {
+            $user->update([
+                "name" => $request->input("name"),
+                "email" => $current_user->role == UserRole::ADMINISTRATOR ? $request->input("email") : $user->email,
+                "department_id" => $request->input("department"),
+                "active" => $request->has("active"),
+                "role" => $current_user->role == UserRole::ADMINISTRATOR ? $request->input("role") : $user->role,
+            ]);
+        }
+
+        Log::channel("application")->info(sprintf("Update User %d (Name: %s, E-Mail: %s, Department: %s)",
+            $user->id, $user->name, $user->email, empty($user->department) ? "" : $user->department->name));
         return redirect()->route("users.index")->with("status", __("User Updated"));
     }
 

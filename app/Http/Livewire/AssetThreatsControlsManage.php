@@ -131,10 +131,10 @@ class AssetThreatsControlsManage extends Component
         $this->authorize("update", $this->asset);
         $this->validate([
             "selectedThreat" => [Rule::exists("threats", "id"), "required"],
-            "probability" => ["required", "min:1", "max:5"],
-            "availability_impact" => ["required", "min:1", "max:5"],
-            "confidentiality_impact" => ["required", "min:1", "max:5"],
-            "integrity_impact" => ["required", "min:1", "max:5"]
+            "probability" => ["required", "numeric", "min:1", "max:5"],
+            "availability_impact" => ["required", "numeric", "min:1", "max:5"],
+            "confidentiality_impact" => ["required", "numeric", "min:1", "max:5"],
+            "integrity_impact" => ["required", "numeric", "min:1", "max:5"]
         ]);
         AssetThreat::create([
             "asset_id" => $this->asset->id,
@@ -152,7 +152,8 @@ class AssetThreatsControlsManage extends Component
             "operation_type" => AssetOperationType::ADD_THREAT,
             "ip" => $request->ip()
         ]);
-        Log::channel("application")->info(sprintf("Add Threat %d to Asset %d", $this->selectedThreat, $this->asset->id));
+        Log::channel("application")->info(sprintf("Add Threat %d to Asset %d",
+            $this->selectedThreat, $this->asset->id));
     }
 
     public function unsetRemainingRiskAcceptance()
@@ -178,7 +179,8 @@ class AssetThreatsControlsManage extends Component
             "operation_type" => AssetOperationType::REMOVE_THREAT,
             "ip" => $request->ip()
         ]);
-        Log::channel("application")->info(sprintf("Remove Threat %d from Asset %d", $assetThreat->threat_id, $this->asset->id));
+        Log::channel("application")->info(sprintf("Remove Threat %d from Asset %d",
+            $assetThreat->threat_id, $this->asset->id));
 
     }
 
@@ -216,7 +218,8 @@ class AssetThreatsControlsManage extends Component
             "operation_type" => AssetOperationType::UPDATE_THREAT,
             "ip" => $request->ip()
         ]);
-        Log::channel("application")->info(sprintf("Update Threat %d Details on Asset %d", $assetThreat->threat_id, $this->asset->id));
+        Log::channel("application")->info(sprintf("Update Threat %d Details on Asset %d",
+            $assetThreat->threat_id, $this->asset->id));
     }
 
     /**
@@ -265,7 +268,8 @@ class AssetThreatsControlsManage extends Component
                 "operation_type" => AssetOperationType::ADD_CONTROL,
                 "ip" => $request->ip()
             ]);
-            Log::channel("application")->info(sprintf("Add Control %d to Asset %d", $this->selectedControl, $this->asset->id));
+            Log::channel("application")->info(sprintf("Add Control %d to Asset %d",
+                $this->selectedControl, $this->asset->id));
         }
         $this->unsetRemainingRiskAcceptance();
         $this->assetThreatControlAddDialogOpen = false;
@@ -287,7 +291,8 @@ class AssetThreatsControlsManage extends Component
             "operation_type" => AssetOperationType::REMOVE_CONTROL,
             "ip" => $request->ip()
         ]);
-        Log::channel("application")->info(sprintf("Remove Control %d from Asset %d", $assetThreatControl->control_id, $this->asset->id));
+        Log::channel("application")->info(sprintf("Remove Control %d from Asset %d",
+            $assetThreatControl->control_id, $this->asset->id));
 
     }
 
@@ -312,6 +317,7 @@ class AssetThreatsControlsManage extends Component
             "operation_type" => AssetOperationType::TOGGLE_CONTROL_VALIDATION,
             "ip" => $request->ip()
         ]);
-        Log::channel("application")->info(sprintf("Toggle Validation of Control %d on Asset %d", $asset_threat_control->control_id, $this->asset->id));
+        Log::channel("application")->info(sprintf("Toggle Validation of Control %d on Asset %d",
+            $asset_threat_control->control_id, $this->asset->id));
     }
 }

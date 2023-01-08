@@ -34,8 +34,10 @@ class ResetPassword extends Command
             $user->update([
                 "password" => \Hash::make($this->argument("password"))
             ]);
+            $this->info("User Password Updated.");
             return CommandAlias::SUCCESS;
         }
+        $this->error("No user with such email found.");
         return CommandAlias::FAILURE;
     }
 }

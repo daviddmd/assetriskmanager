@@ -12,23 +12,24 @@
                             data-tabs-toggle="#tabs" role="tablist">
                             <li class="mr-2" role="presentation">
                                 <button
-                                    class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                                    id="dashboard-tab" data-tabs-target="#asset_list" type="button" role="tab"
-                                    aria-controls="asset_list" aria-selected="false">{{__("Asset List")}}
+                                        class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                        id="dashboard-tab" data-tabs-target="#asset_list" type="button" role="tab"
+                                        aria-controls="asset_list" aria-selected="false">{{__("Asset List")}}
                                 </button>
                             </li>
                             <li class="mr-2" role="presentation">
                                 <button
-                                    class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                                    id="settings-tab" data-tabs-target="#risk_map" type="button" role="tab"
-                                    aria-controls="risk_map" aria-selected="false">{{__("Risk Map")}}
+                                        class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                        id="settings-tab" data-tabs-target="#risk_map" type="button" role="tab"
+                                        aria-controls="risk_map" aria-selected="false">{{__("Risk Map")}}
                                 </button>
                             </li>
                             <li role="presentation">
                                 <button
-                                    class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                                    id="contacts-tab" data-tabs-target="#dependency_graph" type="button" role="tab"
-                                    aria-controls="dependency_graph" aria-selected="false">{{__("Dependency Graph")}}
+                                        class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                        id="contacts-tab" data-tabs-target="#dependency_graph" type="button" role="tab"
+                                        aria-controls="dependency_graph"
+                                        aria-selected="false">{{__("Dependency Graph")}}
                                 </button>
                             </li>
                         </ul>
@@ -38,7 +39,7 @@
                              aria-labelledby="asset_list-tab">
                             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-separate">
                                 <thead
-                                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="px-6 py-3">
                                         {{__("ID")}}
@@ -88,20 +89,20 @@
                                         <td class="px-6 py-4">{{$asset->ip_address}}</td>
                                         <td class="px-6 py-4">{{$asset->fqdn}}</td>
                                         <td
-                                            style="background-color: {{$asset->color($asset->integrity_appreciation)}}"
-                                            class="px-6 py-4">{{$asset->integrity_appreciation}}</td>
+                                                style="background-color: {{$asset->color($asset->integrity_appreciation)}}"
+                                                class="px-6 py-4">{{$asset->integrity_appreciation}}</td>
                                         <td
-                                            style="background-color: {{$asset->color($asset->availability_appreciation)}}"
-                                            class="px-6 py-4">{{$asset->availability_appreciation}}</td>
+                                                style="background-color: {{$asset->color($asset->availability_appreciation)}}"
+                                                class="px-6 py-4">{{$asset->availability_appreciation}}</td>
                                         <td
-                                            style="background-color: {{$asset->color($asset->confidentiality_appreciation)}}"
-                                            class="px-6 py-4">{{$asset->confidentiality_appreciation}}</td>
+                                                style="background-color: {{$asset->color($asset->confidentiality_appreciation)}}"
+                                                class="px-6 py-4">{{$asset->confidentiality_appreciation}}</td>
                                         <td
-                                            style="background-color: {{$asset->color($asset->totalAppreciation())}}"
-                                            class="px-6 py-4">{{$asset->totalAppreciation()}}</td>
+                                                style="background-color: {{$asset->color($asset->totalAppreciation())}}"
+                                                class="px-6 py-4">{{$asset->totalAppreciation()}}</td>
                                         <td
-                                            style="background-color: {{App\Models\AssetThreat::totalRiskColor($asset->highestRemainingRisk())}}"
-                                            class="px-6 py-4">{{$asset->highestRemainingRisk()}}</td>
+                                                style="background-color: {{App\Models\AssetThreat::totalRiskColor($asset->highestRemainingRisk())}}"
+                                                class="px-6 py-4">{{$asset->highestRemainingRisk()}}</td>
                                         <td class="px-6 py-4">
                                             @can("update",$asset)
                                                 <a href="{{route("assets.edit",$asset->id)}}"
@@ -130,7 +131,7 @@
 
                             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-separate">
                                 <thead
-                                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="px-6 py-3">
                                         {{__("Asset ID")}}
@@ -222,7 +223,7 @@
 
     @push("js")
         <script>
-            var imageBlob = null;
+            let imageBlob = null;
 
             function saveImage() {
                 if (imageBlob != null) {
@@ -232,7 +233,7 @@
 
             window.addEventListener('load', async function () {
                 cytoscape.use(dagre);
-                var cy = (window.cy = cytoscape({
+                let cy = (window.cy = cytoscape({
                     container: document.getElementById("cy"),
 
                     boxSelectionEnabled: false,
@@ -280,7 +281,9 @@
                     }
                 }));
                 cy.resize();
-                imageBlob = await cy.png({output: "blob-promise", full: true, quality: 1});
+                @if(count($nodes_array)>0)
+                    imageBlob = await cy.png({output: "blob-promise", full: true});
+                @endif
                 cy.on('tap', 'node', function () {
                     try {
                         window.open(this.data('link'));

@@ -77,7 +77,8 @@ class ThreatControlsManage extends Component
         ]);
         if (!$this->threat->controls->contains($this->control)) {
             $this->threat->controls()->attach($this->control);
-            Log::channel("application")->info(sprintf("Add Control %d to Threat %d", $this->control, $this->threat->id));
+            Log::channel("application")->info(sprintf("Add Control %d to Threat %d",
+                $this->control, $this->threat->id));
         }
         $this->control = "";
         $this->searchTerm = "";
@@ -90,6 +91,7 @@ class ThreatControlsManage extends Component
     {
         $this->authorize("update", $this->threat);
         $this->threat->controls()->detach($id);
-        Log::channel("application")->info(sprintf("Remove Control %d From Threat %d", $id, $this->threat->id));
+        Log::channel("application")->info(sprintf("Remove Control %d From Threat %d",
+            $id, $this->threat->id));
     }
 }
