@@ -13,6 +13,6 @@ class AssetSeeder extends Seeder
      */
     public function run()
     {
-        //only run after logging in with some users
+
     }
 }

@@ -18,11 +18,31 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      */
     public function update($user, array $input)
     {
-        Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
-            'department_id' => [Rule::exists("departments", "id"), "nullable"],
-            'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
-        ])->validateWithBag('updateProfileInformation');
+        /*
+        Validator::make($input,
+            array(
+                'name' => ['required', 'string', 'max:255'],
+                'department_id' => [Rule::exists("departments", "id"), "nullable"],
+                'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
+            ) + (config("ldap.enabled") ? array() : array("email" => ['required', 'email', 'max:255',
+                Rule::unique('users')->ignore($user->id)]))
+        )->validateWithBag('updateProfileInformation');
+        */
+        if (config("ldap.enabled")) {
+            Validator::make($input, [
+                'name' => ['required', 'string', 'max:255'],
+                'department_id' => [Rule::exists("departments", "id"), "nullable"],
+                'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
+            ])->validateWithBag('updateProfileInformation');
+        }
+        else {
+            Validator::make($input, [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+                'department_id' => [Rule::exists("departments", "id"), "nullable"],
+                'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
+            ])->validateWithBag('updateProfileInformation');
+        }
 
         if (isset($input['photo'])) {
             $user->updateProfilePhoto($input['photo']);
@@ -33,10 +53,19 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $this->updateVerifiedUser($user, $input);
         }
         else {
-            $user->forceFill([
-                'name' => $input['name'],
-                'department_id' => empty($input['department_id']) ? null : $input["department_id"],
-            ])->save();
+            if (config("ldap.enabled")) {
+                $user->forceFill([
+                    'name' => $input['name'],
+                    'department_id' => empty($input['department_id']) ? null : $input["department_id"],
+                ])->save();
+            }
+            else {
+                $user->forceFill([
+                    'name' => $input['name'],
+                    'email' => $input['email'],
+                    'department_id' => empty($input['department_id']) ? null : $input["department_id"],
+                ])->save();
+            }
         }
     }
 

@@ -2,26 +2,25 @@
 
 namespace App\Console\Commands;
 
-use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Command\Command as CommandAlias;
 
-class MakeAdmin extends Command
+class Reset2FA extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'make:admin {email}';
+    protected $signature = 'reset:2fa {email}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Grant an User of the Platform the Administrator Role';
+    protected $description = 'Removes 2FA from the account of an User';
 
     /**
      * Execute the console command.
@@ -30,11 +29,12 @@ class MakeAdmin extends Command
      */
     public function handle()
     {
-
         $user = User::where("email", "=", $this->argument("email"))->first();
         if ($user) {
             $user->update([
-                "role" => UserRole::ADMINISTRATOR
+                "two_factor_confirmed_at" => null,
+                "two_factor_recovery_codes" => null,
+                "two_factor_secret" => null
             ]);
             return CommandAlias::SUCCESS;
         }

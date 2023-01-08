@@ -14,25 +14,60 @@ class DepartmentSeeder extends Seeder
      */
     public function run()
     {
+        //1
+        DB::table('departments')->insert([
+            'name' => "Research and Development",
+            'description' => "R&D.\nBuilding 1",
+        ]);
+        //2
         DB::table('departments')->insert([
             'name' => "Human Resources",
-            'description' => "Human Resources.\nLocated in Building 2",
+            'description' => "Human Resources.\nBuilding 2, Floor 1",
         ]);
+        //3
         DB::table('departments')->insert([
-            'name' => "Financial Department",
-            'description' => "Financial Department.\nLocated in Building 3",
+            'name' => "Marketing and Sales",
+            'description' => "Department for Marketing and Sales.\nBuilding 2, Floor 2",
         ]);
+        //4
         DB::table('departments')->insert([
-            'name' => "Secret Resources",
-            'description' => "Department for classified Operations.\nLocation Unknown.",
+            'name' => "Accounting and Finance",
+            'description' => "Financial Department.\nBuilding 2, Floor 3",
         ]);
-        DB::table('departments')->insert([
-            'name' => "Public Relations",
-            'description' => "Department for Public Relations.\nMostly Remote.",
-        ]);
+        //5
         DB::table('departments')->insert([
             'name' => "Administration",
-            'description' => "Department for Administrative Matters.\nBuilding 4, Floor 12.",
+            'description' => "Department for Administrative Matters.\nBuilding 2, Floor 4.",
+        ]);
+        //6
+        DB::table('departments')->insert([
+            'name' => "Customer Service",
+            'description' => "Human Resources.\nBuilding 2, Floor 5",
+        ]);
+        //7
+        DB::table('departments')->insert([
+            'name' => "Technology and Development",
+            'description' => "Software and Hardware Development.\nRemote/Building 2, Floor 6",
+        ]);
+        //8
+        DB::table('departments')->insert([
+            'name' => "QA",
+            'description' => "Quality Assurance.\nRemote/Building 2, Floor 6",
+        ]);
+        //9
+        DB::table('departments')->insert([
+            'name' => "Legal",
+            'description' => "Department for Legal Matters.\nBuilding 2, Floor 7",
+        ]);
+        //10
+        DB::table('departments')->insert([
+            'name' => "Information Security",
+            'description' => "Building 2, Floor 6",
+        ]);
+        //11
+        DB::table('departments')->insert([
+            'name' => "Operations/Production",
+            'description' => "Building 3",
         ]);
     }
 }
