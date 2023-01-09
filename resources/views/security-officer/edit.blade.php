@@ -58,16 +58,10 @@
                                    required>
                         </div>
                         <button type="submit"
-                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{__("Create")}}</button>
+                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{__("Update")}}</button>
+                        @include("common.delete_button")
                     </form>
-                    <div class="py-2">
-                        <form method="POST"
-                              action="{{route('security-officer.destroy',$security_officer->id)}}">
-                            @csrf
-                            @method("DELETE")
-                            @include("common.delete_button",["message"=>__("Are you sure you want to delete the security officer?")])
-                        </form>
-                    </div>
+                    @include("common.delete_prompt",["route" => route('security-officer.destroy',$security_officer->id),"message" => __("Are you sure you want to delete the security officer?")])
                     <div class="flex justify-center">
                         <a class="inline-flex items-center h-10 px-5 m-2 text-sm text-green-100 transition-colors duration-150 bg-green-700 rounded-lg focus:shadow-outline hover:bg-green-800"
                            href="{{route('security-officer.index',["export"=>true])}}"

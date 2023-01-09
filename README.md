@@ -8,7 +8,7 @@ and [Portuguese Law 46/2018](https://www.cncs.gov.pt/docs/regime-jurdico-da-segu
 da Segurança no Ciberespaço) as defined by [CNCS](https://www.cncs.gov.pt/pt/regime-juridico/) (Centro Nacional de
 Cibersegurança).
 
-**The instructions for this application installation are provided in [INSTALL.md](INSTALL.md).**
+**The instructions for this application installation are provided in [INSTALL.md](documentation/INSTALL.md).**
 
 The intended usage of this application, after promoting the initial setup user to an Administrative role, is to add
 multiple users of the LDAP organization to the application by logging them in, assigning them the intended role

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,8 +20,9 @@ class CheckActive
      */
     public function handle(Request $request, Closure $next)
     {
-
-        if (Auth::check() && (!Auth::user()->active)) {
+        /* @var $user User */
+        $user = Auth::user();
+        if (Auth::check() && (!$user->active)) {
             Auth("web")->logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();

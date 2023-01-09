@@ -21,7 +21,7 @@ class LogFormatter
      * @param Logger $logger
      * @return void
      */
-    public function __invoke($logger)
+    public function __invoke(Logger $logger)
     {
         $user = $this->request->user();
         $userEmail = empty($user) ? "" : $user->email;

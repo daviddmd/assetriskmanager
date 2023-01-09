@@ -11,6 +11,7 @@ class AssetThreatControlSeeder extends Seeder
 {
     public function run()
     {
+        $asset_threats = AssetThreat::all();
         /**
          * Cisco Router Catalyst 8300
          * Security Misconfiguration: Audit Configuration
@@ -19,18 +20,18 @@ class AssetThreatControlSeeder extends Seeder
          * Dos: Layer 7, Layer 3+4, DPI, Update Software
          */
         AssetThreatControl::create([
-            "asset_threat_id" => AssetThreat::where("asset_id", "=", 1)->where("threat_id", "=", 12)->first("id")->id,
+            "asset_threat_id" => $asset_threats->where("asset_id", "=", 1)->where("threat_id", "=", 12)->first()->id,
             "control_id" => 26,
             "control_type" => ControlType::MITIGATE
         ]);
         AssetThreatControl::create([
-            "asset_threat_id" => AssetThreat::where("asset_id", "=", 1)->where("threat_id", "=", 13)->first("id")->id,
+            "asset_threat_id" => $asset_threats->where("asset_id", "=", 1)->where("threat_id", "=", 13)->first()->id,
             "control_id" => 14,
             "control_type" => ControlType::MITIGATE
         ]);
         foreach ([15, 16] as $control_id) {
             AssetThreatControl::create([
-                "asset_threat_id" => AssetThreat::where("asset_id", "=", 1)->where("threat_id", "=", 14)->first("id")->id,
+                "asset_threat_id" => $asset_threats->where("asset_id", "=", 1)->where("threat_id", "=", 14)->first()->id,
                 "control_id" => $control_id,
                 "control_type" => ControlType::MITIGATE,
                 "validated" => true
@@ -38,7 +39,7 @@ class AssetThreatControlSeeder extends Seeder
         }
         foreach ([8, 14, 19, 27] as $control_id) {
             AssetThreatControl::create([
-                "asset_threat_id" => AssetThreat::where("asset_id", "=", 1)->where("threat_id", "=", 17)->first("id")->id,
+                "asset_threat_id" => $asset_threats->where("asset_id", "=", 1)->where("threat_id", "=", 17)->first()->id,
                 "control_id" => $control_id,
                 "control_type" => ControlType::MITIGATE,
                 "validated" => true
@@ -55,18 +56,18 @@ class AssetThreatControlSeeder extends Seeder
          */
         foreach ([2, 3, 4, 10] as $asset_id) {
             AssetThreatControl::create([
-                "asset_threat_id" => AssetThreat::where("asset_id", "=", $asset_id)->where("threat_id", "=", 12)->first("id")->id,
+                "asset_threat_id" => $asset_threats->where("asset_id", "=", $asset_id)->where("threat_id", "=", 12)->first()->id,
                 "control_id" => 26,
                 "control_type" => ControlType::MITIGATE
             ]);
             AssetThreatControl::create([
-                "asset_threat_id" => AssetThreat::where("asset_id", "=", $asset_id)->where("threat_id", "=", 13)->first("id")->id,
+                "asset_threat_id" => $asset_threats->where("asset_id", "=", $asset_id)->where("threat_id", "=", 13)->first()->id,
                 "control_id" => 14,
                 "control_type" => ControlType::MITIGATE
             ]);
             foreach ([15, 16] as $control_id) {
                 AssetThreatControl::create([
-                    "asset_threat_id" => AssetThreat::where("asset_id", "=", $asset_id)->where("threat_id", "=", 14)->first("id")->id,
+                    "asset_threat_id" => $asset_threats->where("asset_id", "=", $asset_id)->where("threat_id", "=", 14)->first()->id,
                     "control_id" => $control_id,
                     "control_type" => ControlType::MITIGATE,
                     "validated" => true
@@ -79,14 +80,14 @@ class AssetThreatControlSeeder extends Seeder
          * Data Exfiltration: Enable and Configure Logging, Upload logs to a centralized platform, Network Segmentation
          */
         AssetThreatControl::create([
-            "asset_threat_id" => AssetThreat::where("asset_id", "=", 5)->where("threat_id", "=", 13)->first("id")->id,
+            "asset_threat_id" => $asset_threats->where("asset_id", "=", 5)->where("threat_id", "=", 13)->first()->id,
             "control_id" => 14,
             "control_type" => ControlType::MITIGATE
         ]);
 
         foreach ([11, 15, 16] as $control_id) {
             AssetThreatControl::create([
-                "asset_threat_id" => AssetThreat::where("asset_id", "=", 5)->where("threat_id", "=", 11)->first("id")->id,
+                "asset_threat_id" => $asset_threats->where("asset_id", "=", 5)->where("threat_id", "=", 11)->first()->id,
                 "control_id" => $control_id,
                 "control_type" => ControlType::MITIGATE,
                 "validated" => true
@@ -101,40 +102,40 @@ class AssetThreatControlSeeder extends Seeder
          * Data Loss: Off-Site Backup, Cloud Backup (Transfer),
          */
         AssetThreatControl::create([
-            "asset_threat_id" => AssetThreat::where("asset_id", "=", 6)->where("threat_id", "=", 13)->first("id")->id,
+            "asset_threat_id" => $asset_threats->where("asset_id", "=", 6)->where("threat_id", "=", 13)->first()->id,
             "control_id" => 14,
             "control_type" => ControlType::MITIGATE
         ]);
         foreach ([11, 15, 16] as $control_id) {
             AssetThreatControl::create([
-                "asset_threat_id" => AssetThreat::where("asset_id", "=", 6)->where("threat_id", "=", 11)->first("id")->id,
+                "asset_threat_id" => $asset_threats->where("asset_id", "=", 6)->where("threat_id", "=", 11)->first()->id,
                 "control_id" => $control_id,
                 "control_type" => ControlType::MITIGATE,
                 "validated" => true
             ]);
         }
         AssetThreatControl::create([
-            "asset_threat_id" => AssetThreat::where("asset_id", "=", 6)->where("threat_id", "=", 8)->first("id")->id,
+            "asset_threat_id" => $asset_threats->where("asset_id", "=", 6)->where("threat_id", "=", 8)->first()->id,
             "control_id" => 15,
             "control_type" => ControlType::ACCEPT
         ]);
         AssetThreatControl::create([
-            "asset_threat_id" => AssetThreat::where("asset_id", "=", 6)->where("threat_id", "=", 8)->first("id")->id,
+            "asset_threat_id" => $asset_threats->where("asset_id", "=", 6)->where("threat_id", "=", 8)->first()->id,
             "control_id" => 1,
             "control_type" => ControlType::MITIGATE,
         ]);
         AssetThreatControl::create([
-            "asset_threat_id" => AssetThreat::where("asset_id", "=", 6)->where("threat_id", "=", 8)->first("id")->id,
+            "asset_threat_id" => $asset_threats->where("asset_id", "=", 6)->where("threat_id", "=", 8)->first()->id,
             "control_id" => 10,
             "control_type" => ControlType::MITIGATE
         ]);
         AssetThreatControl::create([
-            "asset_threat_id" => AssetThreat::where("asset_id", "=", 6)->where("threat_id", "=", 9)->first("id")->id,
+            "asset_threat_id" => $asset_threats->where("asset_id", "=", 6)->where("threat_id", "=", 9)->first()->id,
             "control_id" => 21,
             "control_type" => ControlType::MITIGATE
         ]);
         AssetThreatControl::create([
-            "asset_threat_id" => AssetThreat::where("asset_id", "=", 6)->where("threat_id", "=", 9)->first("id")->id,
+            "asset_threat_id" => $asset_threats->where("asset_id", "=", 6)->where("threat_id", "=", 9)->first()->id,
             "control_id" => 22,
             "control_type" => ControlType::TRANSFER
         ]);
@@ -150,31 +151,31 @@ class AssetThreatControlSeeder extends Seeder
          */
         foreach ([7, 8, 12] as $asset_id) {
             AssetThreatControl::create([
-                "asset_threat_id" => AssetThreat::where("asset_id", "=", $asset_id)->where("threat_id", "=", 13)->first("id")->id,
+                "asset_threat_id" => $asset_threats->where("asset_id", "=", $asset_id)->where("threat_id", "=", 13)->first()->id,
                 "control_id" => 14,
                 "control_type" => ControlType::MITIGATE
             ]);
             foreach ([11, 15, 16] as $control_id) {
                 AssetThreatControl::create([
-                    "asset_threat_id" => AssetThreat::where("asset_id", "=", $asset_id)->where("threat_id", "=", 11)->first("id")->id,
+                    "asset_threat_id" => $asset_threats->where("asset_id", "=", $asset_id)->where("threat_id", "=", 11)->first()->id,
                     "control_id" => $control_id,
                     "control_type" => ControlType::MITIGATE,
                     "validated" => true
                 ]);
             }
             AssetThreatControl::create([
-                "asset_threat_id" => AssetThreat::where("asset_id", "=", $asset_id)->where("threat_id", "=", 9)->first("id")->id,
+                "asset_threat_id" => $asset_threats->where("asset_id", "=", $asset_id)->where("threat_id", "=", 9)->first()->id,
                 "control_id" => 21,
                 "control_type" => ControlType::MITIGATE
             ]);
             AssetThreatControl::create([
-                "asset_threat_id" => AssetThreat::where("asset_id", "=", $asset_id)->where("threat_id", "=", 9)->first("id")->id,
+                "asset_threat_id" => $asset_threats->where("asset_id", "=", $asset_id)->where("threat_id", "=", 9)->first()->id,
                 "control_id" => 22,
                 "control_type" => ControlType::TRANSFER
             ]);
             foreach ([6, 7, 20] as $control_id) {
                 AssetThreatControl::create([
-                    "asset_threat_id" => AssetThreat::where("asset_id", "=", $asset_id)->where("threat_id", "=", 5)->first("id")->id,
+                    "asset_threat_id" => $asset_threats->where("asset_id", "=", $asset_id)->where("threat_id", "=", 5)->first()->id,
                     "control_id" => $control_id,
                     "control_type" => ControlType::MITIGATE,
                     "validated" => true
@@ -195,46 +196,46 @@ class AssetThreatControlSeeder extends Seeder
         foreach ([9, 11] as $asset_id) {
             foreach ([11, 15, 16] as $control_id) {
                 AssetThreatControl::create([
-                    "asset_threat_id" => AssetThreat::where("asset_id", "=", $asset_id)->where("threat_id", "=", 11)->first("id")->id,
+                    "asset_threat_id" => $asset_threats->where("asset_id", "=", $asset_id)->where("threat_id", "=", 11)->first()->id,
                     "control_id" => $control_id,
                     "control_type" => ControlType::MITIGATE,
                     "validated" => true
                 ]);
             }
             AssetThreatControl::create([
-                "asset_threat_id" => AssetThreat::where("asset_id", "=", $asset_id)->where("threat_id", "=", 17)->first("id")->id,
+                "asset_threat_id" => $asset_threats->where("asset_id", "=", $asset_id)->where("threat_id", "=", 17)->first()->id,
                 "control_id" => 19,
                 "control_type" => ControlType::TRANSFER
             ]);
             AssetThreatControl::create([
-                "asset_threat_id" => AssetThreat::where("asset_id", "=", $asset_id)->where("threat_id", "=", 9)->first("id")->id,
+                "asset_threat_id" => $asset_threats->where("asset_id", "=", $asset_id)->where("threat_id", "=", 9)->first()->id,
                 "control_id" => 21,
                 "control_type" => ControlType::MITIGATE
             ]);
             AssetThreatControl::create([
-                "asset_threat_id" => AssetThreat::where("asset_id", "=", $asset_id)->where("threat_id", "=", 9)->first("id")->id,
+                "asset_threat_id" => $asset_threats->where("asset_id", "=", $asset_id)->where("threat_id", "=", 9)->first()->id,
                 "control_id" => 22,
                 "control_type" => ControlType::TRANSFER
             ]);
             AssetThreatControl::create([
-                "asset_threat_id" => AssetThreat::where("asset_id", "=", $asset_id)->where("threat_id", "=", 12)->first("id")->id,
+                "asset_threat_id" => $asset_threats->where("asset_id", "=", $asset_id)->where("threat_id", "=", 12)->first()->id,
                 "control_id" => 26,
                 "control_type" => ControlType::MITIGATE
             ]);
             AssetThreatControl::create([
-                "asset_threat_id" => AssetThreat::where("asset_id", "=", $asset_id)->where("threat_id", "=", 8)->first("id")->id,
+                "asset_threat_id" => $asset_threats->where("asset_id", "=", $asset_id)->where("threat_id", "=", 8)->first()->id,
                 "control_id" => 15,
                 "control_type" => ControlType::ACCEPT
             ]);
         }
         AssetThreatControl::create([
-            "asset_threat_id" => AssetThreat::where("asset_id", "=", 11)->where("threat_id", "=", 16)->first("id")->id,
+            "asset_threat_id" => $asset_threats->where("asset_id", "=", 11)->where("threat_id", "=", 16)->first()->id,
             "control_id" => 19,
             "control_type" => ControlType::ACCEPT
         ]);
         foreach ([14, 15, 16, 26] as $control_id) {
             AssetThreatControl::create([
-                "asset_threat_id" => AssetThreat::where("asset_id", "=", 11)->where("threat_id", "=", 16)->first("id")->id,
+                "asset_threat_id" => $asset_threats->where("asset_id", "=", 11)->where("threat_id", "=", 16)->first()->id,
                 "control_id" => $control_id,
                 "control_type" => ControlType::ACCEPT,
                 "validated" => true

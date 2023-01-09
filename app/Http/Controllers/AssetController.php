@@ -161,6 +161,7 @@ class AssetController extends Controller
      */
     public function update(UpdateAssetRequest $request, Asset $asset)
     {
+        /* @var $user User */
         $user = Auth::user();
         $manufacturer_contract_type = $request->input("manufacturer_contract_type");
         $asset->update([

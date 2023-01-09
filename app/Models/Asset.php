@@ -105,11 +105,11 @@ class Asset extends Model
 
     public function availableChildren(): array
     {
-        /* @var $current_user User */
-        $current_user = Auth::user();
-        return array_filter($this->children->all(), function ($child) use ($current_user) {
-            return $child->manager_id == $current_user->id ||
-                in_array($current_user->role, [UserRole::SECURITY_OFFICER, UserRole::DATA_PROTECTION_OFFICER]);
+        /* @var $user User */
+        $user = Auth::user();
+        return array_filter($this->children->all(), function ($child) use ($user) {
+            return $child->manager_id == $user->id ||
+                in_array($user->role, [UserRole::SECURITY_OFFICER, UserRole::DATA_PROTECTION_OFFICER]);
         });
     }
 

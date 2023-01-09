@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -21,12 +22,13 @@ class SetUserLanguage
      */
     public function handle(Request $request, Closure $next)
     {
+        /* @var $user User */
+        $user = Auth::user();
         if ($request->has("set_language")) {
             $path = $request->path();
             $language = $request->input("set_language");
             if (array_key_exists($language, config("app.locales"))) {
-                if (Auth::user()) {
-                    $user = Auth::user();
+                if ($user) {
                     if ($user->language != $language) {
                         $user->language = $language;
                         $user->save();

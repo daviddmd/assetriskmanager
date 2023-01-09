@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Asset;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
@@ -18,6 +19,9 @@ class AssetLogs extends Component
         $this->asset = $asset;
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function render()
     {
         $this->authorize("view", $this->asset);

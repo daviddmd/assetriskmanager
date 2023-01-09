@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\User;
+use Hash;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Command\Command as CommandAlias;
 
@@ -32,7 +33,7 @@ class ResetPassword extends Command
         $user = User::where("email", "=", $this->argument("email"))->first();
         if ($user) {
             $user->update([
-                "password" => \Hash::make($this->argument("password"))
+                "password" => Hash::make($this->argument("password"))
             ]);
             $this->info("User Password Updated.");
             return CommandAlias::SUCCESS;
