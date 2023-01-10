@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Enums\UserRole;
 use App\Imports\AssetsImport;
 use App\Imports\AssetTypesImport;
 use App\Imports\ControlsImport;
@@ -13,6 +14,7 @@ use App\Imports\ThreatsImport;
 use App\Imports\UsersImport;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 class FileImportController extends Controller
@@ -22,6 +24,8 @@ class FileImportController extends Controller
         if (!$request->user()->can("viewAny", User::class)) {
             abort(403);
         }
+        /* @var $current_user User */
+        $current_user = Auth::user();
         if ($request->hasFile('file') && $request->has("model")) {
             $file = $request->file('file');
             $model = $request->input("model");
@@ -53,7 +57,7 @@ class FileImportController extends Controller
                 Excel::import(new ThreatsImport, $file);
                 return redirect()->route("threats.index");
             }
-            else if ($model == "users" && !config("ldap.enabled")) {
+            else if ($model == "users" && !config("ldap.enabled") && $current_user->role == UserRole::ADMINISTRATOR) {
                 Excel::import(new UsersImport, $file);
                 return redirect()->route("users.index");
             }

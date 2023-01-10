@@ -16,7 +16,7 @@
                     @include("common.model_import_form",["model"=>"permanent-contact-points","message" => __("Import Permanent Contact Points")])
                     @include("common.model_import_form",["model"=>"security-officer","message" => __("Import Security Officer")])
                     @include("common.model_import_form",["model"=>"threats","message" => __("Import Threats")])
-                    @if(!config("ldap.enabled"))
+                    @if(!config("ldap.enabled") && Auth::user()->role == \App\Enums\UserRole::ADMINISTRATOR)
                         @include("common.model_import_form",["model"=>"users","message" => __("Import Users")])
                     @endif
 
