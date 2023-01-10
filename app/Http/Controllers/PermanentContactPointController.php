@@ -33,7 +33,7 @@ class PermanentContactPointController extends Controller
             return Excel::download(new PermanentContactPointExport, config("constants.exports.permanent_contact_point_file_name"));
         }
         $permanentContactPoints = PermanentContactPoint::all();
-        return view("permanent-contact-point.index", ["permanentContactPoints" => $permanentContactPoints]);
+        return view("permanent-contact-points.index", ["permanentContactPoints" => $permanentContactPoints]);
     }
 
     /**
@@ -43,7 +43,7 @@ class PermanentContactPointController extends Controller
      */
     public function create()
     {
-        return view("permanent-contact-point.create");
+        return view("permanent-contact-points.create");
     }
 
     /**
@@ -68,7 +68,7 @@ class PermanentContactPointController extends Controller
         ]);
         $permanentContactPoint->save();
         Log::channel("application")->info(sprintf("Create Permanent Contact Point %d", $permanentContactPoint->id));
-        return redirect()->route("permanent-contact-point.index")->with("status", __("Permanent Contact Point Created"));
+        return redirect()->route("permanent-contact-points.index")->with("status", __("Permanent Contact Point Created"));
     }
 
     /**
@@ -79,7 +79,7 @@ class PermanentContactPointController extends Controller
      */
     public function show(PermanentContactPoint $permanentContactPoint)
     {
-        return redirect()->route("permanent-contact-point.edit", $permanentContactPoint);
+        return redirect()->route("permanent-contact-points.edit", $permanentContactPoint);
     }
 
     /**
@@ -90,7 +90,7 @@ class PermanentContactPointController extends Controller
      */
     public function edit(PermanentContactPoint $permanentContactPoint)
     {
-        return view("permanent-contact-point.edit", ["permanent_contact_point" => $permanentContactPoint]);
+        return view("permanent-contact-points.edit", ["permanent_contact_point" => $permanentContactPoint]);
     }
 
     /**
@@ -116,7 +116,7 @@ class PermanentContactPointController extends Controller
             ]
         );
         Log::channel("application")->info(sprintf("Update Permanent Contact Point %d", $permanentContactPoint->id));
-        return redirect()->route("permanent-contact-point.index")->with("status", __("Permanent Contact Point Updated"));
+        return redirect()->route("permanent-contact-points.index")->with("status", __("Permanent Contact Point Updated"));
     }
 
     /**
@@ -129,6 +129,6 @@ class PermanentContactPointController extends Controller
     {
         Log::channel("application")->info(sprintf("Delete Permanent Contact Point %d", $permanentContactPoint->id));
         $permanentContactPoint->delete();
-        return redirect()->route("permanent-contact-point.index")->with("status", __("Permanent Contact Point Deleted"));
+        return redirect()->route("permanent-contact-points.index")->with("status", __("Permanent Contact Point Deleted"));
     }
 }

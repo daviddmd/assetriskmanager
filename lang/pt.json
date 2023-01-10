@@ -196,5 +196,14 @@
   "Task Description": "Descrição da Tarefa",
   "No Controls": "Sem Controlos",
   "Yes": "Sim",
-  "No": "Não"
+  "No": "Não",
+  "Import Files": "Importar Ficheiros",
+  "Import Assets": "Importar Ativos",
+  "Import Asset Types": "Importar Tipos de Ativos",
+  "Import Controls": "Importar Controlos",
+  "Import Departments": "Importar Departamentos",
+  "Import Permanent Contact Points": "Importar Pontos de Contacto Permanentes",
+  "Import Security Officer": "Importar Responsável de Segurança",
+  "Import Threats": "Importar Ameaças",
+  "Import Users": "Importar Utilizadores"
 }

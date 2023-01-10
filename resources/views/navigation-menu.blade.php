@@ -14,17 +14,19 @@
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
+                    <x-jet-nav-link :href="route('assets.index')" :active="request()->routeIs('assets.index')">
+                        {{ __('Assets') }}
+                    </x-jet-nav-link>
                     @can("viewAny",\App\Models\User::class)
                         <x-jet-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                             {{ __('Users') }}
                         </x-jet-nav-link>
+                    @endcan
+                    @if(Auth::user()->role == \App\Enums\UserRole::SECURITY_OFFICER)
                         <x-jet-nav-link :href="route('reports')" :active="request()->routeIs('reports')">
                             {{ __('Reports') }}
                         </x-jet-nav-link>
-                    @endcan
-                    <x-jet-nav-link :href="route('assets.index')" :active="request()->routeIs('assets.index')">
-                        {{ __('Assets') }}
-                    </x-jet-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -58,7 +60,7 @@
 
                                     <!-- Team Settings -->
                                     <x-jet-dropdown-link
-                                        href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
+                                            href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
                                         {{ __('Team Settings') }}
                                     </x-jet-dropdown-link>
 
@@ -110,7 +112,7 @@
                                 {{ __('Asset Types') }}
                             </x-jet-dropdown-link>
                             @can("viewAny",\App\Models\PermanentContactPoint::class)
-                                <x-jet-dropdown-link :href="route('permanent-contact-point.index')">
+                                <x-jet-dropdown-link :href="route('permanent-contact-points.index')">
                                     {{ __('Permanent Contact Points') }}
                                 </x-jet-dropdown-link>
                             @endcan
@@ -125,6 +127,11 @@
                             <x-jet-dropdown-link :href="route('controls.index')">
                                 {{ __('Controls') }}
                             </x-jet-dropdown-link>
+                            @if(Auth::user()->role == \App\Enums\UserRole::SECURITY_OFFICER)
+                                <x-jet-dropdown-link :href="route('import')">
+                                    {{ __('Import Files') }}
+                                </x-jet-dropdown-link>
+                            @endif
                         </x-slot>
                     </x-jet-dropdown>
                 </div>
@@ -150,7 +157,7 @@
                             @foreach(config("app.locales") as $key => $value)
                                 <x-jet-dropdown-link :href="request()->fullUrlWithQuery(['set_language' => $key])">
                                     <p
-                                        class="{{App::getLocale()==$key ? "font-bold" : "fontnormal"}}">{{$value}}</p>
+                                            class="{{App::getLocale()==$key ? "font-bold" : "fontnormal"}}">{{$value}}</p>
                                 </x-jet-dropdown-link>
                             @endforeach
                         </x-slot>
@@ -163,7 +170,7 @@
                         <x-slot name="trigger">
                             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                                 <button
-                                    class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
+                                        class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
                                     <img class="h-8 w-8 rounded-full object-cover"
                                          src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}"/>
                                 </button>

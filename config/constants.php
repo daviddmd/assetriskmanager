@@ -14,5 +14,6 @@ return [
         "orange" => "#FFA500",
         "red" => "#FF0000",
         "white" => "#FFFFFF"
-    ]
+    ],
+    "default_password" => "password"
 ];

@@ -6,7 +6,6 @@ use App\Exports\AssetListExport;
 use App\Exports\RiskMapExport;
 use App\Models\Asset;
 use App\Models\AssetThreat;
-use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -25,9 +24,6 @@ class ReportController extends Controller
 
     public function __invoke(Request $request)
     {
-        if (!$request->user()->can("viewAny", User::class)) {
-            abort(403);
-        }
         $export = $request->input("export");
         if (!empty($export)) {
             if ($export == "risk_map") {

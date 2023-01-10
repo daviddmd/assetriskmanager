@@ -5,6 +5,7 @@ use App\Http\Controllers\AssetTypeController;
 use App\Http\Controllers\ControlController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\FileImportController;
 use App\Http\Controllers\PermanentContactPointController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SecurityOfficerController;
@@ -33,7 +34,7 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get("dashboard", DashboardController::class)->name("dashboard");
-    Route::resource("permanent-contact-point", PermanentContactPointController::class);
+    Route::resource("permanent-contact-points", PermanentContactPointController::class);
     Route::resource("security-officer", SecurityOfficerController::class);
     Route::resource("asset-types", AssetTypeController::class);
     Route::resource("departments", DepartmentController::class);
@@ -41,5 +42,11 @@ Route::middleware([
     Route::resource("threats", ThreatController::class);
     Route::resource("controls", ControlController::class);
     Route::resource("assets", AssetController::class);
-    Route::get("reports", ReportController::class)->name("reports");
+    Route::middleware("ensureSecurityOfficer")->group(function () {
+        Route::get("reports", ReportController::class)->name("reports");
+        Route::view("import", "file-import.index")->name("import");
+        Route::post("import", FileImportController::class)->name("import-file");
+    });
+
+
 });
