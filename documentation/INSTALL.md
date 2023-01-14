@@ -28,7 +28,7 @@ although this application will run on other GNU/Linux distributions if the depen
 Ubuntu Server 22.04 or greater is needed because of the PHP >= 8.1 dependency (although it can be used on former Ubuntu
 Server versions with alternative repositories).
 
-By default, on the Ubuntu 22.04 repository, php defaults to PHP 8.1. On any greater version, replace references of
+By default, on the Ubuntu 22.04 repository, PHP defaults to PHP 8.1. On any greater version, replace references of
 php8.1 or similar to the next PHP version.
 
 Any previous version of Ubuntu Server (or any GNU/Linux distribution) may be used, as long as it provides PHP 8.1 (or
@@ -70,7 +70,7 @@ FLUSH
 
 ```shell
 exit #leave mariadb shell
-apt install php8.1 nginx php8.1-mysql php8.1-fpm php8.1-mbstring php8.1-xml php8.1-bcmath php8.1-curl php8.1-gd php8.1-ldap php8.1-zip git build-essential
+apt install php8.1 nginx php8.1-mysql php8.1-fpm php8.1-mbstring php8.1-xml php8.1-bcmath php8.1-curl php8.1-gd php8.1-ldap php8.1-zip git build-essential unzip
 systemctl enable nginx php8.1-fpm.service
 ufw enable
 ufw allow "OpenSSH"
@@ -246,8 +246,6 @@ git clone https://github.com/daviddmd/assetriskmanager
 cd assetriskmanager
 cp .env.example .env
 composer install #or php composer.phar install 
-npm install
-npm run dev
 php artisan key:generate
 ```
 
@@ -312,6 +310,10 @@ The following instructions will vary depending on if you want to install the app
 
 ## With Docker
 
+Laravel makes use of Laravel Sail to create a containerized environment for Laravel development. If on Windows, WSL2
+must be the Docker backend. A significant performance impact is expected due to the filesystem translation between Linux
+and Windows since the Sail dockerfile uses a bind mount to serve the application files to the application container.
+
 Backup `docker-compose.yml` to `docker-compose-mysql.yml`.
 
 In `.env` edit the following variables to your preference:
@@ -327,10 +329,12 @@ DB_PASSWORD=password
 Next, run:
 
 ```
+composer require laravel/sail --dev
 php artisan sail:install
 bash ./vendor/laravel/sail/bin/sail up
 bash ./vendor/laravel/sail/bin/sail artisan migrate
 bash ./vendor/laravel/sail/bin/sail artisan db:seed
+bash ./vendor/laravel/sail/bin/sail npm run dev
 ```
 
 The platform will be accessible at `http://localhost`.
