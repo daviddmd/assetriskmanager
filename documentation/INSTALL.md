@@ -13,12 +13,18 @@ installation or support Docker.
 OR
 
 - Installation of Docker
+
+If using Laravel Sail:
+
+- Docker
 - PHP
 - Optionally, Global [Composer](https://getcomposer.org/) (This repository comes bundled with a build of composer).
 
-On Docker, Windows Systems must use WSL2. A significant performance penalty is expected.
+On Docker, Windows Systems must use WSL2.
 
-An Active Directory or Equivelent LDAP Server is required for authentication.
+An Active Directory or equivalent LDAP Server is required for authentication if LDAP is enabled, otherwise normal
+registration will be enabled. Email verification and password reset require a functional email configuration. This
+application comes with features (commands) to reset the password and 2FA without using email.
 
 Instructions for both a development environment with Docker and an Ubuntu 22.04 Production Environment are provided,
 although this application will run on other GNU/Linux distributions if the dependencies are satisfied.
@@ -58,7 +64,7 @@ mysql_secure_installation
 mysql
 ```
 
-```sql
+```mysql
 CREATE
 DATABASE arm;
 CREATE
@@ -87,7 +93,7 @@ cp .env.example .env
 vim .env
 ```
 
-```apacheconf
+```ini
 APP_NAME=ARM
 APP_DEBUG=false
 #...
@@ -98,6 +104,7 @@ DB_DATABASE=arm
 DB_USERNAME=armuser
 DB_PASSWORD=armpassword
 #...
+LDAP_ENABLED=true
 LDAP_LOGGING=false
 LDAP_CONNECTION=default
 LDAP_HOST=192.168.134.179
@@ -110,7 +117,7 @@ LDAP_SSL=false
 LDAP_TLS=false
 ```
 
-If you want to generate the production JS and CSS bundle (it's already generated on each release):
+To generate the production JS and CSS bundle:
 
 ```shell
 sudo -i
@@ -171,8 +178,8 @@ server {
 sudo ln -s /etc/nginx/sites-available/assetriskmanager /etc/nginx/sites-enabled/
 sudo rm /etc/nginx/sites-enabled/default
 sudo systemctl restart php8.1-fpm.service nginx
-sudo chown -R www-data.www-data /var/www/assetriskmanager/storage
-sudo chown -R www-data.www-data /var/www/assetriskmanager/bootstrap/cache/
+sudo chown -R www-data:www-data /var/www/assetriskmanager/storage
+sudo chown -R www-data:www-data /var/www/assetriskmanager/bootstrap/cache/
 ```
 
 After this procedure, open the website on the machine's IP and log in as the first administrator (
@@ -193,11 +200,12 @@ npm install
 npm run build
 php artisan migrate
 composer --optimize-autoloader --no-dev install
+npm run production
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
-sudo chown -R www-data.www-data /var/www/assetriskmanager/storage
-sudo chown -R www-data.www-data /var/www/assetriskmanager/bootstrap/cache/
+sudo chown -R www-data:www-data /var/www/assetriskmanager/storage
+sudo chown -R www-data:www-data /var/www/assetriskmanager/bootstrap/cache/
 sudo systemctl restart nginx php8.1-fpm.service
 ```
 
@@ -210,6 +218,7 @@ git clone https://github.com/daviddmd/assetriskmanager
 cd assetriskmanager
 cp .env.example .env
 composer install #or php composer.phar install 
+npm run dev
 php artisan key:generate
 ```
 

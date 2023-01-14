@@ -47,6 +47,4 @@ Route::middleware([
         Route::view("import", "file-import.index")->name("import");
         Route::post("import", FileImportController::class)->name("import-file");
     });
-
-
 });

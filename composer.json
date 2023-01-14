@@ -1,68 +1,68 @@
 {
-    "name": "daviddmd/assetriskmanager",
-    "type": "project",
-    "description": "Asset Risk Manager",
-    "keywords": [
+  "name": "daviddmd/assetriskmanager",
+  "type": "project",
+  "description": "Asset Risk Manager",
+  "keywords": [
+  ],
+  "homepage": "https://github.com/daviddmd/assetriskmanager",
+  "license": "AGPL-3.0-or-later",
+  "require": {
+    "php": "^8.1",
+    "ext-pdo": "*",
+    "directorytree/ldaprecord-laravel": "^v2.7.1",
+    "guzzlehttp/guzzle": "^7.5.0",
+    "laravel/framework": "^v9.47.0",
+    "laravel/jetstream": "^v2.14.1",
+    "laravel/sanctum": "^v2.15.1",
+    "laravel/tinker": "^v2.8.0",
+    "livewire/livewire": "^v2.10.8",
+    "maatwebsite/excel": "^3.1.45"
+  },
+  "require-dev": {
+    "fakerphp/faker": "^v1.21.0",
+    "laravel/sail": "^v1.18.0",
+    "mockery/mockery": "^1.5.1",
+    "nunomaduro/collision": "^v6.4.0",
+    "phpunit/phpunit": "^9.5.28",
+    "spatie/laravel-ignition": "^1.6.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/",
+      "Database\\Factories\\": "database/factories/",
+      "Database\\Seeders\\": "database/seeders/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "post-autoload-dump": [
+      "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+      "@php artisan package:discover --ansi"
     ],
-    "homepage": "https://github.com/daviddmd/assetriskmanager",
-    "license": "AGPL-3.0-or-later",
-    "require": {
-        "php": "^8.1",
-        "ext-pdo": "*",
-        "directorytree/ldaprecord-laravel": "^v2.7.1",
-        "guzzlehttp/guzzle": "^7.5.0",
-        "laravel/framework": "^v9.46.0",
-        "laravel/jetstream": "^v2.14.0",
-        "laravel/sanctum": "^v2.15.1",
-        "laravel/tinker": "^v2.7.3",
-        "livewire/livewire": "^v2.10.8",
-        "maatwebsite/excel": "^3.1.45"
-    },
-    "require-dev": {
-        "fakerphp/faker": "^v1.21.0",
-        "laravel/sail": "^v1.17.0",
-        "mockery/mockery": "^1.5.1",
-        "nunomaduro/collision": "^v6.4.0",
-        "phpunit/phpunit": "^9.5.27",
-        "spatie/laravel-ignition": "^1.6.4"
-    },
-    "autoload": {
-        "psr-4": {
-            "App\\": "app/",
-            "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/"
-        }
-    },
-    "scripts": {
-        "post-autoload-dump": [
-            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
-        ],
-        "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
-        ],
-        "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ],
-        "post-create-project-cmd": [
-            "@php artisan key:generate --ansi"
-        ]
-    },
-    "extra": {
-        "laravel": {
-            "dont-discover": []
-        }
-    },
-    "config": {
-        "optimize-autoloader": true,
-        "preferred-install": "dist",
-        "sort-packages": true
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "post-update-cmd": [
+      "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+    ],
+    "post-root-package-install": [
+      "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+    ],
+    "post-create-project-cmd": [
+      "@php artisan key:generate --ansi"
+    ]
+  },
+  "extra": {
+    "laravel": {
+      "dont-discover": []
+    }
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }

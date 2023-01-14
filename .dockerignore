@@ -1,0 +1,12 @@
+node_modules
+vendor
+public/build
+.git
+.idea
+storage/logs/
+.env*
+docker-*.yml
+.editorconfig
+.gitattributes
+.gitignore
+README.md
