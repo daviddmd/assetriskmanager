@@ -1,4 +1,4 @@
-# Requirements and Installation
+# Requirements and Installation for Production Environment
 
 Asset Risk Manager is a Laravel (PHP) powered web application and runs on all systems that support a modern PHP
 installation or support Docker.
@@ -14,15 +14,9 @@ OR
 
 - Installation of Docker
 
-If using Laravel Sail:
-
-- Docker
-- PHP
-- Optionally, Global [Composer](https://getcomposer.org/) (This repository comes bundled with a build of composer).
-
 On Docker, Windows Systems must use WSL2.
 
-An Active Directory or equivalent LDAP Server is required for authentication if LDAP is enabled, otherwise normal
+An Active Directory or equivalent LDAP Server is required for authentication if LDAP is enabled , otherwise normal
 registration will be enabled. Email verification and password reset require a functional email configuration. This
 application comes with features (commands) to reset the password and 2FA without using email.
 
@@ -40,15 +34,14 @@ php8.1 or similar to the next PHP version.
 Any previous version of Ubuntu Server (or any GNU/Linux distribution) may be used, as long as it provides PHP 8.1 (or
 greater) and a compatible composer, php (with all required extensions) and mysql/mariadb environments.
 
-On **previous versions** of Ubuntu Server (< 22.04), [ondrej PPA](https://launchpad.net/~ondrej/+archive/ubuntu/php) may
-be used to
-install PHP 8.1 (or greater) and its required extensions:
+On **previous versions** of Ubuntu Server (< 22.04), [ondrej PPA](https://launchpad.net/~ondrej/+archive/ubuntu/php)
+may be used to install PHP 8.1 (or greater) and its required extensions. To install this PPA:
 
 ```shell
-sudo apt update
+sudo apt-get update
 sudo apt install lsb-release ca-certificates apt-transport-https software-properties-common -y
 sudo add-apt-repository ppa:ondrej/php
-sudo apt update
+sudo apt-get update
 ```
 
 And follow this guide as if you were using Ubuntu Server 22.04.
@@ -66,18 +59,18 @@ mysql
 
 ```mysql
 CREATE
-DATABASE arm;
+    DATABASE arm;
 CREATE
-USER 'armuser'@'localhost' IDENTIFIED BY 'armpassword';
+    USER 'armuser'@'localhost' IDENTIFIED BY 'armpassword';
 GRANT ALL PRIVILEGES ON arm.* TO
-'armuser'@'localhost';
+    'armuser'@'localhost';
 FLUSH
-PRIVILEGES;
+    PRIVILEGES;
 ```
 
 ```shell
 exit #leave mariadb shell
-apt install php8.1 nginx php8.1-mysql php8.1-fpm php8.1-mbstring php8.1-xml php8.1-bcmath php8.1-curl php8.1-gd php8.1-ldap php8.1-zip composer git build-essential
+apt install php8.1 nginx php8.1-mysql php8.1-fpm php8.1-mbstring php8.1-xml php8.1-bcmath php8.1-curl php8.1-gd php8.1-ldap php8.1-zip git build-essential
 systemctl enable nginx php8.1-fpm.service
 ufw enable
 ufw allow "OpenSSH"
@@ -88,33 +81,34 @@ mkdir -p /var/www/assetriskmanager
 exit #leave root
 sudo chown -R $USER:$USER /var/www/assetriskmanager
 cd /var/www/assetriskmanager
-git clone https://github.com/daviddmd/assetriskmanager.git . #Configure beforehand a personal access token if needed
+#Configure beforehand a personal access token if needed or download the zip/tar from the GitHub releases page and extract there
+git clone https://github.com/daviddmd/assetriskmanager.git . #git checkout v1.0.x to checkout a specific version
 cp .env.example .env
 vim .env
 ```
 
 ```ini
-APP_NAME=ARM
-APP_DEBUG=false
+APP_NAME = ARM
+APP_DEBUG = false
 #...
-DB_CONNECTION=mysql
-DB_HOST=localhost
-DB_PORT=3306
-DB_DATABASE=arm
-DB_USERNAME=armuser
-DB_PASSWORD=armpassword
+DB_CONNECTION = mysql
+DB_HOST = localhost
+DB_PORT = 3306
+DB_DATABASE = arm
+DB_USERNAME = armuser
+DB_PASSWORD = armpassword
 #...
-LDAP_ENABLED=true
-LDAP_LOGGING=false
-LDAP_CONNECTION=default
-LDAP_HOST=192.168.134.179
-LDAP_USERNAME="cn=Reader,cn=Users,dc=example,dc=com"
-LDAP_PASSWORD="password123"
-LDAP_PORT=389
-LDAP_BASE_DN="dc=example,dc=com"
-LDAP_TIMEOUT=5
-LDAP_SSL=false
-LDAP_TLS=false
+LDAP_ENABLED = true
+LDAP_LOGGING = false
+LDAP_CONNECTION = default
+LDAP_HOST = 192.168.134.179
+LDAP_USERNAME = "cn=Reader,cn=Users,dc=example,dc=com"
+LDAP_PASSWORD = "password123"
+LDAP_PORT = 389
+LDAP_BASE_DN = "dc=example,dc=com"
+LDAP_TIMEOUT = 5
+LDAP_SSL = false
+LDAP_TLS = false
 ```
 
 To generate the production JS and CSS bundle:
@@ -129,8 +123,9 @@ npm run build
 ```
 
 ```shell
-composer install --optimize-autoloader --no-dev #or composer install --optimize-autoloader if faker is needed for seeding the database
+php composer.phar install --optimize-autoloader --no-dev #or php composer.phar install --optimize-autoloader if faker is needed for seeding the database
 php artisan key:generate
+php artisan event:cache
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
@@ -195,12 +190,12 @@ To apply updates:
 ```shell
 cd /var/www/assetriskmanager
 sudo chown -R $USER:$USER .
-git pull
+git pull #and checkout a version tag if you don't want to checkout to the latest master commit
 npm install
 npm run build
 php artisan migrate
-composer --optimize-autoloader --no-dev install
-npm run production
+php composer.phar --optimize-autoloader --no-dev install
+php artisan event:cache
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
@@ -209,18 +204,54 @@ sudo chown -R www-data:www-data /var/www/assetriskmanager/bootstrap/cache/
 sudo systemctl restart nginx php8.1-fpm.service
 ```
 
-## Installation for Development Environment
+## Installation on Production Docker Environment
 
-For either option, clone the repository
+Asset Risk Manager officially supports MySQL and Postgres Docker database environments. Make is required for
+the [Makefile](../Makefile). The docker environment will create a database container, app container
+(based on [php-fpm](https://hub.docker.com/_/php)) and a [nginx](https://hub.docker.com/_/nginx) container that exposes
+port 80.
+
+The PHP configuration may be adjusted at the [php.deploy-override.ini](../docker/php/php.deploy-override.ini) file and
+the nginx default webserver configuration may be adjusted at the [default.conf](../docker/nginx/default.conf) file.
+
+By default, the [default Docker Compose file](../docker-compose.yml) targets a MySQL database environment; if the
+PostgreSQL one is preferred, rename the [PostgreSQL Docker Compose file](../docker-compose-postgres.yml)
+to `docker-compose.yml`.
+
+Create the `.env` file from the [.env.docker.example](../.env.docker.example) file with the expected LDAP (if
+applicable), database and application configurations and run `make install` and `make key-generate`. If example data is
+desired, run `make seed`.
+
+The `.env` file and logs directory are synchronized with the host system. If the `.env` file
+was changed on the host system, run `make update-cache`. To destroy the containers with its respective volumes, run
+`make destroy`.
+
+To install updates from the repository, run `git pull` (and optionally switch to a version tag with git
+checkout) and run `make install`.
+
+# Requirements and Installation for Development Environment
+
+For a development environment, it's expected that the environment (PHP and CSS/JS assets) is reloaded when anything in
+the project is changed. Therefore, a local PHP server or a Laravel Sail (Docker) environment is recommended for
+development.
+
+If a local PHP server is chosen for development, a MySQL/MariaDB or PostgreSQL server is required to be installed
+alongside with PHP >= 8.1 (and an LDAP/Active Directory server if LDAP is required), with the .env file configured
+accordingly from [.env.example](../.env.example).
+
+For both the local PHP server and Docker (with Laravel Sail):
 
 ```shell
 git clone https://github.com/daviddmd/assetriskmanager
 cd assetriskmanager
 cp .env.example .env
 composer install #or php composer.phar install 
+npm install
 npm run dev
 php artisan key:generate
 ```
+
+## LDAP Configuration
 
 Take note of your LDAP server configuration. If it is an Active Directory LDAP server, no more action is required.
 
@@ -279,7 +310,9 @@ LDAP_BASE_DN="dc=example,dc=com"
 
 The following instructions will vary depending on if you want to install the application with or without docker.
 
-### With Docker
+## With Docker
+
+Backup `docker-compose.yml` to `docker-compose-mysql.yml`.
 
 In `.env` edit the following variables to your preference:
 
@@ -325,6 +358,8 @@ php artisan db:seed
 php artisan serve
 ```
 
+The application will be accessible at `127.0.0.1:8080`.
+
 -------
 
 ### After Either
@@ -356,5 +391,5 @@ docker system prune
 If you want to delete all associated data with the application (mysql-server docker volume):
 
 ```
-docker system prune --volumes
+docker system prune -a
 ```

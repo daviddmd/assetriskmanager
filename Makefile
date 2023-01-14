@@ -28,22 +28,6 @@ destroy:
 	docker compose down --rmi all --volumes --remove-orphans
 ps:
 	docker compose ps
-logs:
-	docker compose logs
-logs-watch:
-	docker compose logs --follow
-log-web:
-	docker compose logs web
-log-web-watch:
-	docker compose logs --follow web
-log-app:
-	docker compose logs app
-log-app-watch:
-	docker compose logs --follow app
-log-db:
-	docker compose logs db
-log-db-watch:
-	docker compose logs --follow db
 web:
 	docker compose exec web bash
 shell:
@@ -54,13 +38,6 @@ fresh:
 	docker compose exec app php artisan migrate:fresh --seed
 seed:
 	docker compose exec app php artisan db:seed
-rollback-test:
-	docker compose exec app php artisan migrate:fresh
-	docker compose exec app php artisan migrate:refresh
-tinker:
-	docker compose exec app php artisan tinker
-test:
-	docker compose exec app php artisan test
 cache:
 	docker compose exec app composer dump-autoload -o
 	docker compose exec app php artisan event:cache
@@ -85,3 +62,19 @@ storage-link:
 update-cache:
 	@make cache-clear
 	@make cache
+logs:
+	docker compose logs
+logs-watch:
+	docker compose logs --follow
+log-web:
+	docker compose logs web
+log-web-watch:
+	docker compose logs --follow web
+log-app:
+	docker compose logs app
+log-app-watch:
+	docker compose logs --follow app
+log-db:
+	docker compose logs db
+log-db-watch:
+	docker compose logs --follow db
