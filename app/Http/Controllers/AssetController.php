@@ -47,11 +47,11 @@ class AssetController extends Controller
             if (!in_array($user->role, array(UserRole::SECURITY_OFFICER, UserRole::DATA_PROTECTION_OFFICER))) {
                 $assets = $assets->where("manager_id", "=", $user->id)->where("active", "=", true);
             }
-            $assets = $assets->paginate(5)->withQueryString();
+            $assets = $assets->paginate(config("constants.assets.pagination_size"))->withQueryString();
         }
         else {
             if (in_array($user->role, array(UserRole::SECURITY_OFFICER, UserRole::DATA_PROTECTION_OFFICER))) {
-                $assets = Asset::paginate(5)->withQueryString();
+                $assets = Asset::paginate(config("constants.assets.pagination_size"))->withQueryString();
             }
             else {
                 $assets = Asset::where("manager_id", "=", $user->id)->where("active", "=", true)->paginate(5)->withQueryString();

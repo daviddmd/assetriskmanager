@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\AssetListExport;
+use App\Exports\CNCSExport;
 use App\Exports\RiskMapExport;
 use App\Models\Asset;
 use App\Models\AssetThreat;
@@ -26,13 +27,16 @@ class ReportController extends Controller
     {
         $export = $request->input("export");
         if (!empty($export)) {
-            if ($export == "risk_map") {
-                return Excel::download(new RiskMapExport, config("constants.exports.risk_map_file_name"));
+            switch ($export) {
+                case "risk_map":
+                    return Excel::download(new RiskMapExport, config("constants.exports.risk_map_file_name"));
+                case "asset_list":
+                    return Excel::download(new AssetListExport, config("constants.exports.asset_list_file_name"));
+                case "cncs":
+                    return Excel::download(new CNCSExport, config("constants.exports.asset_list_cncs_file_name"));
+                default:
+                    abort(500);
             }
-            elseif ($export == "asset_list") {
-                return Excel::download(new AssetListExport, config("constants.exports.asset_list_file_name"));
-            }
-            abort(500);
         }
         else {
             $nodes_array = array();

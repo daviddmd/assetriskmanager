@@ -64,7 +64,7 @@
                     @include("common.delete_prompt",["route" => route('security-officer.destroy',$security_officer->id),"message" => __("Are you sure you want to delete the security officer?")])
                     <div class="flex justify-center">
                         <a class="inline-flex items-center h-10 px-5 m-2 text-sm text-green-100 transition-colors duration-150 bg-green-700 rounded-lg focus:shadow-outline hover:bg-green-800"
-                           href="{{route('security-officer.index',["export"=>true])}}"
+                           href="{{route('security-officer.index',"export")}}"
                            target="_blank">{{__("Export")}}</a>
                     </div>
                 </div>

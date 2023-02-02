@@ -27,6 +27,7 @@
   "Remove": "Remover",
   "Update": "Atualizar",
   "Export": "Exportar",
+  "Export CNCS": "Exportar para CNCS",
   "Role": "Papel",
   "Type": "Tipo",
   "Asset Type": "Tipo de Ativo",
@@ -206,6 +207,12 @@
   "Import Security Officer": "Importar Responsável de Segurança",
   "Import Threats": "Importar Ameaças",
   "Import Users": "Importar Utilizadores",
+  "Model/Version": "Modelo/Versão",
   "Version": "Versão",
-  "License": "Licença"
+  "License": "Licença",
+  "File Exports": "Exportações para Ficheiros",
+  "Export Permanent Contact Points": "Exportar Pontos de Contacto Permanentes",
+  "Export Security Officer": "Exportar Responsável de Segurança",
+  "Export Asset List to CNCS": "Exportar Lista de Ativos para CNCS",
+  "Exports": "Exportações"
 }

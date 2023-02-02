@@ -3,15 +3,23 @@
 namespace App\Exports;
 
 use App\Models\Asset;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class CNCSExport implements FromCollection
+class CNCSExport implements FromView, WithStyles, ShouldAutoSize
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
+    public function view(): View
     {
-        return Asset::all();
+        return view("export-views.asset_list_cncs", ["assets" => Asset::where("export", true)->get()]);
+    }
+
+    public function styles(Worksheet $sheet)
+    {
+        return [
+            1 => ['font' => ['bold' => true]],
+        ];
     }
 }

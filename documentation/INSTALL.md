@@ -265,8 +265,8 @@ Otherwise, edit `config/auth.php` from:
                 'model' => App\Models\User::class,
                 'sync_passwords' => true,
                 'sync_attributes' => [
-                    'name' => 'cn',
-                    'email' => 'userPrincipalName',
+                    'name' => config("ldap.name_sync_attribute", "cn"),
+                    'email' => config("ldap.username_sync_attribute", "userPrincipalName"),
                 ],
             ],
         ],
@@ -285,17 +285,21 @@ to:
                 'model' => App\Models\User::class,
                 'sync_passwords' => true,
                 'sync_attributes' => [
-                    'name' => 'cn',
-                    'email' => 'email',
+                    'name' => config("ldap.name_sync_attribute", "cn"),
+                    'email' => config("ldap.username_sync_attribute", "userPrincipalName"),
                 ],
             ],
         ],
     ],
 ```
 
-You may also edit the `'name'` or `'email'` mappings to reflect your LDAP environment. The default in this application
-is for the user's email to be the same as
-the ActiveDirectory userPrincipalName.
+You may also edit the `'name'` or `'email'` mappings to reflect your LDAP environment on the `.env` file.
+
+The email attribute will be the "username" of the created user, that the user will use to log in. The name will identify
+the user in the application, be it as an Asset Manager or the actions that the user will generate that will be logged.
+
+The default in this application is for the user's email to be the same as the ActiveDirectory userPrincipalName,
+however, the value may be changed to `email` or `username` depending on the LDAP environment.
 
 At the end of `.env`, edit the LDAP attributes, specially the following:
 
@@ -304,7 +308,13 @@ LDAP_USERNAME="cn=Reader,cn=Users,dc=example,dc=com"
 LDAP_PASSWORD="password123"
 LDAP_PORT=389
 LDAP_BASE_DN="dc=example,dc=com"
+LDAP_NAME_SYNC_ATTRIBUTE=cn
+LDAP_USERNAME_SYNC_ATTRIBUTE=userPrincipalName
 ```
+
+If LDAP isn't needed, set `LDAP_ENABLED` to false to enable local registration. LDAP and non-LDAP users can coexist,
+however LDAP users can't update their emails/usernames or passwords. In case the LDAP server is down, LDAP user
+authentication will still work if the users logged in at least once (to sync the hashed password).
 
 The following instructions will vary depending on if you want to install the application with or without docker.
 

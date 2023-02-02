@@ -131,6 +131,9 @@
                                 <x-jet-dropdown-link :href="route('import')">
                                     {{ __('Import Files') }}
                                 </x-jet-dropdown-link>
+                                <x-jet-dropdown-link :href="route('exports')">
+                                    {{ __('Exports') }}
+                                </x-jet-dropdown-link>
                             @endif
                         </x-slot>
                     </x-jet-dropdown>

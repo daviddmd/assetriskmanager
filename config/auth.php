@@ -71,22 +71,12 @@ return [
                 'model' => App\Models\User::class,
                 'sync_passwords' => true,
                 'sync_attributes' => [
-                    'name' => 'cn',
-                    'email' => 'userPrincipalName',
+                    'name' => config("ldap.name_sync_attribute", "cn"),
+                    'email' => config("ldap.username_sync_attribute", "userPrincipalName"),
                 ],
             ],
         ],
     ],
-
-    /*
-     * Laravel Eloquent Default Driver
-    'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-        ],
-    ],
-     */
 
     /*
     |--------------------------------------------------------------------------

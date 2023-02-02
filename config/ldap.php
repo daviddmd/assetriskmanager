@@ -56,6 +56,9 @@ return [
 
     'logging' => env('LDAP_LOGGING', true),
 
+    "name_sync_attribute" => env("LDAP_NAME_SYNC_ATTRIBUTE", "cn"),
+    'username_sync_attribute' => env("LDAP_USERNAME_SYNC_ATTRIBUTE", "userPrincipalName"),
+
     /*
     |--------------------------------------------------------------------------
     | LDAP Cache

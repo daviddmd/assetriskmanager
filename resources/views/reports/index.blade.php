@@ -124,6 +124,8 @@
                             <div class="flex justify-center">
                                 <a class="inline-flex items-center h-10 px-5 m-2 text-sm text-blue-100 transition-colors duration-150 bg-blue-700 rounded-lg focus:shadow-outline hover:bg-blue-800"
                                    href="{{route("reports","export=asset_list")}}" target="_blank">{{__("Export")}}</a>
+                                <a class="inline-flex items-center h-10 px-5 m-2 text-sm text-blue-100 transition-colors duration-150 bg-blue-700 rounded-lg focus:shadow-outline hover:bg-blue-800"
+                                   href="{{route("reports","export=cncs")}}" target="_blank">{{__("Export CNCS")}}</a>
                             </div>
                         </div>
                         <div class="hidden p-4" id="risk_map" role="tabpanel"
