@@ -8,6 +8,7 @@ use Closure;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class EnsureSecurityOfficer
 {
@@ -23,6 +24,6 @@ class EnsureSecurityOfficer
         if ($request->user()->role == UserRole::SECURITY_OFFICER) {
             return $next($request);
         }
-        abort(403);
+        abort(ResponseAlias::HTTP_FORBIDDEN);
     }
 }

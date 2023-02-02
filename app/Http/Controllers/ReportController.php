@@ -13,6 +13,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class ReportController extends Controller
 {
@@ -35,7 +36,7 @@ class ReportController extends Controller
                 case "cncs":
                     return Excel::download(new CNCSExport, config("constants.exports.asset_list_cncs_file_name"));
                 default:
-                    abort(500);
+                    abort(ResponseAlias::HTTP_BAD_REQUEST);
             }
         }
         else {

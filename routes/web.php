@@ -45,7 +45,7 @@ Route::middleware([
     Route::resource("assets", AssetController::class);
     Route::middleware("ensureSecurityOfficer")->group(function () {
         Route::get("reports", ReportController::class)->name("reports");
-        Route::get("exports", FileExportController::class)->name("exports");
+        Route::view("exports","file-export.index")->name("exports");
         Route::view("imports", "file-import.index")->name("import");
         Route::post("imports", FileImportController::class)->name("import-file");
     });
