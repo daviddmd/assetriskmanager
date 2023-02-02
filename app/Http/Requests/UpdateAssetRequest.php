@@ -55,7 +55,8 @@ class UpdateAssetRequest extends FormRequest
                         $asset->children()->pluck("id")->toArray()
                     )
                 )
-            ]
+            ],
+            "version" => ["nullable"]
         ];
     }
 }

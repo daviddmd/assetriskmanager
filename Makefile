@@ -3,7 +3,6 @@ install:
 	docker volume rm -f assetriskmanager_php-files
 	@make build
 	@make up
-	@make cache-clear
 	@make migrate
 	@make storage-link
 	@make cache
@@ -54,7 +53,6 @@ cache-clear:
 prune:
 	docker system prune -a
 key-generate:
-	@make cache-clear
 	docker compose exec app php artisan key:generate
 	@make cache
 storage-link:

@@ -39,7 +39,8 @@ class AssetSeeder extends Seeder
             "export" => true,
             "active" => true,
             "links_to_id" => null,
-            "remainingRiskAccepted" => false
+            "remainingRiskAccepted" => false,
+            "version" => "1.0.0"
         ]);
         //2
         Asset::create([
@@ -63,7 +64,8 @@ class AssetSeeder extends Seeder
             "export" => true,
             "active" => true,
             "links_to_id" => 1,
-            "remainingRiskAccepted" => false
+            "remainingRiskAccepted" => false,
+            "version" => "1.0.1"
         ]);
         //3
         Asset::create([
@@ -87,7 +89,8 @@ class AssetSeeder extends Seeder
             "export" => true,
             "active" => true,
             "links_to_id" => 1,
-            "remainingRiskAccepted" => false
+            "remainingRiskAccepted" => false,
+            "version" => "1.0.2"
         ]);
         //4
         Asset::create([
@@ -111,7 +114,8 @@ class AssetSeeder extends Seeder
             "export" => true,
             "active" => true,
             "links_to_id" => 1,
-            "remainingRiskAccepted" => false
+            "remainingRiskAccepted" => false,
+            "version" => "1.0.3"
         ]);
         //5
         Asset::create([
@@ -135,7 +139,8 @@ class AssetSeeder extends Seeder
             "export" => true,
             "active" => true,
             "links_to_id" => 4,
-            "remainingRiskAccepted" => false
+            "remainingRiskAccepted" => false,
+            "version" => "1.0.4"
         ]);
         //6
         Asset::create([
@@ -159,7 +164,8 @@ class AssetSeeder extends Seeder
             "export" => true,
             "active" => true,
             "links_to_id" => 4,
-            "remainingRiskAccepted" => false
+            "remainingRiskAccepted" => false,
+            "version" => "1.0.5"
         ]);
         //7
         Asset::create([
@@ -183,7 +189,8 @@ class AssetSeeder extends Seeder
             "export" => true,
             "active" => true,
             "links_to_id" => 3,
-            "remainingRiskAccepted" => false
+            "remainingRiskAccepted" => false,
+            "version" => "Windows 11 22H2 (10.0.22621.1194)"
         ]);
         //8
         Asset::create([
@@ -207,7 +214,8 @@ class AssetSeeder extends Seeder
             "export" => true,
             "active" => true,
             "links_to_id" => 3,
-            "remainingRiskAccepted" => false
+            "remainingRiskAccepted" => false,
+            "version" => "10.22.2"
         ]);
         //9
         Asset::create([
@@ -231,7 +239,8 @@ class AssetSeeder extends Seeder
             "export" => true,
             "active" => true,
             "links_to_id" => 2,
-            "remainingRiskAccepted" => false
+            "remainingRiskAccepted" => false,
+            "version" => "Linux 6.1.9"
         ]);
         //10
         Asset::create([
@@ -255,7 +264,8 @@ class AssetSeeder extends Seeder
             "export" => true,
             "active" => true,
             "links_to_id" => 2,
-            "remainingRiskAccepted" => true
+            "remainingRiskAccepted" => true,
+            "version" => "2.13"
         ]);
         //11
         Asset::create([
@@ -279,7 +289,8 @@ class AssetSeeder extends Seeder
             "export" => true,
             "active" => true,
             "links_to_id" => 10,
-            "remainingRiskAccepted" => false
+            "remainingRiskAccepted" => false,
+            "version" => "Ubuntu 22.04.1"
         ]);
         //12
         Asset::create([
@@ -303,7 +314,8 @@ class AssetSeeder extends Seeder
             "export" => true,
             "active" => true,
             "links_to_id" => 10,
-            "remainingRiskAccepted" => false
+            "remainingRiskAccepted" => false,
+            "version" => "50.44"
         ]);
     }
 }

@@ -103,6 +103,7 @@ class AssetController extends Controller
             "ip_address" => $request->input("ip_address"),
             "export" => $request->has("export"),
             "links_to_id" => $request->input("links_to"),
+            "version" => $request->input("version")
         ]);
         $asset->save();
         AssetLog::create([
@@ -185,6 +186,7 @@ class AssetController extends Controller
             "export" => $request->has("export"),
             "active" => $request->has("active"),
             "links_to_id" => $request->input("links_to"),
+            "version" => $request->input("version")
         ]);
         Log::channel("application")->info(sprintf("Update Asset %d", $asset->id));
         AssetLog::create([

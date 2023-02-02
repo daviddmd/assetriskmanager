@@ -38,7 +38,7 @@ services:
     environment:
       TZ: '${TIMEZONE}'
   db:
-    image: 'postgres'
+    image: 'postgres:15.1'
     restart: always
     ports:
       - '${FORWARD_DB_PORT:-5432}:5432'
@@ -47,7 +47,7 @@ services:
       POSTGRES_USER: '${DB_USERNAME}'
       POSTGRES_PASSWORD: '${DB_PASSWORD}'
     volumes:
-      - db:/var/lib/postgresql/data
+      - db-files:/var/lib/postgresql/data
     networks:
       - net
     healthcheck:
@@ -61,6 +61,6 @@ networks:
 volumes:
   php-files:
     driver: local
-  db:
+  db-files:
     driver: local
 

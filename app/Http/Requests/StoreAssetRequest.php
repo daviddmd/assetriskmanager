@@ -41,7 +41,8 @@ class StoreAssetRequest extends FormRequest
             "mac_address" => ["nullable"],
             "ip_address" => ["nullable"],
             "export" => [],
-            "links_to" => [Rule::exists("assets", "id"), "nullable"]
+            "links_to" => [Rule::exists("assets", "id"), "nullable"],
+            "version" => []
         ];
     }
 }
