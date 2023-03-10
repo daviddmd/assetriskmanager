@@ -31,6 +31,8 @@ web:
 	docker compose exec web bash
 shell:
 	docker compose exec app bash
+shell_db:
+	docker compose exec db bash
 migrate:
 	docker compose exec app php artisan migrate
 fresh:

@@ -211,8 +211,10 @@ the [Makefile](../Makefile). The docker environment will create a database conta
 (based on [php-fpm](https://hub.docker.com/_/php)) and a [nginx](https://hub.docker.com/_/nginx) container that exposes
 port 80.
 
-The PHP configuration may be adjusted at the [php.deploy-override.ini](../docker/php/php.deploy-override.ini) file and
-the nginx default webserver configuration may be adjusted at the [default.conf](../docker/nginx/default.conf) file.
+The PHP configuration may be adjusted at the [php.deploy-override.ini](../docker/php/php.deploy-override.ini) file,
+the nginx default webserver configuration may be adjusted at the [default.conf](../docker/nginx/default.conf) file and
+the mysql configuration may be adjusted with the [my.cnf](../docker/mysql/my.cnf) file. Additional MySQL configuration
+files may be added to the mysql docker directory and copied in its Dockerfile.
 
 By default, the [default Docker Compose file](../docker-compose.yml) targets a MySQL database environment; if the
 PostgreSQL one is preferred, rename the [PostgreSQL Docker Compose file](../docker-compose-postgres.yml)
@@ -502,3 +504,12 @@ or `docker compose exec app php artisan reset:role {user_email}`.
 
 To make a user an administrator, run `php artisan make:admin {user_email}`
 or `docker compose exec app php artisan make:admin {user_email}`.
+
+## Docker Database Export and Administration
+
+To export (dump) a MySQL database in Docker,
+run `docker compose exec db mysqldump -u {DATABASE_USERNAME} -p{DATABASE_PASSWORD} {DATABASE_NAME} > export_file.sql`.
+
+For PostgreSQL, run `docker compose exec db pg_dump -U {DATABASE_USERNAME} {DATABASE_NAME} > export_file.sql`.
+
+To administer the Docker database, run `make shell_db` and run the necessary commands with the required credentials.
