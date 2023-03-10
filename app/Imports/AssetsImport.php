@@ -61,7 +61,6 @@ class AssetsImport implements ToModel, WithHeadingRow
         $export = (bool)filter_var($export, FILTER_VALIDATE_BOOLEAN);
         $links_to_id = (int)$row["links_to_id"];
         $links_to_id = in_array($links_to_id, $existing_asset_ids) ? $links_to_id : null;
-        $version = $row["version"];
         return new Asset([
             'name' => $row["name"],
             'asset_type_id' => $asset_type_id,
@@ -84,7 +83,7 @@ class AssetsImport implements ToModel, WithHeadingRow
             "active" => $active,
             "links_to_id" => $links_to_id,
             "remainingRiskAccepted" => false,
-            "version" => $version
+            "version" => $row["version"]
         ]);
     }
 }

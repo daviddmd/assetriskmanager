@@ -1,0 +1,4 @@
+name, description
+Password Reset,Forced Password Reset Policy every 30 days.
+ORM,Upgrade the platform's SQL queries to use an ORM.
+Two-Factor Authentication,Mandatory Two-Factor Authentication

@@ -297,11 +297,16 @@ to:
 
 You may also edit the `'name'` or `'email'` mappings to reflect your LDAP environment on the `.env` file.
 
-The email attribute will be the "username" of the created user, that the user will use to log in. The name will identify
-the user in the application, be it as an Asset Manager or the actions that the user will generate that will be logged.
+The email/log-in attribute (LDAP_USERNAME_SYNC_ATTRIBUTE) will be the "username" of the created user, that the user will
+use to log in. The name will identify the user in the application, be it as an Asset Manager or the actions that the
+user will generate that will be logged.
 
-The default in this application is for the user's email to be the same as the ActiveDirectory userPrincipalName,
-however, the value may be changed to `email` or `username` depending on the LDAP environment.
+The default in this application is for the user's email to be the same as the ActiveDirectory `userPrincipalName`,
+however, the value may be changed to `email`, `username` or `mail` depending on the LDAP environment.
+
+The name attribute (LDAP_NAME_SYNC_ATTRIBUTE) will be what will be used to authenticate the user (query the LDAP
+environment to search an existing user). The attribute depends on the LDAP environment, with possible options
+being `uid`, `cn` or other attributes.
 
 At the end of `.env`, edit the LDAP attributes, specially the following:
 
@@ -314,9 +319,13 @@ LDAP_NAME_SYNC_ATTRIBUTE=cn
 LDAP_USERNAME_SYNC_ATTRIBUTE=userPrincipalName
 ```
 
-If LDAP isn't needed, set `LDAP_ENABLED` to false to enable local registration. LDAP and non-LDAP users can coexist,
-however LDAP users can't update their emails/usernames or passwords. In case the LDAP server is down, LDAP user
+If LDAP isn't needed, set `LDAP_ENABLED` to false in order to enable local registration. LDAP and non-LDAP users can
+coexist, however LDAP users can't update their emails/usernames or passwords. In case the LDAP server is down, LDAP user
 authentication will still work if the users logged in at least once (to sync the hashed password).
+
+Depending on the LDAP environment, additional options may be needed for configuring the LDAP connection. Such options
+may be set at the `options` array in the LDAP configuration object in [config/ldap.php](../config/ldap.php), specially
+if TLS/SSL is needed.
 
 The following instructions will vary depending on if you want to install the application with or without docker.
 
@@ -409,3 +418,87 @@ If you want to delete all associated data with the application (mysql-server doc
 ```
 docker system prune -a
 ```
+
+# After Installation
+
+## Test Environment
+
+After installation, if a test environment is desired, `php artisan migrate:fresh --seed` or `make fresh` may be run to
+generate a test environment with sample data, such as users (a list of 10 users is printed to the screen, with the
+password for all of them being `password`; the first is
+an Administrator, second Security Officer, third Data Protection Officer and the rest are regular users, with assets
+being assigned to each user), assets, permanent contact points, threats, controls, with threats being assigned to assets
+and controls being assigned to said threats.
+
+## Importing Existing Data
+
+A Security Officer has access to the **Import Files** menu, accessible in the **Manage** dropdown in the navigation bar.
+In that menu, a Security Officer user may import:
+
+- [Asset Types](samples/asset_types.csv)
+- [Assets](samples/assets.csv)
+- [Controls](samples/controls.csv)
+- [Departments](samples/departments.csv)
+- [Permanent Contact Points](samples/permanent_contact_points.csv)
+- [Security Officer(s)](samples/security_officers.csv)
+- [Threats](samples/threats.csv)
+
+With Asset import files in particular, all fields except for manager ID and asset type ID are optional, however, there
+are some constraints:
+
+- If the manufacturer contract type isn't set, the
+  manufacturer contract beginning date, ending date and provider values will be ignored and the contract type will be
+  set to NONE.
+- If any appreciation value (integrity, confidentiality or availability) isn't set, is empty or has an invalid value (
+  not in the 1-5 range), the respective value will be set as 0.
+- For the boolean fields such as active (if the asset is set as active) or export (if it will be exported alongside
+  other assets in the CNCS export file), if the value is invalid or empty, the default value is set as false.
+- If the asset ID that this asset will link to is empty or invalid (doesn't exist), no asset links to ID will be set.
+
+For the users import:
+
+- If the role isn't set or is invalid, the imported user's role will be the Asset Manager (default) role.
+- If the department ID isn't set or is invalid, the user won't be assigned to a department
+- If the password isn't set, the user's password will be the default password, set
+  at [config/constants.php](../config/constants.php)
+
+A valid asset Manager ID and asset type ID must be provided, otherwise the asset row will be skipped and the asset won't
+be created (imported).
+
+For each of these, a sample CSV file is provided. The order of the columns is arbitrary, as long as they have and
+match with the first row of the csv file (with the column names).
+
+Duplication checks are ran on different imports depending on their attributes that are set to be unique, in particular
+to Asset Types, Controls, Departments and Threats by their *name* attribute and Users by their *email*.
+
+The behavior for each of the import process is documented at [app/Imports](../app/Imports).
+
+## Two-Factor Authentication
+
+Two-Factor authentication may be optionally activated for users in this platform. For that, each user may open their
+account menu by selecting the **Profile** option in their name dropdown, followed by Enabling Two-Factor Authentication
+and following the instructions. If the user loses their authentication device, a systems administrator may
+run `php artisan reset:2fa {user_email}` or with the user's email to remove the 2FA feature from the user's account.
+
+The user's 2FA codes can also be retrieved by a system administrator by running `php artisan display:2fa {user_email}`.
+
+If using Docker, run `docker compose exec app php artisan reset:2fa {user_email}`
+or `docker compose exec app php artisan display:2fa {user_email}`.
+
+## Resetting a User's Password
+
+If a user forgets its password, a system administrator may reset it by
+running `php artisan reset:password {user_email} {new_password}`
+or `docker compose exec app php artisan reset:password {user_email} {new_password}`.
+
+If the user is an LDAP user, on the next login the password will be overridden by the LDAP password if the
+authentication
+is successful and the LDAP server is accessible.
+
+## Resetting a User's Role
+
+To reset a user role back to the default User role, a system administrator may run `php artisan reset:role {user_email}`
+or `docker compose exec app php artisan reset:role {user_email}`.
+
+To make a user an administrator, run `php artisan make:admin {user_email}`
+or `docker compose exec app php artisan make:admin {user_email}`.

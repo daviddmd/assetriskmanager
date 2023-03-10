@@ -1,0 +1,5 @@
+name,description
+RCE,Remote Code and Command Execution and Injection
+LPE,Privilege Escalation
+SQLi,SQL Injection
+DoS,Denial of Service Attack
