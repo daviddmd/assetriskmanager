@@ -38,6 +38,12 @@ return [
             'use_ssl' => env('LDAP_SSL', false),
             'use_tls' => env('LDAP_TLS', false),
         ],
+        /*
+         * Custom LDAP options. Useful in certain LDAP environments, specially with TLS/SSL configurations
+        'options' => [
+            LDAP_OPT_X_TLS_REQUIRE_CERT => LDAP_OPT_X_TLS_HARD
+        ]
+        */
 
     ],
 

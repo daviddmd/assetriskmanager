@@ -227,7 +227,9 @@ was changed on the host system, run `make update-cache`. To destroy the containe
 `make destroy`.
 
 To install updates from the repository, run `git pull` (and optionally switch to a version tag with git
-checkout) and run `make install`.
+checkout), apply the required patches with `git apply patch_file.patch` and run `make install`.
+
+To remake the docker environment (which destroys the database in the process), run `make remake`.
 
 # Requirements and Installation for Development Environment
 

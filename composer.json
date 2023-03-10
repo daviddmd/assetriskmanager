@@ -9,20 +9,21 @@
   "require": {
     "php": "^8.1",
     "ext-pdo": "*",
-    "directorytree/ldaprecord-laravel": "^v2.7.2",
+    "directorytree/ldaprecord-laravel": "^v2.7.3",
     "guzzlehttp/guzzle": "^7.5.0",
-    "laravel/framework": "^v9.50.1",
-    "laravel/jetstream": "^v2.16.0",
+    "laravel/framework": "^v9.52.4",
+    "laravel/jetstream": "^v2.16.2",
     "laravel/sanctum": "^v2.15.1",
-    "laravel/tinker": "^v2.8.0",
-    "livewire/livewire": "^v2.11.2",
-    "maatwebsite/excel": "^3.1.46"
+    "laravel/tinker": "^v2.8.1",
+    "livewire/livewire": "^v2.12.3",
+    "maatwebsite/excel": "^3.1.48",
+    "ext-ldap": "*"
   },
   "require-dev": {
     "fakerphp/faker": "^v1.21.0",
     "mockery/mockery": "^1.5.1",
     "nunomaduro/collision": "^v6.4.0",
-    "phpunit/phpunit": "^9.5.28",
+    "phpunit/phpunit": "^9.6.5",
     "spatie/laravel-ignition": "^1.6.4"
   },
   "autoload": {
