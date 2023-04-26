@@ -28,8 +28,8 @@ class ThreatController extends Controller
     {
         $filter = $request->input("filter", "");
         if (!empty($filter)) {
-            $threats = Threat::where("name", "like", "%" . $filter . "%")->
-            orWhere("description", "like", "%" . $filter . "%")->
+            $threats = Threat::where("name", "ilike", "%" . $filter . "%")->
+            orWhere("description", "ilike", "%" . $filter . "%")->
             paginate(5)->withQueryString();
         }
         else {

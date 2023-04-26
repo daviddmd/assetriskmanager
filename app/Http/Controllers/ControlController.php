@@ -28,8 +28,8 @@ class ControlController extends Controller
     {
         $filter = $request->input("filter", "");
         if (!empty($filter)) {
-            $controls = Control::where("name", "like", "%" . $filter . "%")->
-            orWhere("description", "like", "%" . $filter . "%")->
+            $controls = Control::where("name", "ilike", "%" . $filter . "%")->
+            orWhere("description", "ilike", "%" . $filter . "%")->
             paginate(5)->withQueryString();
         }
         else {

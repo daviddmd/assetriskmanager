@@ -49,7 +49,11 @@ class UserController extends Controller
     public static function filterUser($filter)
     {
         return User::where(function ($query) use ($filter) {
-            $query->where("name", "like", "%" . $filter . "%")->orWhere("email", "like", "%" . $filter . "%")->orWhere("id", "=", $filter);
+            $query->where("name", "ilike", "%" . $filter . "%")->
+            orWhere("iemail", "like", "%" . $filter . "%");
+            if (is_int($filter)) {
+                $query->orWhere("id", "=", $filter);
+            }
         });
     }
 

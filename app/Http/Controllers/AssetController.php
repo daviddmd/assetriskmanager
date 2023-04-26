@@ -63,16 +63,17 @@ class AssetController extends Controller
     public static function filterAsset($filter)
     {
         return Asset::where(function ($query) use ($filter) {
-            $query
-                ->where("name", "like", "%" . $filter . "%")
-                ->orWhere("description", "like", "%" . $filter . "%")
-                ->orWhere("mac_address", "=", $filter)
-                ->orWhere("ip_address", "=", $filter)
-                ->orWhere("manufacturer", "like", "%" . $filter . "%")
-                ->orWhere("sku", "like", "%" . $filter . "%")
-                ->orWhere("location", "like", "%" . $filter . "%")
-                ->orWhere("id", "=", $filter)
-                ->orWhere("fqdn", "like", "%" . $filter . "%");
+            $query->where("name", "ilike", "%" . $filter . "%")
+                ->orWhere("description", "ilike", "%" . $filter . "%")
+                ->orWhere("mac_address", "ilike", "%" . $filter . "%")
+                ->orWhere("ip_address", "ilike", "%" . $filter . "%")
+                ->orWhere("manufacturer", "ilike", "%" . $filter . "%")
+                ->orWhere("sku", "ilike", "%" . $filter . "%")
+                ->orWhere("location", "ilike", "%" . $filter . "%")
+                ->orWhere("fqdn", "ilike", "%" . $filter . "%");
+            if (is_int($filter)) {
+                $query->orWhere("id", "=", $filter);
+            }
         });
     }
 
