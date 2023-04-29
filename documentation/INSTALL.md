@@ -513,3 +513,12 @@ run `docker compose exec db mysqldump -u {DATABASE_USERNAME} -p{DATABASE_PASSWOR
 For PostgreSQL, run `docker compose exec db pg_dump -U {DATABASE_USERNAME} {DATABASE_NAME} > export_file.sql`.
 
 To administer the Docker database, run `make shell_db` and run the necessary commands with the required credentials.
+
+## Custom Application Logo
+
+A custom application logo can be applied to the navigation bar and login screen. The logo should be placed
+in [public/storage](../public/storage) with the name `logo.png`, given that the symbolic link
+from [storage/app/public](../storage/app/public) exists, which can be linked with the `php artisan storage:link`
+command (on docker the `make install` command links the directory by default, it can be manually relinked
+with `make storage-link`).
+
