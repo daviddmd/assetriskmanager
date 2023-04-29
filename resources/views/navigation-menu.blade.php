@@ -6,7 +6,11 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-jet-application-mark class="block h-9 w-auto"/>
+                        @if(file_exists(public_path("storage/logo.png")))
+                            <img class="block h-9 w-auto" src="{{asset("storage/logo.png")}}" alt="Application Logo">
+                        @else
+                            <x-jet-application-mark class="block h-9 w-auto"/>
+                        @endif
                     </a>
                 </div>
                 <!-- Navigation Links -->
