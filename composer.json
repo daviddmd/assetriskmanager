@@ -10,8 +10,8 @@
     "php": "^8.1",
     "ext-pdo": "*",
     "directorytree/ldaprecord-laravel": "^v2.7.3",
-    "guzzlehttp/guzzle": "^7.5.1",
-    "laravel/framework": "^v9.52.7",
+    "guzzlehttp/guzzle": "^7.7.0",
+    "laravel/framework": "^v9.52.9",
     "laravel/jetstream": "^v2.16.2",
     "laravel/sanctum": "^v2.15.1",
     "laravel/tinker": "^v2.8.1",
@@ -20,10 +20,10 @@
     "ext-ldap": "*"
   },
   "require-dev": {
-    "fakerphp/faker": "^v1.21.0",
-    "mockery/mockery": "^1.5.1",
+    "fakerphp/faker": "^v1.23.0",
+    "mockery/mockery": "^1.6.2",
     "nunomaduro/collision": "^v6.4.0",
-    "phpunit/phpunit": "^9.6.7",
+    "phpunit/phpunit": "^9.6.9",
     "spatie/laravel-ignition": "^1.6.4"
   },
   "autoload": {
