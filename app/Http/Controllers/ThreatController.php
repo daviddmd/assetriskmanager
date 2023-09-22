@@ -28,8 +28,8 @@ class ThreatController extends Controller
     {
         $filter = $request->input("filter", "");
         if (!empty($filter)) {
-            $threats = Threat::whereRaw('LOWER("name") LIKE ?', [caseInsensitiveMatch($filter)])->
-            orWhereRaw('LOWER("description") LIKE ?', [caseInsensitiveMatch($filter)])->
+            $threats = Threat::whereRaw('LOWER(name) LIKE ?', [caseInsensitiveMatch($filter)])->
+            orWhereRaw('LOWER(description) LIKE ?', [caseInsensitiveMatch($filter)])->
             paginate(5)->withQueryString();
         }
         else {
