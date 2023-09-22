@@ -40,7 +40,8 @@ class ThreatControlsManage extends Component
             $filter = $this->searchTerm;
             $search = Control::whereNotIn("id", $controls->pluck("control_id")->toArray())->
             where(function ($query) use ($filter) {
-                $query->where("name", "ilike", "%" . $filter . "%")->orWhere("description", "ilike", "%" . $filter . "%");
+                $query->whereRaw('LOWER("name") LIKE ?', [caseInsensitiveMatch($filter)])->
+                orWhereRaw('LOWER("description") LIKE ?', [caseInsensitiveMatch($filter)]);
             })->get();
             if ($search->count() > 0) {
                 $this->controls_search = $search;

@@ -5,9 +5,9 @@ installation or support Docker.
 
 ## Dependencies
 
-- PHP >= 8.1 with the pdo, ldap, gd and zip extensions installed and loaded
+- PHP >= 8.2 with the pdo, ldap, gd and zip extensions installed and loaded
 - MySQL >= 8.0, MariaDB >= 10.6 or PostgreSQL
-- Optionally, NodeJS >= 15 with npm (For Generating Production/Development CSS and JS files)
+- Optionally, NodeJS >= 18 with npm (For Generating Production/Development CSS and JS files)
 - Optionally, Global [Composer](https://getcomposer.org/) (This repository comes bundled with a build of composer).
 
 OR
@@ -216,22 +216,28 @@ the nginx default webserver configuration may be adjusted at the [default.conf](
 the mysql configuration may be adjusted with the [my.cnf](../docker/mysql/my.cnf) file. Additional MySQL configuration
 files may be added to the mysql docker directory and copied in its Dockerfile.
 
-By default, the [default Docker Compose file](../docker-compose.yml) targets a MySQL database environment; if the
-PostgreSQL one is preferred, rename the [PostgreSQL Docker Compose file](../docker-compose-postgres.yml)
-to `docker-compose.yml`.
+The program comes with three sample Docker Compose Files, that
+target [MariaDB](../docker/compose/docker-compose-mariadb.yml), [MySQL](../docker/compose/docker-compose-mysql.yml) and
+[PostgreSQL](../docker/compose/docker-compose-postgres.yml) RDBMS. Copy one of the compose files to the root of
+the repository with the `docker-compose.yml` file name and make the required changes.
+
+For the MariaDB/MySQL docker composer files, it's recommended to remove the phpMyAdmin container if graphical database
+administration isn't required for security reasons. The credentials to log in phpMyAdmin (that is served by default
+on the 8080 port, configurable in the `.env` file), are also defined in the `.env` file on the `DB_USERNAME`
+and `DB_PASSWORD` attributes.
 
 Create the `.env` file from the [.env.docker.example](../.env.docker.example) file with the expected LDAP (if
 applicable), database and application configurations and run `make install` and `make key-generate`. If example data is
 desired, run `make seed`.
 
 The `.env` file and logs directory are synchronized with the host system. If the `.env` file
-was changed on the host system, run `make update-cache`. To destroy the containers with its respective volumes, run
-`make destroy`.
+was changed on the host system, run `make update-cache`. To destroy the containers with its respective volumes (
+*including the database*), run `make destroy`.
 
-To install updates from the repository, run `git pull` (and optionally switch to a version tag with git
+To *install updates* from the repository, run `git pull` (and optionally switch to a version tag with git
 checkout), apply the required patches with `git apply patch_file.patch` and run `make install`.
 
-To remake the docker environment (which destroys the database in the process), run `make remake`.
+To remake the docker environment (*which destroys the database in the process*), run `make remake`.
 
 # Requirements and Installation for Development Environment
 
@@ -521,4 +527,3 @@ in [public/storage](../public/storage) with the name `logo.png`, given that the 
 from [storage/app/public](../storage/app/public) exists, which can be linked with the `php artisan storage:link`
 command (on docker the `make install` command links the directory by default, it can be manually relinked
 with `make storage-link`).
-

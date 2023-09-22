@@ -7,23 +7,23 @@
   "homepage": "https://github.com/daviddmd/assetriskmanager",
   "license": "AGPL-3.0-or-later",
   "require": {
-    "php": "^8.1",
+    "php": "^8.2",
     "ext-pdo": "*",
     "directorytree/ldaprecord-laravel": "^v2.7.3",
-    "guzzlehttp/guzzle": "^7.7.0",
-    "laravel/framework": "^v9.52.9",
+    "guzzlehttp/guzzle": "^7.8.0",
+    "laravel/framework": "^v9.52.15",
     "laravel/jetstream": "^v2.16.2",
     "laravel/sanctum": "^v2.15.1",
-    "laravel/tinker": "^v2.8.1",
-    "livewire/livewire": "^v2.12.3",
+    "laravel/tinker": "^v2.8.2",
+    "livewire/livewire": "^v2.12.6",
     "maatwebsite/excel": "^3.1.48",
     "ext-ldap": "*"
   },
   "require-dev": {
     "fakerphp/faker": "^v1.23.0",
-    "mockery/mockery": "^1.6.2",
+    "mockery/mockery": "^1.6.6",
     "nunomaduro/collision": "^v6.4.0",
-    "phpunit/phpunit": "^9.6.9",
+    "phpunit/phpunit": "^9.6.13",
     "spatie/laravel-ignition": "^1.6.4"
   },
   "autoload": {
@@ -31,7 +31,10 @@
       "App\\": "app/",
       "Database\\Factories\\": "database/factories/",
       "Database\\Seeders\\": "database/seeders/"
-    }
+    },
+    "files": [
+      "app/helpers.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {

@@ -65,7 +65,8 @@ class AssetThreatsControlsManage extends Component
             $filter = $this->threatSearchTerm;
             $search = Threat::whereNotIn("id", $this->asset->threats()->pluck("threat_id")->toArray())->
             where(function ($query) use ($filter) {
-                $query->where("name", "ilike", "%" . $filter . "%")->orWhere("description", "ilike", "%" . $filter . "%");
+                $query->whereRaw('LOWER("name") LIKE ?',[caseInsensitiveMatch($filter)])->
+                orWhereRaw('LOWER("description") LIKE ?', [caseInsensitiveMatch($filter)]);
             })->get();
             if ($search->count() > 0) {
                 $this->threatsSearch = $search;

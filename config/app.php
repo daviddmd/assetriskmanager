@@ -56,7 +56,7 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
-    'version' => '1.0.4',
+    'version' => '1.0.6',
 
     'asset_url' => env('ASSET_URL'),
 

@@ -10,3 +10,4 @@ docker-*.yml
 .gitattributes
 .gitignore
 README.md
+docker/compose
