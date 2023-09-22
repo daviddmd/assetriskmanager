@@ -28,8 +28,8 @@ class ControlController extends Controller
     {
         $filter = $request->input("filter", "");
         if (!empty($filter)) {
-            $controls = Control::whereRaw('LOWER(name) LIKE ?', [caseInsensitiveMatch($filter)])->
-            orWhereRaw('LOWER(description) LIKE ?', [caseInsensitiveMatch($filter)])->
+            $controls = Control::whereRaw('LOWER("name") LIKE ?', [caseInsensitiveMatch($filter)])->
+            orWhereRaw('LOWER("description") LIKE ?', [caseInsensitiveMatch($filter)])->
             paginate(5)->withQueryString();
         }
         else {
