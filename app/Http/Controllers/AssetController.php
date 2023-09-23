@@ -63,14 +63,14 @@ class AssetController extends Controller
     public static function filterAsset($filter)
     {
         return Asset::where(function ($query) use ($filter) {
-            $query->whereRaw('LOWER("name") LIKE ?', [caseInsensitiveMatch($filter)])
-                ->orWhereRaw('LOWER("description") LIKE ?', [caseInsensitiveMatch($filter)])
-                ->orWhereRaw('LOWER("mac_address") LIKE ?', [caseInsensitiveMatch($filter)])
-                ->orWhereRaw('LOWER("ip_address") LIKE ?', [caseInsensitiveMatch($filter)])
-                ->orWhereRaw('LOWER("manufacturer") LIKE ?', [caseInsensitiveMatch($filter)])
-                ->orWhereRaw('LOWER("sku") LIKE ?', [caseInsensitiveMatch($filter)])
-                ->orWhereRaw('LOWER("location") LIKE ?', [caseInsensitiveMatch($filter)])
-                ->orWhereRaw('LOWER("fqdn") LIKE ?', [caseInsensitiveMatch($filter)]);
+            $query->whereRaw(lowerLike("name"), [caseInsensitiveMatch($filter)])
+                ->orWhereRaw(lowerLike("description"), [caseInsensitiveMatch($filter)])
+                ->orWhereRaw(lowerLike("mac_address"), [caseInsensitiveMatch($filter)])
+                ->orWhereRaw(lowerLike("ip_address"), [caseInsensitiveMatch($filter)])
+                ->orWhereRaw(lowerLike("manufacturer"), [caseInsensitiveMatch($filter)])
+                ->orWhereRaw(lowerLike("sku"), [caseInsensitiveMatch($filter)])
+                ->orWhereRaw(lowerLike("location"), [caseInsensitiveMatch($filter)])
+                ->orWhereRaw(lowerLike("fqdn"), [caseInsensitiveMatch($filter)]);
             if (is_int($filter)) {
                 $query->orWhere("id", "=", $filter);
             }

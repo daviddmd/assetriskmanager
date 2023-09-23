@@ -49,8 +49,8 @@ class UserController extends Controller
     public static function filterUser($filter)
     {
         return User::where(function ($query) use ($filter) {
-            $query->whereRaw('LOWER("name") LIKE ?', [caseInsensitiveMatch($filter)])->
-            orWhereRaw('LOWER("email") LIKE ?', [caseInsensitiveMatch($filter)]);
+            $query->whereRaw(lowerLike("name"), [caseInsensitiveMatch($filter)])->
+            orWhereRaw(lowerLike("email"), [caseInsensitiveMatch($filter)]);
             if (is_int($filter)) {
                 $query->orWhere("id", "=", $filter);
             }
