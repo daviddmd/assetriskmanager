@@ -1,6 +1,6 @@
 import './bootstrap';
 import 'flowbite';
-import 'flowbite/dist/datepicker';
+import 'flowbite-datepicker';
 import Alpine from 'alpinejs';
 import focus from '@alpinejs/focus';
 
