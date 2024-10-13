@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Enums\AssetOperationType;
 use App\Enums\ControlType;
@@ -162,7 +162,7 @@ class AssetThreatsControlsManage extends Component
         $this->asset->update(
             ["remainingRiskAccepted" => false]
         );
-        $this->emit("threatModified");
+        $this->dispatch("threatModified");
     }
 
     /**

@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'ARM'),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,7 +56,7 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
-    'version' => '1.0.6',
+    'version' => '1.1.0',
 
     'asset_url' => env('ASSET_URL'),
 
@@ -71,7 +71,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Europe/Lisbon',
 
     /*
     |--------------------------------------------------------------------------

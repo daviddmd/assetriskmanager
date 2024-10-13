@@ -9,27 +9,27 @@
                         @if(file_exists(public_path("storage/logo.png")))
                             <img class="block h-9 w-auto" src="{{asset("storage/logo.png")}}" alt="Application Logo">
                         @else
-                            <x-jet-application-mark class="block h-9 w-auto"/>
+                            <x-application-mark class="block h-9 w-auto"/>
                         @endif
                     </a>
                 </div>
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
-                    </x-jet-nav-link>
-                    <x-jet-nav-link :href="route('assets.index')" :active="request()->routeIs('assets.index')">
+                    </x-nav-link>
+                    <x-nav-link :href="route('assets.index')" :active="request()->routeIs('assets.index')">
                         {{ __('Assets') }}
-                    </x-jet-nav-link>
+                    </x-nav-link>
                     @can("viewAny",\App\Models\User::class)
-                        <x-jet-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                        <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                             {{ __('Users') }}
-                        </x-jet-nav-link>
+                        </x-nav-link>
                     @endcan
                     @if(Auth::user()->role == \App\Enums\UserRole::SECURITY_OFFICER)
-                        <x-jet-nav-link :href="route('reports')" :active="request()->routeIs('reports')">
+                        <x-nav-link :href="route('reports')" :active="request()->routeIs('reports')">
                             {{ __('Reports') }}
-                        </x-jet-nav-link>
+                        </x-nav-link>
                     @endif
                 </div>
             </div>
@@ -38,7 +38,7 @@
                 <!-- Teams Dropdown -->
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
                     <div class="ml-3 relative">
-                        <x-jet-dropdown align="right" width="60">
+                        <x-dropdown align="right" width="60">
                             <x-slot name="trigger">
                                 <span class="inline-flex rounded-md">
                                     <button type="button"
@@ -63,15 +63,15 @@
                                     </div>
 
                                     <!-- Team Settings -->
-                                    <x-jet-dropdown-link
+                                    <x-dropdown-link
                                             href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
                                         {{ __('Team Settings') }}
-                                    </x-jet-dropdown-link>
+                                    </x-dropdown-link>
 
                                     @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                                        <x-jet-dropdown-link href="{{ route('teams.create') }}">
+                                        <x-dropdown-link href="{{ route('teams.create') }}">
                                             {{ __('Create New Team') }}
-                                        </x-jet-dropdown-link>
+                                        </x-dropdown-link>
                                     @endcan
 
                                     <div class="border-t border-gray-100"></div>
@@ -82,17 +82,17 @@
                                     </div>
 
                                     @foreach (Auth::user()->allTeams() as $team)
-                                        <x-jet-switchable-team :team="$team"/>
+                                        <x-switchable-team :team="$team"/>
                                     @endforeach
                                 </div>
                             </x-slot>
-                        </x-jet-dropdown>
+                        </x-dropdown>
                     </div>
                 @endif
 
 
                 <div class="ml-3 relative">
-                    <x-jet-dropdown align="left">
+                    <x-dropdown align="left">
                         <x-slot name="trigger">
                                 <span class="inline-flex rounded-md">
                                     <button type="button"
@@ -109,42 +109,42 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <x-jet-dropdown-link :href="route('departments.index')">
+                            <x-dropdown-link :href="route('departments.index')">
                                 {{ __('Departments') }}
-                            </x-jet-dropdown-link>
-                            <x-jet-dropdown-link :href="route('asset-types.index')">
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="route('asset-types.index')">
                                 {{ __('Asset Types') }}
-                            </x-jet-dropdown-link>
+                            </x-dropdown-link>
                             @can("viewAny",\App\Models\PermanentContactPoint::class)
-                                <x-jet-dropdown-link :href="route('permanent-contact-points.index')">
+                                <x-dropdown-link :href="route('permanent-contact-points.index')">
                                     {{ __('Permanent Contact Points') }}
-                                </x-jet-dropdown-link>
+                                </x-dropdown-link>
                             @endcan
                             @can("viewAny",\App\Models\SecurityOfficer::class)
-                                <x-jet-dropdown-link :href="route('security-officer.index')">
+                                <x-dropdown-link :href="route('security-officer.index')">
                                     {{ __('Security Officer') }}
-                                </x-jet-dropdown-link>
+                                </x-dropdown-link>
                             @endcan
-                            <x-jet-dropdown-link :href="route('threats.index')">
+                            <x-dropdown-link :href="route('threats.index')">
                                 {{ __('Threats') }}
-                            </x-jet-dropdown-link>
-                            <x-jet-dropdown-link :href="route('controls.index')">
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="route('controls.index')">
                                 {{ __('Controls') }}
-                            </x-jet-dropdown-link>
+                            </x-dropdown-link>
                             @if(Auth::user()->role == \App\Enums\UserRole::SECURITY_OFFICER)
-                                <x-jet-dropdown-link :href="route('import')">
+                                <x-dropdown-link :href="route('import')">
                                     {{ __('Import Files') }}
-                                </x-jet-dropdown-link>
-                                <x-jet-dropdown-link :href="route('exports')">
+                                </x-dropdown-link>
+                                <x-dropdown-link :href="route('exports')">
                                     {{ __('Exports') }}
-                                </x-jet-dropdown-link>
+                                </x-dropdown-link>
                             @endif
                         </x-slot>
-                    </x-jet-dropdown>
+                    </x-dropdown>
                 </div>
 
                 <div class="ml-3 relative">
-                    <x-jet-dropdown align="left">
+                    <x-dropdown align="left">
                         <x-slot name="trigger">
                                 <span class="inline-flex rounded-md">
                                     <button type="button"
@@ -162,18 +162,18 @@
 
                         <x-slot name="content">
                             @foreach(config("app.locales") as $key => $value)
-                                <x-jet-dropdown-link :href="request()->fullUrlWithQuery(['set_language' => $key])">
+                                <x-dropdown-link :href="request()->fullUrlWithQuery(['set_language' => $key])">
                                     <p
                                             class="{{App::getLocale()==$key ? "font-bold" : "fontnormal"}}">{{$value}}</p>
-                                </x-jet-dropdown-link>
+                                </x-dropdown-link>
                             @endforeach
                         </x-slot>
-                    </x-jet-dropdown>
+                    </x-dropdown>
                 </div>
 
                 <!-- Settings Dropdown -->
                 <div class="ml-3 relative">
-                    <x-jet-dropdown align="right" width="48">
+                    <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                                 <button
@@ -204,14 +204,14 @@
                                 {{ __('Manage Account') }}
                             </div>
 
-                            <x-jet-dropdown-link href="{{ route('profile.show') }}">
+                            <x-dropdown-link href="{{ route('profile.show') }}">
                                 {{ __('Profile') }}
-                            </x-jet-dropdown-link>
+                            </x-dropdown-link>
 
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                                <x-jet-dropdown-link href="{{ route('api-tokens.index') }}">
+                                <x-dropdown-link href="{{ route('api-tokens.index') }}">
                                     {{ __('API Tokens') }}
-                                </x-jet-dropdown-link>
+                                </x-dropdown-link>
                             @endif
 
                             <div class="border-t border-gray-100"></div>
@@ -220,13 +220,13 @@
                             <form method="POST" action="{{ route('logout') }}" x-data>
                                 @csrf
 
-                                <x-jet-dropdown-link href="{{ route('logout') }}"
+                                <x-dropdown-link href="{{ route('logout') }}"
                                                      @click.prevent="$root.submit();">
                                     {{ __('Log Out') }}
-                                </x-jet-dropdown-link>
+                                </x-dropdown-link>
                             </form>
                         </x-slot>
-                    </x-jet-dropdown>
+                    </x-dropdown>
                 </div>
 
 
@@ -251,20 +251,20 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
-            </x-jet-responsive-nav-link>
+            </x-responsive-nav-link>
             @can("viewAny",\App\Models\User::class)
-                <x-jet-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                     {{ __('Users') }}
-                </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link :href="route('reports')" :active="request()->routeIs('reports')">
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('reports')" :active="request()->routeIs('reports')">
                     {{ __('Reports') }}
-                </x-jet-responsive-nav-link>
+                </x-responsive-nav-link>
             @endcan
-            <x-jet-responsive-nav-link :href="route('assets.index')" :active="request()->routeIs('assets.index')">
+            <x-responsive-nav-link :href="route('assets.index')" :active="request()->routeIs('assets.index')">
                 {{ __('Assets') }}
-            </x-jet-responsive-nav-link>
+            </x-responsive-nav-link>
         </div>
 
 
@@ -286,26 +286,26 @@
 
             <div class="mt-3 space-y-1">
                 <!-- Account Management -->
-                <x-jet-responsive-nav-link href="{{ route('profile.show') }}"
+                <x-responsive-nav-link href="{{ route('profile.show') }}"
                                            :active="request()->routeIs('profile.show')">
                     {{ __('Profile') }}
-                </x-jet-responsive-nav-link>
+                </x-responsive-nav-link>
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                    <x-jet-responsive-nav-link href="{{ route('api-tokens.index') }}"
+                    <x-responsive-nav-link href="{{ route('api-tokens.index') }}"
                                                :active="request()->routeIs('api-tokens.index')">
                         {{ __('API Tokens') }}
-                    </x-jet-responsive-nav-link>
+                    </x-responsive-nav-link>
                 @endif
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}" x-data>
                     @csrf
 
-                    <x-jet-responsive-nav-link href="{{ route('logout') }}"
+                    <x-responsive-nav-link href="{{ route('logout') }}"
                                                @click.prevent="$root.submit();">
                         {{ __('Log Out') }}
-                    </x-jet-responsive-nav-link>
+                    </x-responsive-nav-link>
                 </form>
 
                 <!-- Team Management -->
@@ -317,16 +317,16 @@
                     </div>
 
                     <!-- Team Settings -->
-                    <x-jet-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}"
+                    <x-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}"
                                                :active="request()->routeIs('teams.show')">
                         {{ __('Team Settings') }}
-                    </x-jet-responsive-nav-link>
+                    </x-responsive-nav-link>
 
                     @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                        <x-jet-responsive-nav-link href="{{ route('teams.create') }}"
+                        <x-responsive-nav-link href="{{ route('teams.create') }}"
                                                    :active="request()->routeIs('teams.create')">
                             {{ __('Create New Team') }}
-                        </x-jet-responsive-nav-link>
+                        </x-responsive-nav-link>
                     @endcan
 
                     <div class="border-t border-gray-200"></div>
@@ -337,7 +337,7 @@
                     </div>
 
                     @foreach (Auth::user()->allTeams() as $team)
-                        <x-jet-switchable-team :team="$team" component="jet-responsive-nav-link"/>
+                        <x-switchable-team :team="$team" component="jet-responsive-nav-link"/>
                     @endforeach
                 @endif
             </div>

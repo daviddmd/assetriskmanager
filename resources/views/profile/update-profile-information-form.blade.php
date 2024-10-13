@@ -1,4 +1,4 @@
-<x-jet-form-section submit="updateProfileInformation">
+<x-form-section submit="updateProfileInformation">
     <x-slot name="title">
         {{ __('Profile Information') }}
     </x-slot>
@@ -13,7 +13,7 @@
             <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
                 <!-- Profile Photo File Input -->
                 <input type="file" class="hidden"
-                       wire:model="photo"
+                       wire:model.live="photo"
                        x-ref="photo"
                        x-on:change="
                                     photoName = $refs.photo.files[0].name;
@@ -24,7 +24,7 @@
                                     reader.readAsDataURL($refs.photo.files[0]);
                             "/>
 
-                <x-jet-label for="photo" value="{{ __('Photo') }}"/>
+                <x-label for="photo" value="{{ __('Photo') }}"/>
 
                 <!-- Current Profile Photo -->
                 <div class="mt-2" x-show="! photoPreview">
@@ -39,33 +39,33 @@
                     </span>
                 </div>
 
-                <x-jet-secondary-button class="mt-2 mr-2" type="button" x-on:click.prevent="$refs.photo.click()">
+                <x-secondary-button class="mt-2 mr-2" type="button" x-on:click.prevent="$refs.photo.click()">
                     {{ __('Select A New Photo') }}
-                </x-jet-secondary-button>
+                </x-secondary-button>
 
                 @if ($this->user->profile_photo_path)
-                    <x-jet-secondary-button type="button" class="mt-2" wire:click="deleteProfilePhoto">
+                    <x-secondary-button type="button" class="mt-2" wire:click="deleteProfilePhoto">
                         {{ __('Remove Photo') }}
-                    </x-jet-secondary-button>
+                    </x-secondary-button>
                 @endif
 
-                <x-jet-input-error for="photo" class="mt-2"/>
+                <x-input-error for="photo" class="mt-2"/>
             </div>
         @endif
 
         <!-- Name -->
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="name" value="{{ __('Name') }}"/>
-            <x-jet-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="state.name"
+            <x-label for="name" value="{{ __('Name') }}"/>
+            <x-input id="name" type="text" class="mt-1 block w-full" wire:model="state.name"
                          autocomplete="name"/>
-            <x-jet-input-error for="name" class="mt-2"/>
+            <x-input-error for="name" class="mt-2"/>
         </div>
         <!-- Email -->
         @if (!Config::get("ldap.enabled"))
             <div class="col-span-6 sm:col-span-4">
-                <x-jet-label for="email" value="{{ __('Email') }}" />
-                <x-jet-input id="email" type="email" class="mt-1 block w-full" wire:model.defer="state.email" />
-                <x-jet-input-error for="email" class="mt-2" />
+                <x-label for="email" value="{{ __('Email') }}" />
+                <x-input id="email" type="email" class="mt-1 block w-full" wire:model="state.email" />
+                <x-input-error for="email" class="mt-2" />
 
                 @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::emailVerification()) && ! $this->user->hasVerifiedEmail())
                     <p class="text-sm mt-2">
@@ -87,9 +87,9 @@
 
         <!-- Department -->
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="department" value="{{ __('Department') }}"/>
+            <x-label for="department" value="{{ __('Department') }}"/>
             <select id="department"
-                    wire:model.defer="state.department_id" autocomplete="department_id"
+                    wire:model="state.department_id" autocomplete="department_id"
                     class="form-select appearance-none mt-1 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
                 <option value="">{{__("No Department")}}</option>
                 @foreach(\App\Models\Department::all() as $department)
@@ -99,17 +99,17 @@
                     </option>
                 @endforeach
             </select>
-            <x-jet-input-error for="department" class="mt-2"/>
+            <x-input-error for="department" class="mt-2"/>
         </div>
     </x-slot>
 
     <x-slot name="actions">
-        <x-jet-action-message class="mr-3" on="saved">
+        <x-action-message class="mr-3" on="saved">
             {{ __('Saved.') }}
-        </x-jet-action-message>
+        </x-action-message>
 
-        <x-jet-button wire:loading.attr="disabled" wire:target="photo">
+        <x-button wire:loading.attr="disabled" wire:target="photo">
             {{ __('Save') }}
-        </x-jet-button>
+        </x-button>
     </x-slot>
-</x-jet-form-section>
+</x-form-section>

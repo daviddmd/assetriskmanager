@@ -5,7 +5,6 @@ use App\Http\Controllers\AssetTypeController;
 use App\Http\Controllers\ControlController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\FileExportController;
 use App\Http\Controllers\FileImportController;
 use App\Http\Controllers\PermanentContactPointController;
 use App\Http\Controllers\ReportController;
@@ -49,4 +48,12 @@ Route::middleware([
         Route::view("imports", "file-import.index")->name("import");
         Route::post("imports", FileImportController::class)->name("import-file");
     });
+    Route::get('phpinfo', function () {
+        if (config("app.debug")){
+            phpinfo();
+        }
+        else{
+            abort(404);
+        }
+    })->name('phpinfo');
 });

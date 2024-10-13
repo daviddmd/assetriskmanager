@@ -165,25 +165,25 @@
             @endif
         @endforeach
 
-        <x-jet-dialog-modal wire:model="assetThreatAddDialogOpen">
+        <x-dialog-modal wire:model.live="assetThreatAddDialogOpen">
             <x-slot name="title">
                 {{__("Add Threat")}}
             </x-slot>
             <x-slot name="content">
-                <form wire:submit.prevent="addThreat">
+                <form wire:submit="addThreat">
                     <div class="mb-6">
                         <label for="threat" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                             {{__("Threat")}}
                         </label>
                         <input
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            type="text" wire:model="threatSearchTerm"
+                            type="text" wire:model.live="threatSearchTerm"
                             placeholder="{{__("Search for Threat (Name/Description)")}}">
                         <select
                             id="threat"
                             class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             aria-label="Select Threat to Add"
-                            wire:model.defer="selectedThreat">
+                            wire:model="selectedThreat">
                             <option value="" disabled selected>{{__("Select Threat to Add")}}</option>
                             @foreach($threatsSearch as $threat)
                                 <option
@@ -199,7 +199,7 @@
                         </label>
                         <input type="number" id="probability" min="1" max="5"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                               wire:model.defer="probability">
+                               wire:model="probability">
                         @error('probability') <span class="error">{{ $message }}</span> @enderror
                     </div>
                     <div class="mb-6">
@@ -209,7 +209,7 @@
                         </label>
                         <input type="number" id="availability_impact" min="1" max="5"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                               wire:model.defer="availability_impact">
+                               wire:model="availability_impact">
                         @error('availability_impact') <span class="error">{{ $message }}</span> @enderror
                     </div>
                     <div class="mb-6">
@@ -219,7 +219,7 @@
                         </label>
                         <input type="number" id="confidentiality_impact" min="1" max="5"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                               wire:model.defer="confidentiality_impact">
+                               wire:model="confidentiality_impact">
                         @error('confidentiality_impact') <span class="error">{{ $message }}</span> @enderror
                     </div>
                     <div class="mb-6">
@@ -229,33 +229,33 @@
                         </label>
                         <input type="number" id="integrity_impact" min="1" max="5"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                               wire:model.defer="integrity_impact">
+                               wire:model="integrity_impact">
                         @error('integrity_impact') <span class="error">{{ $message }}</span> @enderror
                     </div>
                     <div class="flex justify-center">
-                        <x-jet-button type="submit" class="ml-2" wire:loading.attr="disabled">
+                        <x-button type="submit" class="ml-2" wire:loading.attr="disabled">
                             {{__("Add")}}
-                        </x-jet-button>
+                        </x-button>
                     </div>
                 </form>
             </x-slot>
 
             <x-slot name="footer">
-                <x-jet-secondary-button wire:click="$toggle('assetThreatAddDialogOpen')"
+                <x-secondary-button wire:click="$toggle('assetThreatAddDialogOpen')"
                                         wire:loading.attr="disabled">
                     {{__("Cancel")}}
-                </x-jet-secondary-button>
+                </x-secondary-button>
 
 
             </x-slot>
-        </x-jet-dialog-modal>
+        </x-dialog-modal>
 
-        <x-jet-dialog-modal wire:model="assetThreatEditDialogOpen">
+        <x-dialog-modal wire:model.live="assetThreatEditDialogOpen">
             <x-slot name="title">
                 {{__("Edit Threat")}}
             </x-slot>
             <x-slot name="content">
-                <form wire:submit.prevent="updateThreat">
+                <form wire:submit="updateThreat">
                     <div class="mb-6">
                         <label for="probability"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -267,7 +267,7 @@
                         </label>
                         <input type="number" id="probability" min="1" max="5"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                               wire:model.defer="probability">
+                               wire:model="probability">
                         @error('probability') <span class="error">{{ $message }}</span> @enderror
                     </div>
                     <div class="mb-6">
@@ -281,7 +281,7 @@
                         </label>
                         <input type="number" id="availability_impact" min="1" max="5"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                               wire:model.defer="availability_impact">
+                               wire:model="availability_impact">
                         @error('availability_impact') <span class="error">{{ $message }}</span> @enderror
                     </div>
                     <div class="mb-6">
@@ -295,7 +295,7 @@
                         </label>
                         <input type="number" id="confidentiality_impact" min="1" max="5"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                               wire:model.defer="confidentiality_impact">
+                               wire:model="confidentiality_impact">
                         @error('confidentiality_impact') <span class="error">{{ $message }}</span> @enderror
                     </div>
                     <div class="mb-6">
@@ -309,7 +309,7 @@
                         </label>
                         <input type="number" id="integrity_impact" min="1" max="5"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                               wire:model.defer="integrity_impact">
+                               wire:model="integrity_impact">
                         @error('integrity_impact') <span class="error">{{ $message }}</span> @enderror
                     </div>
                     <div class="mb-6">
@@ -323,7 +323,7 @@
                         </label>
                         <input type="number" id="total_risk"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                               wire:model.defer="total_risk" disabled>
+                               wire:model="total_risk" disabled>
                     </div>
                     <div class="mb-6">
                         <label for="residual_risk_accepted"
@@ -333,7 +333,7 @@
                         <input type="checkbox" id="residual_risk_accepted"
                                {{$this->residual_risk_accepted ? "checked" : ""}}
                                class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                               wire:model.defer="residual_risk_accepted">
+                               wire:model="residual_risk_accepted">
                     </div>
                     <div class="mb-6">
                         <label for="residual_risk"
@@ -346,38 +346,38 @@
                         </label>
                         <input type="number" id="residual_risk" min="0" max="125"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                               wire:model.defer="residual_risk">
+                               wire:model="residual_risk">
                         @error('residual_risk') <span class="error">{{ $message }}</span> @enderror
                     </div>
                     <div class="flex justify-center">
-                        <x-jet-button type="submit" class="ml-2" wire:loading.attr="disabled">
+                        <x-button type="submit" class="ml-2" wire:loading.attr="disabled">
                             {{__("Update")}}
-                        </x-jet-button>
+                        </x-button>
                     </div>
                 </form>
             </x-slot>
 
             <x-slot name="footer">
-                <x-jet-secondary-button wire:click="$toggle('assetThreatEditDialogOpen')"
+                <x-secondary-button wire:click="$toggle('assetThreatEditDialogOpen')"
                                         wire:loading.attr="disabled">
                     {{__("Cancel")}}
-                </x-jet-secondary-button>
+                </x-secondary-button>
             </x-slot>
-        </x-jet-dialog-modal>
+        </x-dialog-modal>
 
-        <x-jet-dialog-modal wire:model="assetThreatControlAddDialogOpen">
+        <x-dialog-modal wire:model.live="assetThreatControlAddDialogOpen">
             <x-slot name="title">
                 {{__("Add Control")}}
             </x-slot>
             <x-slot name="content">
-                <form wire:submit.prevent="addControl">
+                <form wire:submit="addControl">
                     <div class="mb-6">
                         <label for="control" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                             {{__("Control")}}
                         </label>
                         <select
                             id="control"
-                            wire:model.defer="selectedControl"
+                            wire:model="selectedControl"
                             class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             required>
                             <option selected disabled value="">{{__("Select a Control to Add")}}</option>
@@ -397,7 +397,7 @@
                         </label>
                         <select id="control_type"
                                 class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                wire:model.defer="selectedControlType"
+                                wire:model="selectedControlType"
                                 required>
                             <option selected disabled value="">{{__("Select a Control Type")}}</option>
                             @foreach(\App\Enums\ControlType::cases() as $controlType)
@@ -411,22 +411,22 @@
                     </div>
 
                     <div class="flex justify-center">
-                        <x-jet-button type="submit" class="ml-2" wire:loading.attr="disabled">
+                        <x-button type="submit" class="ml-2" wire:loading.attr="disabled">
                             {{__("Add")}}
-                        </x-jet-button>
+                        </x-button>
                     </div>
                 </form>
             </x-slot>
 
             <x-slot name="footer">
-                <x-jet-secondary-button wire:click="$toggle('assetThreatControlAddDialogOpen')"
+                <x-secondary-button wire:click="$toggle('assetThreatControlAddDialogOpen')"
                                         wire:loading.attr="disabled">
                     {{__("Cancel")}}
-                </x-jet-secondary-button>
+                </x-secondary-button>
 
 
             </x-slot>
-        </x-jet-dialog-modal>
+        </x-dialog-modal>
 
 
     </div>

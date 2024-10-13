@@ -1,4 +1,3 @@
-FROM mariadb:lts-jammy
+FROM mariadb:lts-noble
 RUN mkdir -p /etc/mysql/conf.d
-# Add more .cnf configuration files in /etc/mysql/conf.d/
-#COPY my.cnf /etc/mysql/conf.d
+COPY *.cnf /etc/mysql/conf.d

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Enums\UserRole;
 use App\Http\Controllers\AssetController;

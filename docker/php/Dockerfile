@@ -1,17 +1,17 @@
-FROM php:fpm-bookworm AS base
+FROM php:8.3-fpm-bookworm AS base
 
 WORKDIR /workdir
 
 ENV TZ=${TIMEZONE} LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8 COMPOSER_ALLOW_SUPERUSER=1 COMPOSER_HOME=/composer
 
-COPY --from=composer:2.6.3  /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2  /usr/bin/composer /usr/bin/composer
 
 RUN apt-get -qq update && apt-get -qq -y install --no-install-recommends locales git unzip nmap build-essential \
     libzip-dev libicu-dev libonig-dev libpng-dev libldap2-dev libxml2 libxml2-dev libcurl4-openssl-dev libreadline-dev \
     libkrb5-dev libc-client-dev libpq-dev libsqlite3-dev zlib1g-dev vim nano ca-certificates curl gnupg
 RUN mkdir -p /etc/apt/keyrings
 RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_18.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
+RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
 RUN apt-get -qq update && apt-get -qq -y install nodejs
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 RUN locale-gen en_US.UTF-8 && localedef -f UTF-8 -i en_US en_US.UTF-8

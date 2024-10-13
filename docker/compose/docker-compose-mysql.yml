@@ -1,4 +1,3 @@
-version: '3.5'
 services:
   app:
     build:
@@ -20,7 +19,7 @@ services:
       db:
         condition: service_healthy
     environment:
-      TZ: '${TIMEZONE}'
+      TZ: &timezone "Europe/Lisbon"
   web:
     build:
       context: docker/nginx
@@ -36,7 +35,7 @@ services:
     depends_on:
       - app
     environment:
-      TZ: '${TIMEZONE}'
+      TZ: *timezone
   db:
     build:
       context: docker/mysql
@@ -50,7 +49,7 @@ services:
       MYSQL_USER: '${DB_USERNAME}'
       MYSQL_PASSWORD: '${DB_PASSWORD}'
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
-      TZ: '${TIMEZONE}'
+      TZ: *timezone
     volumes:
       - 'db-files:/var/lib/mysql'
     networks:
@@ -60,7 +59,7 @@ services:
       retries: 10
       timeout: 30s
   phpmyadmin:
-    image: phpmyadmin
+    image: phpmyadmin:5-apache
     restart: always
     depends_on:
       db:
