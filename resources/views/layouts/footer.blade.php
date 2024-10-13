@@ -6,6 +6,9 @@
     </span>
     <ul class="flex flex-wrap items-center mt-3 text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
         <li>
+            <a class="mr-4 md:mr-6 ">&#9201;{{round(microtime(true) - LARAVEL_START,3)}}</a>
+        </li>
+        <li>
             <a target="_blank" href="{{config("app.license")}}"
                class="mr-4 hover:underline md:mr-6">{{__("License")}}</a>
         </li>
