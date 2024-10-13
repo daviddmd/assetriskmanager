@@ -15,8 +15,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'ARM'),
-
+    'name' => env('APP_NAME', 'Asset Risk Manager'),
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -57,6 +56,8 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
 
     'version' => '1.1.0',
+    "homepage" => "https://github.com/daviddmd/assetriskmanager",
+    "license" => "https://www.gnu.org/licenses/agpl-3.0.txt",
 
     'asset_url' => env('ASSET_URL'),
 
